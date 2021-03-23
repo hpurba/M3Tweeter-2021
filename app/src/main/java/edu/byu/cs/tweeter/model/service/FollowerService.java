@@ -7,19 +7,21 @@ import edu.byu.cs.tweeter.model.service.request.FollowerRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowerResponse;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
 
+/**
+ * FollowerService extends the BaseService to get the Followers of a user.
+ */
 public class FollowerService extends BaseService {
 
+    // Follower Response and Request Objects.
     FollowerResponse followerResponse;
     FollowerRequest followerRequest;
 
     /**
-     * Returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followers returned and to return the next set of
-     * followers after any that were returned in a previous request. Uses the {@link ServerFacadeOriginalM2} to
-     * get the followers from the server.
+     * This is called to get the Followers for a user (followee).
+     * Takes a FollowerRequest as the parameter and returns a FollowerResponse.
      *
-     * @param request contains the data required to fulfill the request.
-     * @return the followers.
+     * @param request A FollowerRequest Object.
+     * @return A FollowerResponse Object which contains the followers of the user.
      */
     public FollowerResponse getFollowers(FollowerRequest request) throws IOException {
         this.followerRequest = request;
@@ -27,11 +29,15 @@ public class FollowerService extends BaseService {
         return followerResponse;
     }
 
+    /**
+     * This is the main method in the Template pattern of the BaseService Class.
+     * This will get the Followers from the server facade of a user (followee) using the provided
+     * FollowerRequest (which is first passed into getFollowers).
+     */
     @Override
     public void doServiceSpecificTask() throws IOException {
-
         followerResponse = getServerFacade().getFollowers(followerRequest);
-
+        // Images must be loaded into a byte array.
         if(followerResponse.isSuccess()) {
             loadImages(followerResponse);
         }
@@ -48,5 +54,4 @@ public class FollowerService extends BaseService {
             user.setImageBytes(bytes);
         }
     }
-
 }

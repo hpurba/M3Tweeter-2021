@@ -6,23 +6,18 @@ import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.net.ServerFacade;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
 
+/**
+ * BaseService: Abstract Base Class for Other Services.
+ */
 abstract class BaseService
 {
     public ServerFacade serverFacade;
 
-    /** Sets the serverFacade by calling getServerFacade
-     *
+    /** Sets the serverFacade by calling getServerFacade.
      */
     public final void setServerFacade()
     {
-        try
-        {
-            serverFacade = getServerFacade();
-        }
-        catch (Exception e)
-        {
-            System.out.println("Retrieving ServerFacade unsuccessful");
-        }
+        serverFacade = getServerFacade();
     }
 
     /**
@@ -30,23 +25,21 @@ abstract class BaseService
      * testing purposes. All usages of ServerFacade should get their ServerFacade instance from this
      * method to allow for proper mocking.
      *
-     * @return the instance.
+     * @return a new instance of the ServerFacade.
      */
     public ServerFacade getServerFacade() {
         return new ServerFacade();
     }
 
     /**
-     * Loads the profile image data for the user.
+     * Loads the profile image data for the user as a byte array.
      *
-     * @param user the user whose profile image data is to be loaded.
+     * @param user the user whose profile image data is to be loaded as a byte array.
      */
     public void loadImage(User user) throws IOException {
         byte [] bytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
         user.setImageBytes(bytes);
     }
-
-    public abstract void doServiceSpecificTask() throws IOException;
 
     /** Template
      * Gets the serverFacade and then does the service specific Task
@@ -60,4 +53,12 @@ abstract class BaseService
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * This method is intended to be Overriden for each Service as part of the Template
+     * method Design Pattern.
+     * @throws IOException
+     */
+    public abstract void doServiceSpecificTask() throws IOException;
 }

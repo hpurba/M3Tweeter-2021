@@ -373,11 +373,6 @@ public class ServerFacade {
             if(request.getLimit() < 0) {
                 throw new AssertionError();
             }
-
-//             the request isn't really important
-//            if(request.getTweet() == null) {
-//                throw new AssertionError();
-//            }
         }
 
         List<Tweet> allTweets = getDummyTweets();
