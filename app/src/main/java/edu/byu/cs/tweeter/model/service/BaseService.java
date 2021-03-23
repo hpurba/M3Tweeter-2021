@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.net.ServerFacade;
+import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
 
 /**
@@ -60,5 +61,5 @@ abstract class BaseService
      * method Design Pattern.
      * @throws IOException
      */
-    public abstract void doServiceSpecificTask() throws IOException;
+    public abstract void doServiceSpecificTask() throws IOException, TweeterRemoteException;
 }
