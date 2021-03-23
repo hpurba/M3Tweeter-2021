@@ -8,10 +8,10 @@ import java.util.Objects;
  */
 public class User implements Comparable<User>, Serializable {
 
-    private final String firstName;
-    private final String lastName;
-    private final String alias;
-    private final String imageUrl;
+    private String firstName;
+    private String lastName;
+    private String alias;
+    private String imageUrl;
     private byte [] imageBytes;
     private int followersCount;
     private int followingCount;
@@ -97,5 +97,9 @@ public class User implements Comparable<User>, Serializable {
     @Override
     public int compareTo(User user) {
         return this.getAlias().compareTo(user.getAlias());
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 }

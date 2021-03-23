@@ -7,21 +7,20 @@ import edu.byu.cs.tweeter.model.service.response.FollowingResponse;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
 
 /**
- * Contains the business logic for getting the users a user is following.
+ * FollowingService extends the BaseService Abstract Class to get the Followers of a user.
  */
 public class FollowingService extends BaseService {
 
+    // Following Response and Request Objects.
     FollowingResponse followingResponse;
     FollowingRequest followingRequest;
 
     /**
-     * Returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followees returned and to return the next set of
-     * followees after any that were returned in a previous request. Uses the {@link ServerFacadeOriginalM2} to
-     * get the followees from the server.
+     * This is called to get the Followees of a user (people the user is following).
+     * Takes a FollowingRequest as the parameter and returns a FollowingResponse.
      *
-     * @param request contains the data required to fulfill the request.
-     * @return the followees.
+     * @param request A FollowerRequest Object.
+     * @return A FollowerResponse Object which contains the followers of the user.
      */
     public FollowingResponse getFollowees(FollowingRequest request) throws IOException {
         this.followingRequest = request;
@@ -30,22 +29,26 @@ public class FollowingService extends BaseService {
     }
 
     /**
+     * This is the primary method in the Template pattern of the BaseService Abstract Class.
+     * This will get the Followees of a user from the server facade (people the user is following)
+     * using the provided FollowingRequest (which is first passed into getFollowees).
+     */
+    @Override
+    public void doServiceSpecificTask() throws IOException {
+        followingResponse = getServerFacade().getFollowees(followingRequest);
+        if(followingResponse.isSuccess()) {
+            loadImages(followingResponse);
+        }
+    }
+
+    /**
      * Loads the profile image data for each followee included in the response.
-     *
      * @param response the response from the followee request.
      */
     private void loadImages(FollowingResponse response) throws IOException {
         for(User user : response.getFollowees()) {
             byte [] bytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
             user.setImageBytes(bytes);
-        }
-    }
-
-    @Override
-    public void doServiceSpecificTask() throws IOException {
-        followingResponse = getServerFacade().getFollowees(followingRequest);
-        if(followingResponse.isSuccess()) {
-            loadImages(followingResponse);
         }
     }
 }

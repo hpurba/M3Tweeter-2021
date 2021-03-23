@@ -54,9 +54,9 @@ abstract class BaseService
         }
     }
 
-
     /**
-     * This method is intended to be Overriden for each Service as part of the Template
+     * This is the primary method in the Template pattern of the BaseService Abstract Class.
+     * This is intended to be Overridden for each Service as part of the Template method pattern.
      * method Design Pattern.
      * @throws IOException
      */

@@ -8,10 +8,13 @@ import edu.byu.cs.tweeter.model.service.response.LoginResponse;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
 
 /**
- * Contains the business logic to support the login operation.
+ * LoginService extends the BaseService Abstract Class to login the user.
  */
 public class LoginService implements ILoginService {
+    // The url_path extension for login. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
     private static final String URL_PATH = "/loginuser";
+
+
     public LoginResponse login(LoginRequest request) throws IOException, TweeterRemoteException {
         ServerFacade serverFacade = getServerFacade();
         LoginResponse loginResponse = serverFacade.login(request, URL_PATH);

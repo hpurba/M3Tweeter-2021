@@ -8,7 +8,7 @@ import edu.byu.cs.tweeter.model.service.response.FollowerResponse;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
 
 /**
- * FollowerService extends the BaseService to get the Followers of a user.
+ * FollowerService extends the BaseService Abstract Class to get the Followers of a user.
  */
 public class FollowerService extends BaseService {
 
@@ -30,7 +30,7 @@ public class FollowerService extends BaseService {
     }
 
     /**
-     * This is the main method in the Template pattern of the BaseService Class.
+     * This is the primary method in the Template pattern of the BaseService Abstract Class.
      * This will get the Followers from the server facade of a user (followee) using the provided
      * FollowerRequest (which is first passed into getFollowers).
      */
@@ -45,7 +45,6 @@ public class FollowerService extends BaseService {
 
     /**
      * Loads the profile image data for each follower included in the response.
-     *
      * @param response the response from the follower request.
      */
     public void loadImages(FollowerResponse response) throws IOException {

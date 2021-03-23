@@ -13,8 +13,6 @@ import java.util.List;
 import edu.byu.cs.tweeter.BuildConfig;
 import edu.byu.cs.tweeter.model.domain.Tweet;
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.domain.AuthToken;
-import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.FeedTweetsRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowerRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
@@ -151,13 +149,6 @@ public class ServerFacade {
     private final Tweet tweet_S16 = new Tweet("@TestUser", "In the end, it's not the years in your life that count. It's the life in your years.", "TestUser");
 
 
-
-
-
-
-
-
-
     /**
      * Performs a logout and if successful
      *
@@ -265,9 +256,6 @@ public class ServerFacade {
                 user19, user20);
     }
 
-
-
-
     /**
      * Returns the users that the user specified in the request is following. Uses information in
      * the request object to limit the number of followers returned and to return the next set of
@@ -352,9 +340,6 @@ public class ServerFacade {
                 user19, user20);
     }
 
-
-
-
     /**
      * Returns the users that the user specified in the request is following. Uses information in
      * the request object to limit the number of followers returned and to return the next set of
@@ -435,8 +420,6 @@ public class ServerFacade {
     }
 
 
-
-
     /**
      * Returns the users that the user specified in the request is following. Uses information in
      * the request object to limit the number of followers returned and to return the next set of
@@ -455,11 +438,6 @@ public class ServerFacade {
             if(request.getLimit() < 0) {
                 throw new AssertionError();
             }
-
-//             the request isn't really important
-//            if(request.getTweet() == null) {
-//                throw new AssertionError();
-//            }
         }
 
         List<Tweet> allTweets = getDummyTweetsForStory();
@@ -492,11 +470,6 @@ public class ServerFacade {
     }
 
 
-
-
-
-
-
     /**
      * Performs a login and if successful, returns the logged in user and an auth token. The current
      * implementation is hard-coded to return a dummy user and doesn't actually make a network
@@ -522,15 +495,10 @@ public class ServerFacade {
         if(request.getAlias() == null || request.getPassword() == null || request.getFirstName() == null || request.getLastName() == null || request.getByteArray() == null) {
             return new RegisterResponse(null, null);
         }
-
 //        User user = new User(firstName, lastName,
 //                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
 
         user.setImageBytes(byteArray);
-
-
-
-
 
         // ------------------------------------------------------------------------------------------------------------
         // Create a neat value object to hold the URL
@@ -562,24 +530,18 @@ public class ServerFacade {
             }
             System.out.println(response.toString());
         }
-
-
         // ------------------------------------------------------------------------------------------------------
-
 
 //        User user = new User("Test", "User",
 //                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
         return new RegisterResponse(user, null);
     }
 
-
-
     // POST A TWEET
     public TweetResponse tweet(TweetRequest tweetRequest) {
         tweetRequest.getUsername();
         tweetRequest.getTweetText();
         // Add tweet to database using the username provided
-
 
         // Used in place of assert statements because Android does not support them
         if(BuildConfig.DEBUG) {
@@ -600,8 +562,6 @@ public class ServerFacade {
         }
         return tweetResponse;
     }
-
-
 
     private Boolean followingStatus = true;
 
