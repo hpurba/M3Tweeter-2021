@@ -3,6 +3,8 @@ package edu.byu.cs.tweeter.model.service.response;
 import java.util.List;
 import java.util.Objects;
 
+import edu.byu.cs.tweeter.model.domain.User;
+
 public class FollowerResponse extends PagedResponse {
     private List<User> followers;
 

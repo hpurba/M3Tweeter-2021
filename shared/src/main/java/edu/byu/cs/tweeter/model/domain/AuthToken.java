@@ -8,5 +8,5 @@ import java.io.Serializable;
  *      https://www.tutorialspoint.com/java/java_serialization.htm
  */
 public class AuthToken implements Serializable {
-    private AuthToken() {}
+    public AuthToken() {}
 }

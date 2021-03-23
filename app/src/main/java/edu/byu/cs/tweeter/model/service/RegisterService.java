@@ -17,6 +17,10 @@ public class RegisterService extends BaseService {
 
     @Override
     public void doServiceSpecificTask() {
-        registerResponse = serverFacade.register(registerRequest);
+        try {
+            registerResponse = serverFacade.register(registerRequest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

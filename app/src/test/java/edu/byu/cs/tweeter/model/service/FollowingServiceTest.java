@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.net.ServerFacadeOriginalM2;
 import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowingResponse;
 
@@ -21,7 +20,7 @@ public class FollowingServiceTest {
     private FollowingResponse successResponse;
     private FollowingResponse failureResponse;
 
-    private FollowingService followingServiceSpy;
+    private IFollowingService followingServiceSpy;
 
     /**
      * Create a FollowingService spy that uses a mock ServerFacade to return known responses to
@@ -47,7 +46,7 @@ public class FollowingServiceTest {
         failureResponse = new FollowingResponse("An exception occurred");
 
         // Mock FollowingService used to call getFollowees()
-        followingServiceSpy = Mockito.spy(new FollowingService());
+        followingServiceSpy = Mockito.spy(new IFollowingService());
         Mockito.when(followingServiceSpy.getFollowees(validRequest)).thenReturn(successResponse);
         Mockito.when(followingServiceSpy.getFollowees(invalidRequest)).thenReturn(failureResponse);
 
@@ -58,7 +57,7 @@ public class FollowingServiceTest {
     }
 
     /**
-     * Verify that for successful requests the {@link FollowingService#getFollowees(FollowingRequest)}
+     * Verify that for successful requests the {@link IFollowingService#getFollowees(FollowingRequest)}
      * method returns the same result as the {@link ServerFacadeOriginalM2}.
      * .
      *
@@ -71,7 +70,7 @@ public class FollowingServiceTest {
     }
 
     /**
-     * Verify that the {@link FollowingService#getFollowees(FollowingRequest)} method loads the
+     * Verify that the {@link IFollowingService#getFollowees(FollowingRequest)} method loads the
      * profile image of each user included in the result.
      *
      * @throws IOException if an IO error occurs.
@@ -85,7 +84,7 @@ public class FollowingServiceTest {
     }
 
     /**
-     * Verify that for failed requests the {@link FollowingService#getFollowees(FollowingRequest)}
+     * Verify that for failed requests the {@link IFollowingService#getFollowees(FollowingRequest)}
      * method returns the same result as the {@link ServerFacadeOriginalM2}.
      *
      * @throws IOException if an IO error occurs.

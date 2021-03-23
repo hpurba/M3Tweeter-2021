@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.User;
+import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.LoginRequest;
 import edu.byu.cs.tweeter.model.service.response.LoginResponse;
 import edu.byu.cs.tweeter.presenter.LoginPresenter;
@@ -61,6 +62,8 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, LoginResponse> {
             }
         } catch (IOException ex) {
             exception = ex;
+        } catch (TweeterRemoteException e) {
+            e.printStackTrace();
         }
 
         return loginResponse;

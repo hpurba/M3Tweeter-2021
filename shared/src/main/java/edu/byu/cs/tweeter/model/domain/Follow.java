@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.model.domain;
 
+
 import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 

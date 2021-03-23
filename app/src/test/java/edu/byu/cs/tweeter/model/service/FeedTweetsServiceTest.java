@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import edu.byu.cs.tweeter.model.domain.Tweet;
-import edu.byu.cs.tweeter.model.net.ServerFacadeOriginalM2;
 import edu.byu.cs.tweeter.model.service.request.FeedTweetsRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.model.service.response.FeedTweetsResponse;
@@ -50,7 +49,7 @@ class FeedTweetsServiceTest {
     }
 
     /**
-     * Verify that for successful requests the {@link FollowingService#getFollowees(FollowingRequest)}
+     * Verify that for successful requests the {@link IFollowingService#getFollowees(FollowingRequest)}
      * method returns the same result as the {@link ServerFacadeOriginalM2}.
      * .
      *

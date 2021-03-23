@@ -8,9 +8,8 @@ import org.mockito.Mockito;
 import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.AuthToken;
-import edu.byu.cs.tweeter.model.domain.Tweet;
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.service.LoginService;
+import edu.byu.cs.tweeter.model.service.ILoginService;
 import edu.byu.cs.tweeter.model.service.request.LoginRequest;
 import edu.byu.cs.tweeter.model.service.response.LoginResponse;
 
@@ -21,7 +20,7 @@ class LoginPresenterTest {
     private LoginRequest badRequest;
     private LoginResponse response;
     private LoginResponse badResponse;
-    private LoginService mockLoginService;
+    private ILoginService mockLoginService;
     private LoginPresenter presenter;
 
     @BeforeEach
@@ -42,7 +41,7 @@ class LoginPresenterTest {
         badResponse = new LoginResponse((User) null, (AuthToken) null);
 
         // Create a mock FollowingService
-        mockLoginService = Mockito.mock(LoginService.class);
+        mockLoginService = Mockito.mock(ILoginService.class);
         Mockito.when(mockLoginService.login(request)).thenReturn(response);
 
         // Wrap a FollowingPresenter in a spy that will use the mock service.

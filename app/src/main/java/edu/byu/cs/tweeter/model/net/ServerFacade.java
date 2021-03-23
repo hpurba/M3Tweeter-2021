@@ -83,31 +83,6 @@ public class ServerFacade {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // This is the hard coded followee data returned by the 'getFollowees()' method
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
@@ -133,43 +108,55 @@ public class ServerFacade {
     private final User user19 = new User("Justin", "Jones", MALE_IMAGE_URL);
     private final User user20 = new User("Jill", "Johnson", FEMALE_IMAGE_URL);
 
-    private final Tweet tweet1 = new Tweet("@AllenAnderson", "I am Allen! Nice to meet you all!");
-    private final Tweet tweet2 = new Tweet("@AmyAmes", "Yooo I'm Amy.");
-    private final Tweet tweet3 = new Tweet("@BobBobson", "Welcome to Bob paradise");
-    private final Tweet tweet4 = new Tweet("@BonnieBeatty", "I don't have anything to say");
-    private final Tweet tweet5 = new Tweet("@ChrisColston", "Motorycles are cool");
-    private final Tweet tweet6 = new Tweet("@CindyCoats", "I love physics");
-    private final Tweet tweet7 = new Tweet("@DanDonaldson", "Do I look like a duck to you?");
-    private final Tweet tweet8 = new Tweet("@DeeDempsey", "Doooo doooooooo doodly dooo");
-    private final Tweet tweet9 = new Tweet("@ElliottEnderson", "heyoooooo");
-    private final Tweet tweet10 = new Tweet("@ElizabethEngle", "bah blah");
-    private final Tweet tweet11 = new Tweet("@FrankFrandson", "frank is dope bro");
-    private final Tweet tweet12 = new Tweet("@FranFranklin", "i am rich");
-    private final Tweet tweet13 = new Tweet("@GaryGilbert", "i am poor");
-    private final Tweet tweet14 = new Tweet("@GiovannaGiles", "i have a good life");
-    private final Tweet tweet15 = new Tweet("@HenryHenderson", "one republic yo");
-    private final Tweet tweet16 = new Tweet("@HelenHopwell", "Have hope for the future");
-    private final Tweet tweet17 = new Tweet("@IgorIsaacson", "You should give this guy 100% because hes a good person");
-    private final Tweet tweet18 = new Tweet("@IsabelIsaacson", "I like to eat pizza");
-    private final Tweet tweet19 = new Tweet("@JustinJones", "world peace is not possible");
-    private final Tweet tweet20 = new Tweet("@JillJohnson", "I am an olympian");
+    // Collection of Tweet(s). [tweet1 - tweet20]
+    private final Tweet tweet1 = new Tweet("@AllenAnderson", "I am Allen! Nice to meet you all!", "Allen Anderson");
+    private final Tweet tweet2 = new Tweet("@AmyAmes", "Yooo I'm Amy.", "Amy Ames");
+    private final Tweet tweet3 = new Tweet("@BobBobson", "Welcome to Bob paradise", "Bob Bobson");
+    private final Tweet tweet4 = new Tweet("@BonnieBeatty", "I don't have anything to say", "Bonnie Beatty");
+    private final Tweet tweet5 = new Tweet("@ChrisColston", "Motorycles are cool", "Chris Colston");
+    private final Tweet tweet6 = new Tweet("@CindyCoats", "I love physics", "Cindy Coats");
+    private final Tweet tweet7 = new Tweet("@DanDonaldson", "Do I look like a duck to you?", "Dan Donaldson");
+    private final Tweet tweet8 = new Tweet("@DeeDempsey", "Doooo doooooooo doodly dooo", "Dee Dempsey");
+    private final Tweet tweet9 = new Tweet("@ElliottEnderson", "heyoooooo", "Elliott Enderson");
+    private final Tweet tweet10 = new Tweet("@ElizabethEngle", "bah blah", "Elizabeth Engle");
+    private final Tweet tweet11 = new Tweet("@FrankFrandson", "frank is dope bro", "Frank Frandson");
+    private final Tweet tweet12 = new Tweet("@FranFranklin", "i am rich", "Fran Franklin");
+    private final Tweet tweet13 = new Tweet("@GaryGilbert", "i am poor", "Gary Gilbert");
+    private final Tweet tweet14 = new Tweet("@GiovannaGiles", "i have a good life", "Giovanna Giles");
+    private final Tweet tweet15 = new Tweet("@HenryHenderson", "one republic yo", "Henry Henderson");
+    private final Tweet tweet16 = new Tweet("@HelenHopwell", "Have hope for the future", "Helen Hopwell");
+    private final Tweet tweet17 = new Tweet("@IgorIsaacson", "You should give this guy 100% because hes a good person", "Igor Isaacson");
+    private final Tweet tweet18 = new Tweet("@IsabelIsaacson", "I like to eat pizza", "Isabel Isaacson");
+    private final Tweet tweet19 = new Tweet("@JustinJones", "world peace is not possible", "Justin Jones");
+    private final Tweet tweet20 = new Tweet("@JillJohnson", "I am an olympian", "JillJohnson");
 
-    private final Tweet tweet_S1 = new Tweet("@TestUser", "The greatest glory in living lies not in never falling, but in rising every time we fall.");
-    private final Tweet tweet_S2 = new Tweet("@TestUser", "The way to get started is to quit talking and begin doing.");
-    private final Tweet tweet_S3 = new Tweet("@TestUser", "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.");
-    private final Tweet tweet_S4 = new Tweet("@TestUser", "If life were predictable it would cease to be life, and be without flavor.");
-    private final Tweet tweet_S5 = new Tweet("@TestUser", "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.");
-    private final Tweet tweet_S6 = new Tweet("@TestUser", "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.");
-    private final Tweet tweet_S7 = new Tweet("@TestUser", "Life is what happens when you're busy making other plans.");
-    private final Tweet tweet_S8 = new Tweet("@TestUser", "Spread love everywhere you go. Let no one ever come to you without leaving happier.");
-    private final Tweet tweet_S9 = new Tweet("@TestUser", "When you reach the end of your rope, tie a knot in it and hang on.");
-    private final Tweet tweet_S10 = new Tweet("@TestUser", "Always remember that you are absolutely unique. Just like everyone else.");
-    private final Tweet tweet_S11 = new Tweet("@TestUser", "Don't judge each day by the harvest you reap but by the seeds that you plant.");
-    private final Tweet tweet_S12 = new Tweet("@TestUser", "The future belongs to those who believe in the beauty of their dreams.");
-    private final Tweet tweet_S13 = new Tweet("@TestUser", "Tell me and I forget. Teach me and I remember. Involve me and I learn.");
-    private final Tweet tweet_S14 = new Tweet("@TestUser", "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.");
-    private final Tweet tweet_S15 = new Tweet("@TestUser", "Do not go where the path may lead, go instead where there is no path and leave a trail.");
-    private final Tweet tweet_S16 = new Tweet("@TestUser", "In the end, it's not the years in your life that count. It's the life in your years.");
+    // Collection of Tweet(s). [tweet_S1 - tweet_S16]
+    // These tweets are made by the @TestUser.
+    // Therefore, these are tweets for @TestUser(s) story
+    private final Tweet tweet_S1 = new Tweet("@TestUser", "The greatest glory in living lies not in never falling, but in rising every time we fall.", "TestUser");
+    private final Tweet tweet_S2 = new Tweet("@TestUser", "The way to get started is to quit talking and begin doing.", "TestUser");
+    private final Tweet tweet_S3 = new Tweet("@TestUser", "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.", "TestUser");
+    private final Tweet tweet_S4 = new Tweet("@TestUser", "If life were predictable it would cease to be life, and be without flavor.", "TestUser");
+    private final Tweet tweet_S5 = new Tweet("@TestUser", "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.", "TestUser");
+    private final Tweet tweet_S6 = new Tweet("@TestUser", "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.", "TestUser");
+    private final Tweet tweet_S7 = new Tweet("@TestUser", "Life is what happens when you're busy making other plans.", "TestUser");
+    private final Tweet tweet_S8 = new Tweet("@TestUser", "Spread love everywhere you go. Let no one ever come to you without leaving happier.", "TestUser");
+    private final Tweet tweet_S9 = new Tweet("@TestUser", "When you reach the end of your rope, tie a knot in it and hang on.", "TestUser");
+    private final Tweet tweet_S10 = new Tweet("@TestUser", "Always remember that you are absolutely unique. Just like everyone else.", "TestUser");
+    private final Tweet tweet_S11 = new Tweet("@TestUser", "Don't judge each day by the harvest you reap but by the seeds that you plant.", "TestUser");
+    private final Tweet tweet_S12 = new Tweet("@TestUser", "The future belongs to those who believe in the beauty of their dreams.", "TestUser");
+    private final Tweet tweet_S13 = new Tweet("@TestUser", "Tell me and I forget. Teach me and I remember. Involve me and I learn.", "TestUser");
+    private final Tweet tweet_S14 = new Tweet("@TestUser", "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.", "TestUser");
+    private final Tweet tweet_S15 = new Tweet("@TestUser", "Do not go where the path may lead, go instead where there is no path and leave a trail.", "TestUser");
+    private final Tweet tweet_S16 = new Tweet("@TestUser", "In the end, it's not the years in your life that count. It's the life in your years.", "TestUser");
+
+
+
+
+
+
+
+
 
     /**
      * Performs a logout and if successful

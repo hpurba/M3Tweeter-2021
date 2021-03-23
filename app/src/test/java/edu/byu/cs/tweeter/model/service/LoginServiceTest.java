@@ -9,8 +9,9 @@ import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.net.ServerFacadeOriginalM2;
+import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.LoginRequest;
+import edu.byu.cs.tweeter.model.net.ServerFacade;
 import edu.byu.cs.tweeter.model.service.response.LoginResponse;
 
 class LoginServiceTest {
@@ -21,14 +22,14 @@ class LoginServiceTest {
     private LoginResponse successResponse;
     private LoginResponse failureResponse;
 
-    private LoginService loginServiceSpy;
+    private ILoginService loginServiceSpy;
 
     /**
      * Create a LoginService spy that uses a mock ServerFacade to return known responses to
      * requests.
      */
     @BeforeEach
-    public void setup() throws IOException {
+    public void setup() throws IOException, TweeterRemoteException {
         String username = "@hpurba";
 
         User currentUser = new User("Test", "User", null);
@@ -58,26 +59,26 @@ class LoginServiceTest {
     }
 
     /**
-     * Verify that for successful requests the {@link LoginService #login(LoginRequest)}
-     * method returns the same result as the {@link ServerFacadeOriginalM2}.
+     * Verify that for successful requests the {@link ILoginService #login(LoginRequest)}
+     * method returns the same result as the {@link ServerFacade}.
      * .
      *
      * @throws IOException if an IO error occurs.
      */
     @Test
-    public void testGetLoginStatus_validRequest_correctResponse() throws IOException {
+    public void testGetLoginStatus_validRequest_correctResponse() throws IOException, TweeterRemoteException {
         LoginResponse response = loginServiceSpy.login(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     /**
      * Verify that for failed requests the {@link FollowingStatusService #getFollowingStatus(FollowingStatusRequest)}
-     * method returns the same result as the {@link ServerFacadeOriginalM2}.
+     * method returns the same result as the {@link ServerFacade}.
      *
      * @throws IOException if an IO error occurs.
      */
     @Test
-    public void testLoginStatus_invalidRequest_returnsNoLoginStatus() throws IOException {
+    public void testLoginStatus_invalidRequest_returnsNoLoginStatus() throws IOException, TweeterRemoteException {
         LoginResponse response = loginServiceSpy.login(invalidRequest);
         Assertions.assertEquals(failureResponse, response);
     }
