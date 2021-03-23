@@ -1,6 +1,5 @@
 package edu.byu.cs.tweeter.model.service;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,13 +9,11 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.net.ServerFacade;
+import edu.byu.cs.tweeter.model.net.ServerFacadeOriginalM2;
 import edu.byu.cs.tweeter.model.service.request.FollowerRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowerResponse;
 import edu.byu.cs.tweeter.model.service.response.FollowingResponse;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class FollowerServiceTest {
 
@@ -58,7 +55,7 @@ class FollowerServiceTest {
 
     /**
      * Verify that for successful requests the {@link FollowerService# getFollower(FollowerRequest)}
-     * method returns the same result as the {@link ServerFacade}.
+     * method returns the same result as the {@link ServerFacadeOriginalM2}.
      * .
      *
      * @throws IOException if an IO error occurs.
@@ -85,7 +82,7 @@ class FollowerServiceTest {
 
     /**
      * Verify that for failed requests the {@link FollowingService#getFollowees(FollowingRequest)}
-     * method returns the same result as the {@link ServerFacade}.
+     * method returns the same result as the {@link ServerFacadeOriginalM2}.
      *
      * @throws IOException if an IO error occurs.
      */

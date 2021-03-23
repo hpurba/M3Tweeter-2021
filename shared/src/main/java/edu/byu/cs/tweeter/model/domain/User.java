@@ -8,16 +8,13 @@ import java.util.Objects;
  */
 public class User implements Comparable<User>, Serializable {
 
-    private String firstName;
-    private String lastName;
-    private String alias;
-    private String imageUrl;
+    private final String firstName;
+    private final String lastName;
+    private final String alias;
+    private final String imageUrl;
     private byte [] imageBytes;
-
-    /**
-     * Allows construction of the object from Json. Private so it won't be called by other code.
-     */
-    private User() {}
+    private int followersCount;
+    private int followingCount;
 
     public User(String firstName, String lastName, String imageURL) {
         this(firstName, lastName, String.format("@%s%s", firstName, lastName), imageURL);
@@ -34,16 +31,8 @@ public class User implements Comparable<User>, Serializable {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getName() {
@@ -54,16 +43,8 @@ public class User implements Comparable<User>, Serializable {
         return alias;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public byte [] getImageBytes() {
@@ -72,6 +53,22 @@ public class User implements Comparable<User>, Serializable {
 
     public void setImageBytes(byte[] imageBytes) {
         this.imageBytes = imageBytes;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public int getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowersCount(int followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    public void setFollowingCount(int followingCount) {
+        this.followingCount = followingCount;
     }
 
     @Override

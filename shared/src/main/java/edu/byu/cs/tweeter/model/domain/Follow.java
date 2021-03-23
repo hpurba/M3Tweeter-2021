@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.model.domain;
 
+import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 /**
@@ -10,7 +11,7 @@ public class Follow {
     private final User follower;
     private final User followee;
 
-    public Follow(User follower, User followee) {
+    public Follow(@NotNull User follower, @NotNull User followee) {
         this.follower = follower;
         this.followee = followee;
     }
@@ -37,6 +38,7 @@ public class Follow {
         return Objects.hash(follower, followee);
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "Follow{" +

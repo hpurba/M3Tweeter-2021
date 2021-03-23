@@ -9,11 +9,9 @@ import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.net.ServerFacade;
+import edu.byu.cs.tweeter.model.net.ServerFacadeOriginalM2;
 import edu.byu.cs.tweeter.model.service.request.LoginRequest;
 import edu.byu.cs.tweeter.model.service.response.LoginResponse;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class LoginServiceTest {
 
@@ -61,7 +59,7 @@ class LoginServiceTest {
 
     /**
      * Verify that for successful requests the {@link LoginService #login(LoginRequest)}
-     * method returns the same result as the {@link ServerFacade}.
+     * method returns the same result as the {@link ServerFacadeOriginalM2}.
      * .
      *
      * @throws IOException if an IO error occurs.
@@ -74,7 +72,7 @@ class LoginServiceTest {
 
     /**
      * Verify that for failed requests the {@link FollowingStatusService #getFollowingStatus(FollowingStatusRequest)}
-     * method returns the same result as the {@link ServerFacade}.
+     * method returns the same result as the {@link ServerFacadeOriginalM2}.
      *
      * @throws IOException if an IO error occurs.
      */

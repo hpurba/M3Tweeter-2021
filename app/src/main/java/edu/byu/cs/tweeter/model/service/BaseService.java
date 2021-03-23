@@ -3,12 +3,12 @@ package edu.byu.cs.tweeter.model.service;
 import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.net.ServerFacade;
+import edu.byu.cs.tweeter.model.net.ServerFacadeOriginalM2;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
 
 abstract class BaseService
 {
-    public ServerFacade serverFacade;
+    public ServerFacadeOriginalM2 serverFacade;
 
     /** Sets the serverFacade by calling getServerFacade
      *
@@ -26,14 +26,14 @@ abstract class BaseService
     }
 
     /**
-     * Returns an instance of {@link ServerFacade}. Allows mocking of the ServerFacade class for
+     * Returns an instance of {@link ServerFacadeOriginalM2}. Allows mocking of the ServerFacade class for
      * testing purposes. All usages of ServerFacade should get their ServerFacade instance from this
      * method to allow for proper mocking.
      *
      * @return the instance.
      */
-    public ServerFacade getServerFacade() {
-        return new ServerFacade();
+    public ServerFacadeOriginalM2 getServerFacade() {
+        return new ServerFacadeOriginalM2();
     }
 
     /**

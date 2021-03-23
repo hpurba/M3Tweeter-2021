@@ -7,11 +7,17 @@ public class Tweet implements Comparable<Tweet>, Serializable {
 
     private final String alias;
     private final String tweetText;
+    private final String userName;
 
+    public String getUserName() {
+        return userName;
+    }
 
-    public Tweet(String alias, String tweetText) {
+    // Constructor
+    public Tweet(String alias, String tweetText, String userName) {
         this.alias = alias;
         this.tweetText = tweetText;
+        this.userName = userName;
     }
 
     public String getAlias() {
@@ -21,7 +27,6 @@ public class Tweet implements Comparable<Tweet>, Serializable {
     public String getTweetText() {
         return tweetText;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -36,7 +41,6 @@ public class Tweet implements Comparable<Tweet>, Serializable {
         return Objects.hash(alias);
     }
 
-
     @Override
     public int compareTo(Tweet tweet) {
         int sameAlias = this.getAlias().compareTo(tweet.getAlias());
@@ -48,5 +52,4 @@ public class Tweet implements Comparable<Tweet>, Serializable {
             return 0;
         }
     }
-
 }

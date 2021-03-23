@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import edu.byu.cs.tweeter.model.domain.Tweet;
-import edu.byu.cs.tweeter.model.net.ServerFacade;
+import edu.byu.cs.tweeter.model.net.ServerFacadeOriginalM2;
 import edu.byu.cs.tweeter.model.service.request.StoryTweetsRequest;
 import edu.byu.cs.tweeter.model.service.response.StoryTweetsResponse;
 
@@ -50,7 +50,7 @@ class StoryTweetsServiceTest {
 
     /**
      * Verify that for successful requests the {@link StoryTweetsService #getStoryTweets(StoryTweetsRequest)}
-     * method returns the same result as the {@link ServerFacade}.
+     * method returns the same result as the {@link ServerFacadeOriginalM2}.
      * .
      *
      * @throws IOException if an IO error occurs.
@@ -64,7 +64,7 @@ class StoryTweetsServiceTest {
 
     /**
      * Verify that for failed requests the {@link StoryTweetsService #getFeedTweets(FeedTweetsRequest)}
-     * method returns the same result as the {@link ServerFacade}.
+     * method returns the same result as the {@link ServerFacadeOriginalM2}.
      *
      * @throws IOException if an IO error occurs.
      */

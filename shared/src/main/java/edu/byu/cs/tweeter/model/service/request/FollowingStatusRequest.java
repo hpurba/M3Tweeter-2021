@@ -2,31 +2,31 @@ package edu.byu.cs.tweeter.model.service.request;
 
 public class FollowingStatusRequest {
 
-
-    private final String myUsername;
-    private final String otherPersonUsername;
+    private User user;
+//    private final String myUsername;
+//    private final String otherPersonUsername;
     private Boolean isFollowing;
 
     /**
      * Creates an instance.
      *
-     * @param myUsername the username of the user to be logged in.
-     * @param otherPersonUsername
+     * @param user
+     * @param isFollowing
      */
-    public FollowingStatusRequest(String myUsername, String otherPersonUsername, Boolean isFollowing) {
-        this.myUsername = myUsername;
-        this.otherPersonUsername = otherPersonUsername;
+    public FollowingStatusRequest(User user, Boolean isFollowing) {
+        this.user = user;
         this.isFollowing = isFollowing;
     }
 
-
-    public String getMyUsername() {
-        return myUsername;
+    public User getUser() {
+        return user;
     }
-
-    public String getOtherPersonUsername() {
-        return otherPersonUsername;
-    }
+//    public String getMyUsername() {
+//        return myUsername;
+//    }
+//    public String getOtherPersonUsername() {
+//        return otherPersonUsername;
+//    }
 
     public Boolean getFollowing() {
         return isFollowing;

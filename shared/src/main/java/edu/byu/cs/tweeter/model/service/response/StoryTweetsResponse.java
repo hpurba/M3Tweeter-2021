@@ -3,8 +3,6 @@ package edu.byu.cs.tweeter.model.service.response;
 import java.util.List;
 import java.util.Objects;
 
-import edu.byu.cs.tweeter.model.domain.Tweet;
-
 public class StoryTweetsResponse extends PagedResponse {
 
     private List<Tweet> tweets;

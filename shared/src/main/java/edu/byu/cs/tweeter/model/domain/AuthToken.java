@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * Represents an auth token in the system.
+ * For more on java Serialization:
+ *      https://www.tutorialspoint.com/java/java_serialization.htm
  */
 public class AuthToken implements Serializable {
     private AuthToken() {}

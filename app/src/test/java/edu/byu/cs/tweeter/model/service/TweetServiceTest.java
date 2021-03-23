@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.Tweet;
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.net.ServerFacade;
+import edu.byu.cs.tweeter.model.net.ServerFacadeOriginalM2;
 import edu.byu.cs.tweeter.model.service.request.TweetRequest;
 import edu.byu.cs.tweeter.model.service.response.TweetResponse;
 
@@ -52,7 +52,7 @@ class TweetServiceTest {
 
     /**
      * Verify that for successful requests the {@link TweetService #tweet(TweetRequest)}
-     * method returns the same result as the {@link ServerFacade}.
+     * method returns the same result as the {@link ServerFacadeOriginalM2}.
      * .
      *
      * @throws IOException if an IO error occurs.
@@ -66,7 +66,7 @@ class TweetServiceTest {
 
     /**
      * Verify that for failed requests the {@link TweetService #tweet(TweetRequest)}
-     * method returns the same result as the {@link ServerFacade}.
+     * method returns the same result as the {@link ServerFacadeOriginalM2}.
      *
      * @throws IOException if an IO error occurs.
      */

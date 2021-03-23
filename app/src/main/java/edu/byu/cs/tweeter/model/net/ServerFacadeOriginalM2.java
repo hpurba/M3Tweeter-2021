@@ -1,20 +1,13 @@
 package edu.byu.cs.tweeter.model.net;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import edu.byu.cs.tweeter.BuildConfig;
+import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.Tweet;
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.domain.AuthToken;
-import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.FeedTweetsRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowerRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
@@ -38,80 +31,17 @@ import edu.byu.cs.tweeter.model.service.response.TweetResponse;
  * Acts as a Facade to the Tweeter server. All network requests to the server should go through
  * this class.
  */
-public class ServerFacade {
-
-    // TODO: Set this to the invoke URL of your API. Find it by going to your API in AWS, clicking
-    //  on stages in the right-side menu, and clicking on the stage you deployed your API to.
-    private static final String SERVER_URL = "https://136xswxwxa.execute-api.us-west-2.amazonaws.com/dev";
-
-    private final ClientCommunicator clientCommunicator = new ClientCommunicator(SERVER_URL);
-
-    /**
-     * Performs a login and if successful, returns the logged in user and an auth token.
-     *
-     * @param request contains all information needed to perform a login.
-     * @return the login response.
-     */
-    public LoginResponse login(LoginRequest request, String urlPath) throws IOException, TweeterRemoteException {
-        LoginResponse response = clientCommunicator.doPost(urlPath, request, null, LoginResponse.class);
-
-        if(response.isSuccess()) {
-            return response;
-        } else {
-            throw new RuntimeException(response.getMessage());
-        }
-    }
-
-    /**
-     * Returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followees returned and to return the next set of
-     * followees after any that were returned in a previous request.
-     *
-     * @param request contains information about the user whose followees are to be returned and any
-     *                other information required to satisfy the request.
-     * @return the followees.
-     */
-    public FollowingResponse getFollowees(FollowingRequest request, String urlPath)
-            throws IOException, TweeterRemoteException {
-        FollowingResponse response = clientCommunicator.doPost(urlPath, request, null, FollowingResponse.class);
-
-        if(response.isSuccess()) {
-            return response;
-        } else {
-            throw new RuntimeException(response.getMessage());
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // This is the hard coded followee data returned by the 'getFollowees()' method
+public class ServerFacadeOriginalM2 {
+    // DUMMY DATA
+    // Image URLs
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
 
+    // Main test User
+    private User user =  new User("Test", "User",
+            "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
+
+    // Collection of other users. [user1 - user20]
     private final User user1 = new User("Allen", "Anderson", MALE_IMAGE_URL);
     private final User user2 = new User("Amy", "Ames", FEMALE_IMAGE_URL);
     private final User user3 = new User("Bob", "Bobson", MALE_IMAGE_URL);
@@ -133,67 +63,88 @@ public class ServerFacade {
     private final User user19 = new User("Justin", "Jones", MALE_IMAGE_URL);
     private final User user20 = new User("Jill", "Johnson", FEMALE_IMAGE_URL);
 
-    private final Tweet tweet1 = new Tweet("@AllenAnderson", "I am Allen! Nice to meet you all!");
-    private final Tweet tweet2 = new Tweet("@AmyAmes", "Yooo I'm Amy.");
-    private final Tweet tweet3 = new Tweet("@BobBobson", "Welcome to Bob paradise");
-    private final Tweet tweet4 = new Tweet("@BonnieBeatty", "I don't have anything to say");
-    private final Tweet tweet5 = new Tweet("@ChrisColston", "Motorycles are cool");
-    private final Tweet tweet6 = new Tweet("@CindyCoats", "I love physics");
-    private final Tweet tweet7 = new Tweet("@DanDonaldson", "Do I look like a duck to you?");
-    private final Tweet tweet8 = new Tweet("@DeeDempsey", "Doooo doooooooo doodly dooo");
-    private final Tweet tweet9 = new Tweet("@ElliottEnderson", "heyoooooo");
-    private final Tweet tweet10 = new Tweet("@ElizabethEngle", "bah blah");
-    private final Tweet tweet11 = new Tweet("@FrankFrandson", "frank is dope bro");
-    private final Tweet tweet12 = new Tweet("@FranFranklin", "i am rich");
-    private final Tweet tweet13 = new Tweet("@GaryGilbert", "i am poor");
-    private final Tweet tweet14 = new Tweet("@GiovannaGiles", "i have a good life");
-    private final Tweet tweet15 = new Tweet("@HenryHenderson", "one republic yo");
-    private final Tweet tweet16 = new Tweet("@HelenHopwell", "Have hope for the future");
-    private final Tweet tweet17 = new Tweet("@IgorIsaacson", "You should give this guy 100% because hes a good person");
-    private final Tweet tweet18 = new Tweet("@IsabelIsaacson", "I like to eat pizza");
-    private final Tweet tweet19 = new Tweet("@JustinJones", "world peace is not possible");
-    private final Tweet tweet20 = new Tweet("@JillJohnson", "I am an olympian");
+    // Collection of Tweet(s). [tweet1 - tweet20]
+    private final Tweet tweet1 = new Tweet("@AllenAnderson", "I am Allen! Nice to meet you all!", "Allen Anderson");
+    private final Tweet tweet2 = new Tweet("@AmyAmes", "Yooo I'm Amy.", "Amy Ames");
+    private final Tweet tweet3 = new Tweet("@BobBobson", "Welcome to Bob paradise", "Bob Bobson");
+    private final Tweet tweet4 = new Tweet("@BonnieBeatty", "I don't have anything to say", "Bonnie Beatty");
+    private final Tweet tweet5 = new Tweet("@ChrisColston", "Motorycles are cool", "Chris Colston");
+    private final Tweet tweet6 = new Tweet("@CindyCoats", "I love physics", "Cindy Coats");
+    private final Tweet tweet7 = new Tweet("@DanDonaldson", "Do I look like a duck to you?", "Dan Donaldson");
+    private final Tweet tweet8 = new Tweet("@DeeDempsey", "Doooo doooooooo doodly dooo", "Dee Dempsey");
+    private final Tweet tweet9 = new Tweet("@ElliottEnderson", "heyoooooo", "Elliott Enderson");
+    private final Tweet tweet10 = new Tweet("@ElizabethEngle", "bah blah", "Elizabeth Engle");
+    private final Tweet tweet11 = new Tweet("@FrankFrandson", "frank is dope bro", "Frank Frandson");
+    private final Tweet tweet12 = new Tweet("@FranFranklin", "i am rich", "Fran Franklin");
+    private final Tweet tweet13 = new Tweet("@GaryGilbert", "i am poor", "Gary Gilbert");
+    private final Tweet tweet14 = new Tweet("@GiovannaGiles", "i have a good life", "Giovanna Giles");
+    private final Tweet tweet15 = new Tweet("@HenryHenderson", "one republic yo", "Henry Henderson");
+    private final Tweet tweet16 = new Tweet("@HelenHopwell", "Have hope for the future", "Helen Hopwell");
+    private final Tweet tweet17 = new Tweet("@IgorIsaacson", "You should give this guy 100% because hes a good person", "Igor Isaacson");
+    private final Tweet tweet18 = new Tweet("@IsabelIsaacson", "I like to eat pizza", "Isabel Isaacson");
+    private final Tweet tweet19 = new Tweet("@JustinJones", "world peace is not possible", "Justin Jones");
+    private final Tweet tweet20 = new Tweet("@JillJohnson", "I am an olympian", "JillJohnson");
 
-    private final Tweet tweet_S1 = new Tweet("@TestUser", "The greatest glory in living lies not in never falling, but in rising every time we fall.");
-    private final Tweet tweet_S2 = new Tweet("@TestUser", "The way to get started is to quit talking and begin doing.");
-    private final Tweet tweet_S3 = new Tweet("@TestUser", "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.");
-    private final Tweet tweet_S4 = new Tweet("@TestUser", "If life were predictable it would cease to be life, and be without flavor.");
-    private final Tweet tweet_S5 = new Tweet("@TestUser", "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.");
-    private final Tweet tweet_S6 = new Tweet("@TestUser", "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.");
-    private final Tweet tweet_S7 = new Tweet("@TestUser", "Life is what happens when you're busy making other plans.");
-    private final Tweet tweet_S8 = new Tweet("@TestUser", "Spread love everywhere you go. Let no one ever come to you without leaving happier.");
-    private final Tweet tweet_S9 = new Tweet("@TestUser", "When you reach the end of your rope, tie a knot in it and hang on.");
-    private final Tweet tweet_S10 = new Tweet("@TestUser", "Always remember that you are absolutely unique. Just like everyone else.");
-    private final Tweet tweet_S11 = new Tweet("@TestUser", "Don't judge each day by the harvest you reap but by the seeds that you plant.");
-    private final Tweet tweet_S12 = new Tweet("@TestUser", "The future belongs to those who believe in the beauty of their dreams.");
-    private final Tweet tweet_S13 = new Tweet("@TestUser", "Tell me and I forget. Teach me and I remember. Involve me and I learn.");
-    private final Tweet tweet_S14 = new Tweet("@TestUser", "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.");
-    private final Tweet tweet_S15 = new Tweet("@TestUser", "Do not go where the path may lead, go instead where there is no path and leave a trail.");
-    private final Tweet tweet_S16 = new Tweet("@TestUser", "In the end, it's not the years in your life that count. It's the life in your years.");
+    // Collection of Tweet(s). [tweet_S1 - tweet_S16]
+    // These tweets are made by the @TestUser.
+    // Therefore, these are tweets for @TestUser(s) story
+    private final Tweet tweet_S1 = new Tweet("@TestUser", "The greatest glory in living lies not in never falling, but in rising every time we fall.", "TestUser");
+    private final Tweet tweet_S2 = new Tweet("@TestUser", "The way to get started is to quit talking and begin doing.", "TestUser");
+    private final Tweet tweet_S3 = new Tweet("@TestUser", "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.", "TestUser");
+    private final Tweet tweet_S4 = new Tweet("@TestUser", "If life were predictable it would cease to be life, and be without flavor.", "TestUser");
+    private final Tweet tweet_S5 = new Tweet("@TestUser", "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.", "TestUser");
+    private final Tweet tweet_S6 = new Tweet("@TestUser", "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.", "TestUser");
+    private final Tweet tweet_S7 = new Tweet("@TestUser", "Life is what happens when you're busy making other plans.", "TestUser");
+    private final Tweet tweet_S8 = new Tweet("@TestUser", "Spread love everywhere you go. Let no one ever come to you without leaving happier.", "TestUser");
+    private final Tweet tweet_S9 = new Tweet("@TestUser", "When you reach the end of your rope, tie a knot in it and hang on.", "TestUser");
+    private final Tweet tweet_S10 = new Tweet("@TestUser", "Always remember that you are absolutely unique. Just like everyone else.", "TestUser");
+    private final Tweet tweet_S11 = new Tweet("@TestUser", "Don't judge each day by the harvest you reap but by the seeds that you plant.", "TestUser");
+    private final Tweet tweet_S12 = new Tweet("@TestUser", "The future belongs to those who believe in the beauty of their dreams.", "TestUser");
+    private final Tweet tweet_S13 = new Tweet("@TestUser", "Tell me and I forget. Teach me and I remember. Involve me and I learn.", "TestUser");
+    private final Tweet tweet_S14 = new Tweet("@TestUser", "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.", "TestUser");
+    private final Tweet tweet_S15 = new Tweet("@TestUser", "Do not go where the path may lead, go instead where there is no path and leave a trail.", "TestUser");
+    private final Tweet tweet_S16 = new Tweet("@TestUser", "In the end, it's not the years in your life that count. It's the life in your years.", "TestUser");
 
     /**
-     * Performs a logout and if successful
+     * Performs a login and if successful, returns the logged in user and an auth token. The current
+     * implementation is hard-coded to return a dummy user and doesn't actually make a network
+     * request.
+     *
+     * @param request contains all information needed to perform a login.
+     * @return the login response.
+     */
+    public LoginResponse login(LoginRequest request) {
+        // Grabs username and password (currently not used)
+        request.getUsername();
+        request.getPassword();
+        // Sets the follower and following count
+        user.setFollowersCount(20);
+        user.setFollowingCount(20);
+        // Returns a new LoginResponse of the pre-defined user and a new AuthToken()
+        // *Remember the AuthToken is also not saved.
+        return new LoginResponse(user, new AuthToken());
+    }
+
+    /**
+     * Performs a logout of the current User.
+     * Will always return a LogoutResponse. Depending on success, success boolean is true or false.
      *
      * @param request contains all information needed to perform a login.
      * @return the login response.
      */
     public LogoutResponse logout(LogoutRequest request) {
         LogoutResponse logoutResponse;
-        // Used in place of assert statements because Android does not support them
-        if(BuildConfig.DEBUG) {
-            if(request.getUsername() == null) {
-                throw new AssertionError();
-            }
-        }
+
         if (request.getUsername() != null) {
             logoutResponse = new LogoutResponse(true);
         }
         else {
             logoutResponse = new LogoutResponse(false);
         }
+        // TODO: erase the created user...
+
         return new LogoutResponse();
     }
-
 
     /**
      * Returns the users that the user specified in the request is following. Uses information in
@@ -278,9 +229,6 @@ public class ServerFacade {
                 user19, user20);
     }
 
-
-
-
     /**
      * Returns the users that the user specified in the request is following. Uses information in
      * the request object to limit the number of followers returned and to return the next set of
@@ -292,18 +240,6 @@ public class ServerFacade {
      * @return the following response.
      */
     public FollowerResponse getFollowers(FollowerRequest request) {
-
-
-        // Used in place of assert statements because Android does not support them
-        if(BuildConfig.DEBUG) {
-            if(request.getLimit() < 0) {
-                throw new AssertionError();
-            }
-
-            if(request.getFollowee() == null) {
-                throw new AssertionError();
-            }
-        }
 
         List<User> allFollowers = getDummyFollowers();
         List<User> responseFollowers = new ArrayList<>(request.getLimit());
@@ -523,7 +459,7 @@ public class ServerFacade {
      * @param request contains all information needed to perform a login.
      * @return the login response.
      */
-    public RegisterResponse register(RegisterRequest request) throws IOException {
+    public RegisterResponse register(RegisterRequest request) {
         request.getAlias();
         request.getPassword();
         String firstName = request.getFirstName();
@@ -546,48 +482,9 @@ public class ServerFacade {
 
         user.setImageBytes(byteArray);
 
-
-
-
-
-        // ------------------------------------------------------------------------------------------------------------
-        // Create a neat value object to hold the URL
-        URL url = new URL("https://136xswxwxa.execute-api.us-west-2.amazonaws.com/dev/registeruser");
-
-        // Open a connection(?) on the URL(??) and cast the response(???)
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        connection.setRequestMethod("POST");
-        // Now it's "open", we can set the request method, headers etc.
-        connection.setRequestProperty("?Content-Type", "application/json");
-        connection.setRequestProperty("Accept", "application/json");
-
-        connection.setDoOutput(true);
-
-        String jsonInputString = "{\"firstname\": \"Superman\", \"lastname\":\"INSERT A LASTNAME HERE\", \"username\":\"INSERT A USERNAME HERE\", \"password\":\"INSERT A PASSWORD HERE\", \"profilepicture\":\"INSERT AN IMAGE HERE\"}";
-
-        try(OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes("utf-8");
-            os.write(input, 0, input.length);
-        }
-
-        try(BufferedReader br = new BufferedReader(
-                new InputStreamReader(connection.getInputStream(), "utf-8"))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
-            System.out.println(response.toString());
-        }
-
-
-        // ------------------------------------------------------------------------------------------------------
-
-
 //        User user = new User("Test", "User",
 //                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
-        return new RegisterResponse(user, null);
+        return new RegisterResponse(user, new AuthToken());
     }
 
 
@@ -600,11 +497,11 @@ public class ServerFacade {
 
 
         // Used in place of assert statements because Android does not support them
-        if(BuildConfig.DEBUG) {
-            if(tweetRequest.getUsername() == null || tweetRequest.getTweetText() == null) {
-                throw new AssertionError();
-            }
-        }
+//        if(BuildConfig.DEBUG) {
+//            if(tweetRequest.getUsername() == null || tweetRequest.getTweetText() == null) {
+//                throw new AssertionError();
+//            }
+//        }
 
         TweetResponse tweetResponse;
 
@@ -621,11 +518,25 @@ public class ServerFacade {
 
 
 
+    // Initialize the following status. User is first following the other User.
     private Boolean followingStatus = true;
 
     public FollowingStatusResponse checkFollowingStatus(FollowingStatusRequest followingStatusRequest) {
         followingStatus = followingStatusRequest.getFollowing();
-        FollowingStatusResponse followingStatusResponse = new FollowingStatusResponse(followingStatusRequest.getOtherPersonUsername(), followingStatus);
+        FollowingStatusResponse followingStatusResponse = new FollowingStatusResponse(followingStatusRequest.getUser(), followingStatus);
+
+        user = followingStatusResponse.getUser();
+
+        if(followingStatus == false) {
+            user.setFollowersCount(user.getFollowersCount() - 1);
+        }
+        else {
+            user.setFollowersCount(user.getFollowersCount() + 1);
+        }
+
+        followingStatusResponse.updateUser(user);
+
         return followingStatusResponse;
     }
+
 }
