@@ -26,5 +26,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Tweeter.shared" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains:annotations-java5:15.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains:annotations-java5:15.0" level="project" />
   </component>
 </module>
