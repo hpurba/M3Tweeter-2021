@@ -50,7 +50,7 @@ abstract class BaseService
         setServerFacade();
         try {
             doServiceSpecificTask();    // This will take care of the service specific task.
-        } catch (IOException e) {
+        } catch (IOException | TweeterRemoteException e) {
             e.printStackTrace();
         }
     }
