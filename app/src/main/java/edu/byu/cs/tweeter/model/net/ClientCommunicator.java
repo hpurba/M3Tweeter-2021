@@ -11,35 +11,58 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
-
+/**
+ * Client Communicator Class.
+ * Uses the baseURL + requestURL extension to make an HTTP Connection.
+ * doPost uses doRequest, and upon HTTP_OK, returns response as
+ * "JsonSerializer.deserialize(responseString, returnType);"
+ * which is the response Object.
+ */
 class ClientCommunicator {
+    private static final int TIMEOUT_MILLIS = 10000;    // Connection timeout (10 sec.)
+    private final String baseURL;                       // Base URL is the Invoke URL found in API:Tweeter stage:dev
 
-    private static final int TIMEOUT_MILLIS = 10000;
-
-    private final String baseURL;
-
+    // Constructor for this ClientCommunicator
     ClientCommunicator(String baseURL) {
         this.baseURL = baseURL;
     }
 
+    /**
+     * Interface: Strategy Pattern for Sending A Request.
+     * 1. Set the Request Method using the HttpURLConnection
+     */
     private interface RequestStrategy {
         void setRequestMethod(HttpURLConnection connection) throws IOException;
         void sendRequest(HttpURLConnection connection) throws IOException;
     }
 
+    /**
+     *  Does an HTTP POST Request Method.
+     *  1. Uses the provided HttpURLConnection to set the request method to be a: POST
+     *  2. Send Request. Uses the Request Object (ex. LoginRequest). Serializes to JSON, writes its bytes to DataOutputStream.
+     *  Lastly, invoke the doRequest method using the specific urlPath for the API endpoint, header (usually null),
+     *
+     * @param urlPath The urlPath is the extension to the baseURL. (ex: "/loginuser")
+     * @param requestInfo This is the request Object. (ex: LoginRequest)
+     * @param headers   This is typically null.
+     * @param returnType    Return type T: Generic class. T can be substituted with any Class name during initialization.
+     * @param <T>   Class<T> represents a class object of specific class type 'T'.
+     * @return  Returns return from doRequest method.
+     * @throws IOException
+     * @throws TweeterRemoteException
+     */
     <T> T doPost(String urlPath, final Object requestInfo, Map<String, String> headers, Class<T> returnType)
             throws IOException, TweeterRemoteException {
+
+        // Usage of the Request Strategy Interface.
         RequestStrategy requestStrategy = new RequestStrategy() {
             @Override
             public void setRequestMethod(HttpURLConnection connection) throws IOException {
                 connection.setRequestMethod("POST");
             }
-
             @Override
             public void sendRequest(HttpURLConnection connection) throws IOException {
                 connection.setDoOutput(true);
-
                 String entityBody = JsonSerializer.serialize(requestInfo);
                 try (DataOutputStream os = new DataOutputStream(connection.getOutputStream())) {
                     os.writeBytes(entityBody);
@@ -51,14 +74,26 @@ class ClientCommunicator {
         return doRequest(urlPath, headers, returnType, requestStrategy);
     }
 
+    /**
+     * TODO: Figure out from where this will be called from elsewhere.
+     *
+     * @param urlPath   The urlPath is the extension to the baseURL. (ex: "/loginuser")
+     * @param headers   This is typically null.
+     * @param returnType    Return type T: Generic class. Returns appropriate Response Class object.
+     * @param <T>
+     * @return
+     * @throws IOException
+     * @throws TweeterRemoteException
+     */
     <T> T doGet(String urlPath, Map<String, String> headers, Class<T> returnType)
             throws IOException, TweeterRemoteException {
+
+        // Usage of the RequestStrategy Interface. @Overrides default methods.
         RequestStrategy requestStrategy = new RequestStrategy() {
             @Override
             public void setRequestMethod(HttpURLConnection connection) throws IOException {
                 connection.setRequestMethod("GET");
             }
-
             @Override
             public void sendRequest(HttpURLConnection connection) {
                 // Nothing to send. For a get, the request is sent when the connection is opened.
@@ -68,12 +103,27 @@ class ClientCommunicator {
         return doRequest(urlPath, headers, returnType, requestStrategy);
     }
 
+    /**
+     * doRequest will Send the request with the HttpURLConnection.
+     * On HTTP_OK response code, return the Response Object.
+     *
+     * @param urlPath
+     * @param headers
+     * @param returnType
+     * @param requestStrategy
+     * @param <T>
+     * @return
+     * @throws IOException
+     * @throws TweeterRemoteException
+     */
     private <T> T doRequest(String urlPath, Map<String, String> headers, Class<T> returnType, RequestStrategy requestStrategy)
             throws IOException, TweeterRemoteException {
 
+        // Initialize the connection to null.
         HttpURLConnection connection = null;
 
         try {
+            // Build the connection
             URL url = getUrl(urlPath);
             connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(TIMEOUT_MILLIS);
@@ -85,12 +135,14 @@ class ClientCommunicator {
                 }
             }
 
+            // SENDS THE REQUEST WITH THE CONNECTION
             requestStrategy.sendRequest(connection);
 
+            // Depending on the responseCode...
             switch (connection.getResponseCode()) {
                 case HttpURLConnection.HTTP_OK:
                     String responseString = getResponse(connection.getInputStream());
-                    return JsonSerializer.deserialize(responseString, returnType);
+                    return JsonSerializer.deserialize(responseString, returnType);      // This is the working case we want to expect.
                 case HttpURLConnection.HTTP_BAD_REQUEST:
                     ErrorResponse errorResponse = getErrorResponse(connection);
                     throw new TweeterRequestException(errorResponse.errorMessage, errorResponse.errorType, errorResponse.stackTrace);
@@ -107,11 +159,27 @@ class ClientCommunicator {
         }
     }
 
+    /**
+     * Produce the full url path from the baseURL and the urlPath extension.
+     *
+     * @param urlPath
+     * @return
+     * @throws MalformedURLException
+     */
     private URL getUrl(String urlPath) throws MalformedURLException {
         String urlString = baseURL + (urlPath.startsWith("/") ? "" : "/") + urlPath;
         return new URL(urlString);
     }
 
+    /**
+     * getErrorResponse will handle errors from the connection.
+     * If the responseString is null, no response from the server.
+     * else, deserialize the responseString and returns it.
+     *
+     * @param connection The HttpURLConnection
+     * @return ErrorResponse generated from the responseString.
+     * @throws IOException
+     */
     private ErrorResponse getErrorResponse(HttpURLConnection connection) throws IOException {
         String responseString = getResponse(connection.getErrorStream());
         if(responseString == null) {
@@ -121,6 +189,16 @@ class ClientCommunicator {
         }
     }
 
+    /**
+     * Objective: Returns the response as a String from the inputStream.
+     * Description: A BufferedReader is used to read each line of the inputStream.
+     *              Each inputLine of the inputStream is appended to a response using a StringBuilder.
+     *              Response is returned as a String.
+     *
+     * @param inputStream
+     * @return response.toString() The response as a String (generated from the inputStream)
+     * @throws IOException
+     */
     private String getResponse(InputStream inputStream) throws IOException {
         if(inputStream == null)  {
             return null;
@@ -132,15 +210,15 @@ class ClientCommunicator {
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
-
+                // Returns the response from the inputStream as a String.
                 return response.toString();
             }
         }
     }
 
     /**
-     * A class for de-serializing the json string the API Gateway returns with a 400 or 500 status
-     * code.
+     * A class for de-serializing the json string the API Gateway returns with
+     * a 400 or 500 status code.
      */
     @SuppressWarnings("unused")
     private static class ErrorResponse {
