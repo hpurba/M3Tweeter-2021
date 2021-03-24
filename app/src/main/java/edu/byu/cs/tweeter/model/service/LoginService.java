@@ -55,15 +55,4 @@ public class LoginService extends BaseService {
             loadImage(loginResponse.getUser());
         }
     }
-
-    /**
-     * Returns an instance of {@link ServerFacade}. Allows mocking of the ServerFacade class for
-     * testing purposes. All usages of ServerFacade should get their ServerFacade instance from this
-     * method to allow for proper mocking.
-     *
-     * @return the instance.
-     */
-    public ServerFacade getServerFacade() {
-        return new ServerFacade();
-    }
 }

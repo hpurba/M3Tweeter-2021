@@ -2,7 +2,12 @@ package edu.byu.cs.tweeter.model.service.request;
 
 public class LogoutRequest {
 
-    private final String username;
+    private String username;
+
+    /**
+     * Empty Default constructor
+     */
+    public LogoutRequest() { }
 
     /**
      * Creates an instance.

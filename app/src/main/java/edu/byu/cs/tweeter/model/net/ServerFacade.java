@@ -155,21 +155,14 @@ public class ServerFacade {
      * @param request contains all information needed to perform a login.
      * @return the login response.
      */
-    public LogoutResponse logout(LogoutRequest request) {
-        LogoutResponse logoutResponse;
-        // Used in place of assert statements because Android does not support them
-        if(BuildConfig.DEBUG) {
-            if(request.getUsername() == null) {
-                throw new AssertionError();
-            }
+    public LogoutResponse logout(LogoutRequest request, String urlPath) throws IOException, TweeterRemoteException {
+        LogoutResponse response = clientCommunicator.doPost(urlPath, request, null, LogoutResponse.class);
+
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
         }
-        if (request.getUsername() != null) {
-            logoutResponse = new LogoutResponse(true);
-        }
-        else {
-            logoutResponse = new LogoutResponse(false);
-        }
-        return new LogoutResponse();
     }
 
 
