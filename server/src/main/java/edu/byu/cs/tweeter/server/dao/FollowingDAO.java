@@ -37,18 +37,6 @@ public class FollowingDAO {
     private final User user19 = new User("Justin", "Jones", MALE_IMAGE_URL);
     private final User user20 = new User("Jill", "Johnson", FEMALE_IMAGE_URL);
 
-    /**
-     * Gets the count of users from the database that the user specified is following. The
-     * current implementation uses generated data and doesn't actually access a database.
-     *
-     * @param follower the User whose count of how many following is desired.
-     * @return said count.
-     */
-    public Integer getFolloweeCount(User follower) {
-        // TODO: uses the dummy data.  Replace with a real implementation.
-//        assert follower != null;
-        return getDummyFollowees().size();
-    }
 
     /**
      * Gets the users from the database that the user specified in the request is following. Uses
@@ -64,7 +52,6 @@ public class FollowingDAO {
 
         // allFollowees.
         List<User> allFollowees = getDummyFollowees();
-
 
         int requestLimit = request.getLimit();
         if (requestLimit < 8) { // Ensure the request limit is at least 8.
