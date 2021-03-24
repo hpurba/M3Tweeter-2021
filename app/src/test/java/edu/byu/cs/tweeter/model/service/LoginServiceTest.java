@@ -22,7 +22,7 @@ class LoginServiceTest {
     private LoginResponse successResponse;
     private LoginResponse failureResponse;
 
-    private ILoginService loginServiceSpy;
+    private LoginService loginServiceSpy;
 
     /**
      * Create a LoginService spy that uses a mock ServerFacade to return known responses to

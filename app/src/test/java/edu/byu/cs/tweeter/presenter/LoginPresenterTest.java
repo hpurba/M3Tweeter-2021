@@ -9,7 +9,9 @@ import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
+import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.ILoginService;
+import edu.byu.cs.tweeter.model.service.LoginService;
 import edu.byu.cs.tweeter.model.service.request.LoginRequest;
 import edu.byu.cs.tweeter.model.service.response.LoginResponse;
 
@@ -20,11 +22,11 @@ class LoginPresenterTest {
     private LoginRequest badRequest;
     private LoginResponse response;
     private LoginResponse badResponse;
-    private ILoginService mockLoginService;
+    private LoginService mockLoginService;
     private LoginPresenter presenter;
 
     @BeforeEach
-    public void setup() throws IOException {
+    public void setup() throws IOException, TweeterRemoteException {
 
         String username = "@hpurba";
         String password = "password";
@@ -41,7 +43,7 @@ class LoginPresenterTest {
         badResponse = new LoginResponse((User) null, (AuthToken) null);
 
         // Create a mock FollowingService
-        mockLoginService = Mockito.mock(ILoginService.class);
+        mockLoginService = Mockito.mock(LoginService.class);
         Mockito.when(mockLoginService.login(request)).thenReturn(response);
 
         // Wrap a FollowingPresenter in a spy that will use the mock service.
@@ -50,7 +52,7 @@ class LoginPresenterTest {
     }
 
     @Test
-    public void testGetLogin_returnsServiceResult() throws IOException {
+    public void testGetLogin_returnsServiceResult() throws IOException, TweeterRemoteException {
         Mockito.when(mockLoginService.login(request)).thenReturn(response);
 
         // Assert that the presenter returns the same response as the service (it doesn't do
@@ -59,7 +61,7 @@ class LoginPresenterTest {
     }
 
     @Test
-    public void testGetLogin_serviceThrowsIOException_presenterThrowsIOException() throws IOException {
+    public void testGetLogin_serviceThrowsIOException_presenterThrowsIOException() throws IOException, TweeterRemoteException {
         Mockito.when(mockLoginService.login(badRequest)).thenReturn(response);
         LoginPresenter testPresenter = new LoginPresenter(new LoginPresenter.View() {});
         Assertions.assertEquals(response.isSuccess(), presenter.login(request).isSuccess());

@@ -20,7 +20,7 @@ public class FollowingServiceTest {
     private FollowingResponse successResponse;
     private FollowingResponse failureResponse;
 
-    private IFollowingService followingServiceSpy;
+    private FollowingService followingServiceSpy;
 
     /**
      * Create a FollowingService spy that uses a mock ServerFacade to return known responses to
@@ -46,7 +46,7 @@ public class FollowingServiceTest {
         failureResponse = new FollowingResponse("An exception occurred");
 
         // Mock FollowingService used to call getFollowees()
-        followingServiceSpy = Mockito.spy(new IFollowingService());
+        followingServiceSpy = Mockito.spy(new FollowingService());
         Mockito.when(followingServiceSpy.getFollowees(validRequest)).thenReturn(successResponse);
         Mockito.when(followingServiceSpy.getFollowees(invalidRequest)).thenReturn(failureResponse);
 
@@ -58,7 +58,7 @@ public class FollowingServiceTest {
 
     /**
      * Verify that for successful requests the {@link IFollowingService#getFollowees(FollowingRequest)}
-     * method returns the same result as the {@link ServerFacadeOriginalM2}.
+     * method returns the same result as the {@link edu.byu.cs.tweeter.model.net.ServerFacade}.
      * .
      *
      * @throws IOException if an IO error occurs.
@@ -85,7 +85,7 @@ public class FollowingServiceTest {
 
     /**
      * Verify that for failed requests the {@link IFollowingService#getFollowees(FollowingRequest)}
-     * method returns the same result as the {@link ServerFacadeOriginalM2}.
+     * method returns the same result as the {@link edu.byu.cs.tweeter.model.net.ServerFacade}.
      *
      * @throws IOException if an IO error occurs.
      */
