@@ -49,7 +49,7 @@ class FollowingStatusServiceTest {
         invalidRequest = new FollowingStatusRequest(resultUser1,  false);
 
         // Setup a mock ServerFacade that will return known responses
-        successResponse = new FollowingStatusResponse(currentUser, false);
+        successResponse = new FollowingStatusResponse(currentUser.getAlias(), false);
         failureResponse = new FollowingStatusResponse("An exception occurred");
 
 
@@ -60,7 +60,7 @@ class FollowingStatusServiceTest {
 
     /**
      * Verify that for successful requests the {@link FollowingStatusService #getFollowingStatus(FollowingStatusRequest)}
-     * method returns the same result as the {@link ServerFacadeOriginalM2}.
+     * method returns the same result as the {@link edu.byu.cs.tweeter.model.net.ServerFacade}.
      * .
      *
      * @throws IOException if an IO error occurs.
@@ -74,7 +74,7 @@ class FollowingStatusServiceTest {
 
     /**
      * Verify that for failed requests the {@link FollowingStatusService #getFollowingStatus(FollowingStatusRequest)}
-     * method returns the same result as the {@link ServerFacadeOriginalM2}.
+     * method returns the same result as the {@link edu.byu.cs.tweeter.model.net.ServerFacade}.
      *
      * @throws IOException if an IO error occurs.
      */

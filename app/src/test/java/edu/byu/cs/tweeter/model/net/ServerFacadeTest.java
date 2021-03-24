@@ -24,11 +24,11 @@ class ServerFacadeTest {
     private final User user7 = new User("Harriett", "Hansen", "");
     private final User user8 = new User("Zoe", "Zabriski", "");
 
-    private ServerFacadeOriginalM2 serverFacadeSpy;
+    private ServerFacade serverFacadeSpy;
 
     @BeforeEach
     void setup() {
-        serverFacadeSpy = Mockito.spy(new ServerFacadeOriginalM2());
+        serverFacadeSpy = Mockito.spy(new ServerFacade());
     }
 
     @Test
