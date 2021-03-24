@@ -259,36 +259,15 @@ public class ServerFacade {
      *                other information required to satisfy the request.
      * @return the following response.
      */
-    public FollowerResponse getFollowers(FollowerRequest request) {
+    public FollowerResponse getFollowers(FollowerRequest request, String urlPath) throws IOException, TweeterRemoteException {
+        FollowerResponse response = clientCommunicator.doPost(urlPath, request, null, FollowerResponse.class);
 
-
-        // Used in place of assert statements because Android does not support them
-        if(BuildConfig.DEBUG) {
-            if(request.getLimit() < 0) {
-                throw new AssertionError();
-            }
-
-            if(request.getFollowee() == null) {
-                throw new AssertionError();
-            }
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
         }
 
-        List<User> allFollowers = getDummyFollowers();
-        List<User> responseFollowers = new ArrayList<>(request.getLimit());
-
-        boolean hasMorePages = false;
-
-        if(request.getLimit() > 0) {
-            int followersIndex = getFolloweesStartingIndex(request.getLastFollower(), allFollowers);
-
-            for(int limitCounter = 0; followersIndex < allFollowers.size() && limitCounter < request.getLimit(); followersIndex++, limitCounter++) {
-                responseFollowers.add(allFollowers.get(followersIndex));
-            }
-
-            hasMorePages = followersIndex < allFollowers.size();
-        }
-
-        return new FollowerResponse(responseFollowers, hasMorePages);
     }
 
     /**

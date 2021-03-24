@@ -75,7 +75,9 @@ public class FollowingDAO {
         if(requestLimit > 0) {
             if (allFollowees != null) {
                 int followeesIndex = getFolloweesStartingIndex(request.getLastFollowee(), allFollowees);
-
+                if (request.getLastFollowee() == null){
+                    followeesIndex = 0;
+                }
                 for(int limitCounter = 0; followeesIndex < allFollowees.size() && limitCounter < request.getLimit(); followeesIndex++, limitCounter++) {
                     responseFollowees.add(allFollowees.get(followeesIndex));
                 }

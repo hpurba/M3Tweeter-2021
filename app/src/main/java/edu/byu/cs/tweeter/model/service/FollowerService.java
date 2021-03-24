@@ -3,6 +3,7 @@ package edu.byu.cs.tweeter.model.service;
 import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.User;
+import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.FollowerRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowerResponse;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
@@ -11,6 +12,7 @@ import edu.byu.cs.tweeter.util.ByteArrayUtils;
  * FollowerService extends the BaseService Abstract Class to get the Followers of a user.
  */
 public class FollowerService extends BaseService {
+    private static final String URL_PATH = "/followers";
 
     // Follower Response and Request Objects.
     FollowerResponse followerResponse;
@@ -35,8 +37,8 @@ public class FollowerService extends BaseService {
      * FollowerRequest (which is first passed into getFollowers).
      */
     @Override
-    public void doServiceSpecificTask() throws IOException {
-        followerResponse = getServerFacade().getFollowers(followerRequest);
+    public void doServiceSpecificTask() throws IOException, TweeterRemoteException {
+        followerResponse = getServerFacade().getFollowers(followerRequest, URL_PATH);
         // Images must be loaded into a byte array.
         if(followerResponse.isSuccess()) {
             loadImages(followerResponse);
