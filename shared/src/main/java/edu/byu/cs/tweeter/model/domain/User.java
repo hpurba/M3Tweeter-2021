@@ -16,6 +16,8 @@ public class User implements Comparable<User>, Serializable {
     private int followersCount;
     private int followingCount;
 
+    public User() {}
+
     public User(String firstName, String lastName, String imageURL) {
         this(firstName, lastName, String.format("@%s%s", firstName, lastName), imageURL);
     }
@@ -111,5 +113,15 @@ public class User implements Comparable<User>, Serializable {
         this.alias = alias;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

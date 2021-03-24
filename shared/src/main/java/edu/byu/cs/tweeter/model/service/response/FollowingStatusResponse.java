@@ -3,7 +3,7 @@ package edu.byu.cs.tweeter.model.service.response;
 public class FollowingStatusResponse extends Response {
 
     private String user;
-    private Boolean isFollowing;
+    private Boolean following; // isFollowing;
 
     /**
      * Creates a response indicating that the corresponding request was unsuccessful.
@@ -23,7 +23,7 @@ public class FollowingStatusResponse extends Response {
     public FollowingStatusResponse(String user, Boolean isFollowing) {
         super(true, null);
         this.user = user;
-        this.isFollowing = isFollowing;
+        this.following = isFollowing;
     }
 
     /**
@@ -36,13 +36,18 @@ public class FollowingStatusResponse extends Response {
     }
 
     public Boolean getFollowing() {
-        return isFollowing;
+        return following;
     }
 
-//    public void updateUser(User user) {
-//        this.user = user;
-//    }
     public void updateUser(String user) {
         this.user = user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setFollowing(Boolean isFollowing) {
+        following = isFollowing;
     }
 }

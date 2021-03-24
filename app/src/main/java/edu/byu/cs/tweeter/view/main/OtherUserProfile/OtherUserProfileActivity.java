@@ -47,8 +47,6 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
     public Button followUnFollowButton;
     public int numberOfFollowers = 0;
 
-
-
     // Tabs and ViewPager
     TabLayout tabLayout;                                    // Button Tabs
     ViewPager myViewPager;                                  // Widget that allows the user to swipe left or right to see an entirely new screen.
@@ -103,18 +101,20 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
 
         // Display the Follower Count
         TextView followerCount = findViewById(R.id.otherUserfollowerCount);
-        followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
+//        followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
+        followerCount.setText(getString(R.string.followerCount, 20)); // TODO: This is a hard coded count
 
         // Display the Followee Count
         TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
-        followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
+//        followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
+        followeeCount.setText(getString(R.string.followeeCount, 19));   // TODO: This is a hard coded count
 
         // Follow/Unfollow Button
         followUnFollowButton = findViewById(R.id.FollowUnFollowButton);
         followUnFollowButton.setOnClickListener(new View.OnClickListener() {
             /**
-             * Makes a login request. The user is hard-coded, so it doesn't matter what data we put
-             * in the LoginRequest object.
+             * Makes a  request. The user is hard-coded, so it doesn't matter what data we put
+             * in the  object.
              *
              * @param view the view object that was clicked.
              */
@@ -135,11 +135,13 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
                     followUnFollowButton.setText("FOLLOW");
                 }
 //                // Display the Follower Count
-//                TextView followerCount = findViewById(R.id.otherUserfollowerCount);
+                TextView followerCount = findViewById(R.id.otherUserfollowerCount);
 //                followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
-//                // Display the Followee Count
-//                TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
+                followerCount.setText(getString(R.string.followerCount, 20)); // TODO: This is a hard coded count
+                // Display the Followee Count
+                TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
 //                followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
+                followeeCount.setText(getString(R.string.followeeCount, 19)); // TODO: This is a hard coded count
 
             }
         });
@@ -173,18 +175,20 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
     @Override
     public void followingRetrieved(FollowingStatusResponse followingStatusResponse) {
         isFollowing = followingStatusResponse.getFollowing();
-        if (isFollowing) {
-            followUnFollowButton.setText("FOLLOWING");
-        }
-        else {
-            followUnFollowButton.setText("FOLLOW");
-        }
+//        if (isFollowing) {
+//            followUnFollowButton.setText("FOLLOWING");
+//        }
+//        else {
+//            followUnFollowButton.setText("FOLLOW");
+//        }
         // Display the Follower Count
         TextView followerCount = findViewById(R.id.otherUserfollowerCount);
-        followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
+//        followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
+        followerCount.setText(getString(R.string.followerCount, 20));   // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
         // Display the Followee Count
         TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
-        followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
+        followeeCount.setText(getString(R.string.followeeCount, 19));   // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
+//        followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
     }
 
     @Override
@@ -192,7 +196,8 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
         List<User> followersRetrieved = followerResponse.getFollowers();
         numberOfFollowers = followersRetrieved.size();
         TextView followerCount = findViewById(R.id.otherUserfollowerCount);
-        followerCount.setText(getString(R.string.followerCount, numberOfFollowers));
+//        followerCount.setText(getString(R.string.followerCount, numberOfFollowers));
+        followerCount.setText(getString(R.string.followerCount, 20)); // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
     }
 
     @Override

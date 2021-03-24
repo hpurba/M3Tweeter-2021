@@ -13,6 +13,7 @@ public class ChangeToFollowDAO {
 //            followingStatus = true;
 //        }
         FollowingStatusResponse followingStatusResponse = new FollowingStatusResponse("SomeDude", followingStatus);
+        followingStatusResponse.setFollowing(followingStatus);
         return followingStatusResponse;
     }
 }
