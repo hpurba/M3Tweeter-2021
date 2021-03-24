@@ -2,6 +2,8 @@ package edu.byu.cs.tweeter.model.service;
 
 import java.io.IOException;
 
+import edu.byu.cs.tweeter.model.net.ServerFacade;
+import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.FollowingStatusRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowingStatusResponse;
 
@@ -15,6 +17,11 @@ public class FollowingStatusService extends BaseService {
     // FollowingStatus Response and Request Objects.
     FollowingStatusResponse followingStatusResponse;
     FollowingStatusRequest followingStatusRequest;
+
+    // The url_path extension for register. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
+    private static final String URL_PATH_FOLLOW = "/followuser";
+    // The url_path extension for register. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
+    private static final String URL_PATH_UNFOLLOW = "/unfollowuser";
 
     /**
      * This is called to get the Following status for the current user over another user.
@@ -39,7 +46,18 @@ public class FollowingStatusService extends BaseService {
      * @throws IOException
      */
     @Override
-    public void doServiceSpecificTask() throws IOException {
-        followingStatusResponse = serverFacade.checkFollowingStatus(followingStatusRequest);
+    public void doServiceSpecificTask() throws IOException, TweeterRemoteException {
+        ServerFacade serverFacade = getServerFacade();
+
+        // This will help determine which API endpoint to call depending on if
+        // the user is going to begin following another user or un-follow a user.
+        String URL_Extension = "";
+        if (followingStatusRequest.getFollowing() == true) {
+            this.followingStatusResponse = serverFacade.changeToFollow(followingStatusRequest, URL_PATH_FOLLOW);
+        }
+        else {
+            this.followingStatusResponse = serverFacade.changeToUnFollow(followingStatusRequest, URL_PATH_UNFOLLOW);
+        }
+//        this.followingStatusResponse = serverFacade.checkFollowingStatus(followingStatusRequest, URL_Extension);
     }
 }

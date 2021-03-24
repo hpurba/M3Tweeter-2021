@@ -10,6 +10,11 @@ public class FollowingStatusRequest {
     private Boolean isFollowing;
 
     /**
+     * Empty Default constructor
+     */
+    public FollowingStatusRequest() {}
+
+    /**
      * Creates an instance.
      *
      * @param user

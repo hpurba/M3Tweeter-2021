@@ -476,11 +476,37 @@ public class ServerFacade {
         }
     }
 
-    private Boolean followingStatus = true;
+    public FollowingStatusResponse changeToFollow(FollowingStatusRequest request, String urlPath) throws IOException, TweeterRemoteException {
+        FollowingStatusResponse response = clientCommunicator.doPost(urlPath, request, null, FollowingStatusResponse.class);
 
-    public FollowingStatusResponse checkFollowingStatus(FollowingStatusRequest followingStatusRequest) {
-        followingStatus = followingStatusRequest.getFollowing();
-        FollowingStatusResponse followingStatusResponse = new FollowingStatusResponse(followingStatusRequest.getOtherPersonUsername(), followingStatus);
-        return followingStatusResponse;
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
+        }
     }
+
+    public FollowingStatusResponse changeToUnFollow(FollowingStatusRequest request, String urlPath) throws IOException, TweeterRemoteException {
+        FollowingStatusResponse response = clientCommunicator.doPost(urlPath, request, null, FollowingStatusResponse.class);
+
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
+        }
+    }
+
+    // OLD. TODO: delete this when change to follow and change to unfollow are working.
+//    public FollowingStatusResponse checkFollowingStatus(FollowingStatusRequest request, String urlPath) throws IOException, TweeterRemoteException {
+//        FollowingStatusResponse response = clientCommunicator.doPost(urlPath, request, null, FollowingStatusResponse.class);
+//
+//        if(response.isSuccess()) {
+//            return response;
+//        } else {
+//            throw new RuntimeException(response.getMessage());
+//        }
+//    }
+
+
+
 }
