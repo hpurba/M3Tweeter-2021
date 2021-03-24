@@ -21,6 +21,7 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../server">
       <sourceFolder url="file://$MODULE_DIR$/../../../server/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../server/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/../../../server/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../server/build" />
     </content>
