@@ -46,7 +46,7 @@ public class FollowingDAO {
      */
     public Integer getFolloweeCount(User follower) {
         // TODO: uses the dummy data.  Replace with a real implementation.
-        assert follower != null;
+//        assert follower != null;
         return getDummyFollowees().size();
     }
 
@@ -61,24 +61,27 @@ public class FollowingDAO {
      * @return the followees.
      */
     public FollowingResponse getFollowees(FollowingRequest request) {
-        // TODO: Generates dummy data. Replace with a real implementation.
 
+        // allFollowees.
         List<User> allFollowees = getDummyFollowees();
-        List<User> responseFollowees = new ArrayList<>(request.getLimit());
 
-        boolean hasMorePages = false;
+
         int requestLimit = request.getLimit();
         if (requestLimit < 8) { // Ensure the request limit is at least 8.
             requestLimit = 8;
         }
 
+        // response Followees (has limited space)
+        List<User> responseFollowees = new ArrayList<>(requestLimit);
+
+        boolean hasMorePages = true;
         if(requestLimit > 0) {
             if (allFollowees != null) {
                 int followeesIndex = getFolloweesStartingIndex(request.getLastFollowee(), allFollowees);
                 if (request.getLastFollowee() == null){
                     followeesIndex = 0;
                 }
-                for(int limitCounter = 0; followeesIndex < allFollowees.size() && limitCounter < request.getLimit(); followeesIndex++, limitCounter++) {
+                for(int limitCounter = 0; followeesIndex < allFollowees.size() && limitCounter < requestLimit; followeesIndex++, limitCounter++) {
                     responseFollowees.add(allFollowees.get(followeesIndex));
                 }
 
@@ -87,7 +90,9 @@ public class FollowingDAO {
         }
 
         return new FollowingResponse(responseFollowees, hasMorePages);
+//        return new FollowingResponse(allFollowees, hasMorePages); // This returns all of them at once.
     }
+
 
     /**
      * Determines the index for the first followee in the specified 'allFollowees' list that should
