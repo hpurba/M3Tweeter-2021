@@ -2,6 +2,8 @@ package edu.byu.cs.tweeter.model.service;
 
 import java.io.IOException;
 
+import edu.byu.cs.tweeter.model.net.ServerFacade;
+import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.FeedTweetsRequest;
 import edu.byu.cs.tweeter.model.service.response.FeedTweetsResponse;
 
@@ -13,6 +15,9 @@ public class FeedTweetsService extends BaseService{
     // Feed of Tweets Response and Request Objects.
     FeedTweetsResponse feedTweetsResponse;
     FeedTweetsRequest feedTweetsRequest;
+
+    // The url_path extension for register. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
+    private static final String URL_PATH = "/feedtweets";
 
     /**
      * This is called to get the Tweets for the users Feed.
@@ -34,7 +39,13 @@ public class FeedTweetsService extends BaseService{
      * feedTweetsRequest (which is first passed into getFeedTweets).
      */
     @Override
-    public void doServiceSpecificTask() {
-        feedTweetsResponse = getServerFacade().getFeedTweets(feedTweetsRequest);
+    public void doServiceSpecificTask() throws IOException, TweeterRemoteException {
+        ServerFacade serverFacade = getServerFacade();
+        this.feedTweetsResponse = serverFacade.getFeedTweets(feedTweetsRequest, URL_PATH);
+
+        // TODO: Find out if loading images for each feed tweet is necessary
+        //        if(feedTweetsResponse.isSuccess()) {
+        //            loadImage(feedTweetsResponse.getUser());
+        //        }
     }
 }

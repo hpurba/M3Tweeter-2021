@@ -343,34 +343,18 @@ public class ServerFacade {
      *                other information required to satisfy the request.
      * @return the following response.
      */
-    public FeedTweetsResponse getFeedTweets(FeedTweetsRequest request) {
+    public FeedTweetsResponse getFeedTweets(FeedTweetsRequest request, String urlPath) throws IOException, TweeterRemoteException {
 
+        FeedTweetsResponse response = clientCommunicator.doPost(urlPath, request, null, FeedTweetsResponse.class);
 
-        // Used in place of assert statements because Android does not support them
-        if(BuildConfig.DEBUG) {
-            if(request.getLimit() < 0) {
-                throw new AssertionError();
-            }
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
         }
-
-        List<Tweet> allTweets = getDummyTweets();
-        List<Tweet> responseTweets = new ArrayList<>(request.getLimit());
-
-        boolean hasMorePages = false;
-
-        if(request.getLimit() > 0) {
-            int tweetsIndex = getTweetsStartingIndex(request.getLastTweet(), allTweets);
-
-            for(int limitCounter = 0; tweetsIndex < allTweets.size() && limitCounter < request.getLimit(); tweetsIndex++, limitCounter++) {
-                responseTweets.add(allTweets.get(tweetsIndex));
-            }
-
-            hasMorePages = tweetsIndex < allTweets.size();
-        }
-
-        return new FeedTweetsResponse(responseTweets, hasMorePages);
     }
 
+    // TODO: REMOVE THIS ONCE GETFEEDTWEETS IS WORKING!
     /**
      * Determines the index for the first tweet in the specified 'allTweets' list that should
      * be returned in the current request. This will be the index of the next tweet after the
@@ -401,16 +385,16 @@ public class ServerFacade {
         return tweetsIndex;
     }
 
-    /**
-     * Returns the list of dummy tweet data. This is written as a separate method to allow
-     * mocking of the tweets.
-     *
-     * @return the generator.
-     */
-    List<Tweet> getDummyTweets() {
-        return Arrays.asList(tweet1, tweet2, tweet3, tweet4, tweet5, tweet6, tweet7, tweet8, tweet9, tweet10, tweet11, tweet12,
-                tweet13, tweet14, tweet15, tweet16, tweet17, tweet18, tweet19, tweet20);
-    }
+//    /**
+//     * Returns the list of dummy tweet data. This is written as a separate method to allow
+//     * mocking of the tweets.
+//     *
+//     * @return the generator.
+//     */
+//    List<Tweet> getDummyTweets() {
+//        return Arrays.asList(tweet1, tweet2, tweet3, tweet4, tweet5, tweet6, tweet7, tweet8, tweet9, tweet10, tweet11, tweet12,
+//                tweet13, tweet14, tweet15, tweet16, tweet17, tweet18, tweet19, tweet20);
+//    }
 
 
     /**

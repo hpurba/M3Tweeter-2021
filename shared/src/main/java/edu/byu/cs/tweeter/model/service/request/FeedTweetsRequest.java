@@ -4,10 +4,14 @@ import edu.byu.cs.tweeter.model.domain.Tweet;
 
 public class FeedTweetsRequest {
 
+    private Tweet tweet;
+    private int limit;
+    private Tweet lastTweet;
 
-    private final Tweet tweet;
-    private final int limit;
-    private final Tweet lastTweet;
+    /**
+     * Empty Default constructor
+     */
+    public FeedTweetsRequest() { }
 
     /**
      * Creates an instance.
