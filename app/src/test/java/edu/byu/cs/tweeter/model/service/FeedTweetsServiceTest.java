@@ -50,7 +50,7 @@ class FeedTweetsServiceTest {
 
     /**
      * Verify that for successful requests the {@link IFollowingService#getFollowees(FollowingRequest)}
-     * method returns the same result as the {@link ServerFacadeOriginalM2}.
+     * method returns the same result as the {@link edu.byu.cs.tweeter.model.net.ServerFacade}.
      * .
      *
      * @throws IOException if an IO error occurs.
@@ -64,7 +64,7 @@ class FeedTweetsServiceTest {
 
     /**
      * Verify that for failed requests the {@link FeedTweetsService #getFeedTweets(FeedTweetsRequest)}
-     * method returns the same result as the {@link ServerFacadeOriginalM2}.
+     * method returns the same result as the {@link edu.byu.cs.tweeter.model.net.ServerFacade}.
      *
      * @throws IOException if an IO error occurs.
      */
