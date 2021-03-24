@@ -4,9 +4,13 @@ import edu.byu.cs.tweeter.model.domain.Tweet;
 
 public class StoryTweetsRequest {
 
-    private final Tweet tweet;
-    private final int limit;
-    private final Tweet lastTweet;
+    private Tweet tweet;
+    private int limit;
+    private Tweet lastTweet;
+
+
+    public StoryTweetsRequest() {}
+
 
     /**
      * Creates an instance.

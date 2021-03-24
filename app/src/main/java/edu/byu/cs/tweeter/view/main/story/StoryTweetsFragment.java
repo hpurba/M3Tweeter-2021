@@ -107,6 +107,7 @@ public class StoryTweetsFragment  extends Fragment implements StoryTweetsPresent
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(getContext(), "You selected '" + userAlias.getText() + "'.", Toast.LENGTH_SHORT).show();
+
                     }
                 });
             } else {

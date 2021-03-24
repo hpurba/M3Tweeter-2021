@@ -20,6 +20,7 @@ import java.util.List;
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
+import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowingStatusRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowerResponse;
 import edu.byu.cs.tweeter.model.service.response.FollowingStatusResponse;
@@ -27,6 +28,7 @@ import edu.byu.cs.tweeter.presenter.FollowerPresenter;
 import edu.byu.cs.tweeter.presenter.FollowingPresenter;
 import edu.byu.cs.tweeter.presenter.OtherUserProfilePresenter;
 import edu.byu.cs.tweeter.view.asyncTasks.GetFollowersTask;
+import edu.byu.cs.tweeter.view.asyncTasks.GetFollowingTask;
 import edu.byu.cs.tweeter.view.asyncTasks.GetOtherUserProfileTask;
 
 import static edu.byu.cs.tweeter.view.main.MainActivity.setImageViewWithByteArray;
@@ -75,6 +77,7 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
         otherUserAlias = (String) getIntent().getSerializableExtra(OTHER_USER_ALIAS);
         otherUserFullName = (String) getIntent().getSerializableExtra(OTHER_USER_FULL_NAME);
 
+
         // Sets the top activity bar to be the name of the selected user's alias
         getSupportActionBar().setTitle(otherUserAlias);  // provide compatibility to all the versions
 
@@ -97,52 +100,51 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
         byte [] imageBytes = user.getImageBytes();
         setImageViewWithByteArray(userImageView, imageBytes);
 
+
         // Display the Follower Count
         TextView followerCount = findViewById(R.id.otherUserfollowerCount);
-//        followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
-        followerCount.setText(getString(R.string.followerCount, 20)); // TODO: This is a hard coded count
-
+         followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
+//        followerCount.setText(getString(R.string.followerCount, followerCountInt)); // TODO: This is a hard coded count
         // Display the Followee Count
         TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
-//        followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
-        followeeCount.setText(getString(R.string.followeeCount, 19));   // TODO: This is a hard coded count
+         followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
+//        followeeCount.setText(getString(R.string.followeeCount, 19));   // TODO: This is a hard coded count
 
         // Follow/Unfollow Button
         followUnFollowButton = findViewById(R.id.FollowUnFollowButton);
         followUnFollowButton.setOnClickListener(new View.OnClickListener() {
-        /**
-         * Makes a  request. The user is hard-coded, so it doesn't matter what data we put
-         * in the  object.
-         *
-         * @param view the view object that was clicked.
-         */
-        @Override
-        public void onClick(View view) {
+            /**
+             * Makes a  request. The user is hard-coded, so it doesn't matter what data we put
+             * in the  object.
+             *
+             * @param view the view object that was clicked.
+             */
+            @Override
+            public void onClick(View view) {
 
-            isFollowing = !isFollowing;
-            FollowingStatusRequest followingStatusRequest = new FollowingStatusRequest(user, isFollowing); // Alias is the @username
-            followingStatusRequest.setMyUsername("otherUsername");
-            followingStatusRequest.setMyUsername(user.getAlias());
-            GetOtherUserProfileTask getOtherUserProfileTask = new GetOtherUserProfileTask(presenter, OtherUserProfileActivity.this);
-            getOtherUserProfileTask.execute(followingStatusRequest);
+                isFollowing = !isFollowing;
+                FollowingStatusRequest followingStatusRequest = new FollowingStatusRequest(user, isFollowing); // Alias is the @username
+                followingStatusRequest.setMyUsername("otherUsername");
+                followingStatusRequest.setMyUsername(user.getAlias());
+                GetOtherUserProfileTask getOtherUserProfileTask = new GetOtherUserProfileTask(presenter, OtherUserProfileActivity.this);
+                getOtherUserProfileTask.execute(followingStatusRequest);
 
-            if (isFollowing) {
-                followUnFollowButton.setText("FOLLOWING");
+                if (isFollowing) {
+                    followUnFollowButton.setText("FOLLOWING");
+                }
+                else {
+                    followUnFollowButton.setText("FOLLOW");
+                }
+    //                // Display the Follower Count
+//                TextView followerCount = findViewById(R.id.otherUserfollowerCount);
+//    //                followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
+//                followerCount.setText(getString(R.string.followerCount, 20)); // TODO: This is a hard coded count
+//                // Display the Followee Count
+//                TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
+//    //                followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
+//                followeeCount.setText(getString(R.string.followeeCount, 19)); // TODO: This is a hard coded count
+
             }
-            else {
-                followUnFollowButton.setText("FOLLOW");
-            }
-//                // Display the Follower Count
-            TextView followerCount = findViewById(R.id.otherUserfollowerCount);
-//                followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
-            followerCount.setText(getString(R.string.followerCount, 20)); // TODO: This is a hard coded count
-            // Display the Followee Count
-            TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
-//                followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
-            followeeCount.setText(getString(R.string.followeeCount, 19)); // TODO: This is a hard coded count
-
-
-        }
         });
     }
 
@@ -180,14 +182,16 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
 //        else {
 //            followUnFollowButton.setText("FOLLOW");
 //        }
+
+
         // Display the Follower Count
-        TextView followerCount = findViewById(R.id.otherUserfollowerCount);
-//        followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
-        followerCount.setText(getString(R.string.followerCount, 20));   // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
-        // Display the Followee Count
-        TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
-        followeeCount.setText(getString(R.string.followeeCount, 19));   // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
-//        followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
+//        TextView followerCount = findViewById(R.id.otherUserfollowerCount);
+////        followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
+//        followerCount.setText(getString(R.string.followerCount, 20));   // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
+//        // Display the Followee Count
+//        TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
+//        followeeCount.setText(getString(R.string.followeeCount, 19));   // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
+////        followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
     }
 
     @Override
@@ -196,7 +200,7 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
         numberOfFollowers = followersRetrieved.size();
         TextView followerCount = findViewById(R.id.otherUserfollowerCount);
 //        followerCount.setText(getString(R.string.followerCount, numberOfFollowers));
-        followerCount.setText(getString(R.string.followerCount, 20)); // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
+//        followerCount.setText(getString(R.string.followerCount, 20)); // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
     }
 
     @Override

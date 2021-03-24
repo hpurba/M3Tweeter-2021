@@ -16,6 +16,8 @@ public class LoginDAO {
     public LoginResponse verifyLogin(LoginRequest request) {
 //        request.getUsername();
 //        request.getPassword();
+        user1.setFollowersCount(20);
+        user1.setFollowingCount(18);
 
         // TODO: Generates dummy data. Replace with a real implementation.
 //        User user = new User("Test", "User",

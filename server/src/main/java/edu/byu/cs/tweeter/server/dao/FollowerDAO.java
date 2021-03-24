@@ -12,7 +12,7 @@ public class FollowerDAO {
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
 
-    private final User user1 = new User("Allen", "Anderson", MALE_IMAGE_URL);
+    private User user1 = new User("Allen", "Anderson", MALE_IMAGE_URL);
     private final User user2 = new User("Amy", "Ames", FEMALE_IMAGE_URL);
     private final User user3 = new User("Bob", "Bobson", MALE_IMAGE_URL);
     private final User user4 = new User("Bonnie", "Beatty", FEMALE_IMAGE_URL);
@@ -67,6 +67,47 @@ public class FollowerDAO {
     }
 
     List<User> getDummyFollowers() {
+        user1.setFollowingCount(10);
+        user1.setFollowersCount(17);
+        user2.setFollowingCount(10);
+        user2.setFollowersCount(17);
+        user3.setFollowingCount(10);
+        user3.setFollowersCount(17);
+        user4.setFollowingCount(10);
+        user4.setFollowersCount(17);
+        user5.setFollowingCount(10);
+        user5.setFollowersCount(17);
+        user6.setFollowingCount(10);
+        user6.setFollowersCount(17);
+        user7.setFollowingCount(10);
+        user7.setFollowersCount(17);
+        user8.setFollowingCount(10);
+        user8.setFollowersCount(17);
+        user9.setFollowingCount(10);
+        user9.setFollowersCount(17);
+        user10.setFollowingCount(10);
+        user10.setFollowersCount(17);
+        user11.setFollowingCount(10);
+        user11.setFollowersCount(17);
+        user12.setFollowingCount(10);
+        user12.setFollowersCount(17);
+        user13.setFollowingCount(10);
+        user13.setFollowersCount(17);
+        user14.setFollowingCount(10);
+        user14.setFollowersCount(17);
+        user15.setFollowingCount(10);
+        user15.setFollowersCount(17);
+        user16.setFollowingCount(10);
+        user16.setFollowersCount(17);
+        user17.setFollowingCount(10);
+        user17.setFollowersCount(17);
+        user18.setFollowingCount(10);
+        user18.setFollowersCount(17);
+        user19.setFollowingCount(10);
+        user19.setFollowersCount(17);
+        user20.setFollowingCount(10);
+        user20.setFollowersCount(17);
+
         return Arrays.asList(user1, user2, user3, user4, user5, user6, user7,
                 user8, user9, user10, user11, user12, user13, user14, user15, user16, user17, user18,
                 user19, user20);

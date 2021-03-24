@@ -159,6 +159,7 @@ public class FollowersFragment extends Fragment implements FollowerPresenter.Vie
                         intent.putExtra(OtherUserProfileActivity.AUTH_TOKEN_KEY, authToken);
                         intent.putExtra(OtherUserProfileActivity.OTHER_USER_ALIAS, userAlias.getText().toString());
                         intent.putExtra(OtherUserProfileActivity.OTHER_USER_FULL_NAME, userName.getText().toString());
+
                         context.startActivity(intent);
                     }
                 });
