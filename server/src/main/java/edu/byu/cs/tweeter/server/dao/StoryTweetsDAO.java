@@ -10,7 +10,6 @@ import edu.byu.cs.tweeter.model.service.response.StoryTweetsResponse;
 
 public class StoryTweetsDAO {
 
-
     public StoryTweetsResponse getStoryTweets(StoryTweetsRequest request) {
 
         // This is a List of all the dummy Tweets.
