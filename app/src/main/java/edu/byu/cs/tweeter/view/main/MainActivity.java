@@ -292,6 +292,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
         tweetCompleteToast.show();
 
         TweetRequest tweetRequest = new TweetRequest(user.getAlias(), tweetText);
+
         TweetTask tweetTask = new TweetTask(tweetPresenter, this);
         tweetTask.execute(tweetRequest);
         return true;

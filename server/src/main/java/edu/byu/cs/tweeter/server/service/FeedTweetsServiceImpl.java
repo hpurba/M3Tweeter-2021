@@ -9,7 +9,7 @@ public class FeedTweetsServiceImpl {
     public FeedTweetsResponse getFeedTweets(FeedTweetsRequest request) {
         if (request == null) {
             throw new RuntimeException("[BadRequest400] 400");
-        } else if (request.getTweet() == null) {
+        } else if (request.getLimit() < 0) {
             throw new RuntimeException("[BadRequest500] 500");
         }
         return feedTweetsDAO().getFeedTweets(request);

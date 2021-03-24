@@ -9,7 +9,7 @@ public class StoryTweetsServiceImpl {
     public StoryTweetsResponse getStoryTweets(StoryTweetsRequest request) {
         if (request == null) {
             throw new RuntimeException("[BadRequest400] 400");
-        } else if (request.getTweet() == null || request.getLastTweet() == null) {
+        } else if (request.getLimit() < 0) {
             throw new RuntimeException("[BadRequest500] 500");
         }
         return storyTweetsDAO().getStoryTweets(request);

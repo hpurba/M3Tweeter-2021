@@ -9,7 +9,7 @@ public class LogoutServiceImpl {
     public LogoutResponse logout(LogoutRequest request) {
         if (request == null) {
             throw new RuntimeException("[BadRequest400] 400");
-        } else if (request.getUsername() == null) {
+        } else if (request.getUsername() != null && request.getClass() == null) {
             throw new RuntimeException("[BadRequest500] 500");
         }
         return logoutDAO().logout(request);
