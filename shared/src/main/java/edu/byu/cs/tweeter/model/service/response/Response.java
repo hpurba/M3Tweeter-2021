@@ -5,8 +5,8 @@ package edu.byu.cs.tweeter.model.service.response;
  */
 class Response {
 
-    private final boolean success;
-    private final String message;
+    private boolean success;
+    private String message;
 
     /**
      * Creates an instance with a null message.
@@ -45,4 +45,13 @@ class Response {
     public String getMessage() {
         return message;
     }
+
+    /**
+     * Sets success boolean
+     * @param success
+     */
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
 }

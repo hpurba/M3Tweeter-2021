@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.server.dao;
 
+import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.service.request.LoginRequest;
 import edu.byu.cs.tweeter.model.service.response.LoginResponse;
@@ -13,8 +14,8 @@ public class LoginDAO {
     private final User user1 = new User("Hikaru", "Purba", MALE_IMAGE_URL);
 
     public LoginResponse verifyLogin(LoginRequest request) {
-        request.getUsername();
-        request.getPassword();
+//        request.getUsername();
+//        request.getPassword();
 
         // TODO: Generates dummy data. Replace with a real implementation.
 //        User user = new User("Test", "User",
@@ -23,8 +24,9 @@ public class LoginDAO {
 //        user.setImageBytes(null);
 
 //        user1.setAlias("@hpurba");
-        user1.setAlias(request.getUsername());
-        LoginResponse loginResponse = new LoginResponse(user1, null);
+//        user1.setAlias(request.getUsername());
+        AuthToken authToken = new AuthToken();
+        LoginResponse loginResponse = new LoginResponse(user1, authToken);
         return loginResponse;
     }
 }

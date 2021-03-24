@@ -50,7 +50,7 @@ public class LoginService extends BaseService {
     @Override
     public void doServiceSpecificTask() throws IOException, TweeterRemoteException {
         ServerFacade serverFacade = getServerFacade();
-        LoginResponse loginResponse = serverFacade.login(loginRequest, URL_PATH);
+        this.loginResponse = serverFacade.login(loginRequest, URL_PATH);
         if(loginResponse.isSuccess()) {
             loadImage(loginResponse.getUser());
         }

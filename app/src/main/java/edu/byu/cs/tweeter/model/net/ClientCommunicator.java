@@ -64,6 +64,7 @@ class ClientCommunicator {
             public void sendRequest(HttpURLConnection connection) throws IOException {
                 connection.setDoOutput(true);
                 String entityBody = JsonSerializer.serialize(requestInfo);
+
                 try (DataOutputStream os = new DataOutputStream(connection.getOutputStream())) {
                     os.writeBytes(entityBody);
                     os.flush();
