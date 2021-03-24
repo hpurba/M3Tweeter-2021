@@ -50,7 +50,7 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
     // Tabs and ViewPager
     TabLayout tabLayout;                                    // Button Tabs
     ViewPager myViewPager;                                  // Widget that allows the user to swipe left or right to see an entirely new screen.
-    OtherUserSectionsPagerAdapter othrUsrSecPagerAdapter;
+//    OtherUserSectionsPagerAdapter othrUsrSecPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +64,7 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
         user = (User) getIntent().getSerializableExtra(CURRENT_USER_KEY);
         AuthToken authToken = (AuthToken) getIntent().getSerializableExtra(AUTH_TOKEN_KEY);
 
-
         OtherUserSectionsPagerAdapter sectionsPagerAdapter = new OtherUserSectionsPagerAdapter(this, getSupportFragmentManager(), user, authToken);
-//        OtherUserSectionsPagerAdapter sectionsPagerAdapter = new OtherUserSectionsPagerAdapter(getSupportFragmentManager());
         myViewPager = (ViewPager) findViewById(R.id.otherUser_view_pager);
         tabLayout = (TabLayout) findViewById(R.id.otherUser_tabs);
         myViewPager.setAdapter(sectionsPagerAdapter);
@@ -112,38 +110,39 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
         // Follow/Unfollow Button
         followUnFollowButton = findViewById(R.id.FollowUnFollowButton);
         followUnFollowButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Makes a  request. The user is hard-coded, so it doesn't matter what data we put
-             * in the  object.
-             *
-             * @param view the view object that was clicked.
-             */
-            @Override
-            public void onClick(View view) {
+        /**
+         * Makes a  request. The user is hard-coded, so it doesn't matter what data we put
+         * in the  object.
+         *
+         * @param view the view object that was clicked.
+         */
+        @Override
+        public void onClick(View view) {
 
-                isFollowing = !isFollowing;
-                FollowingStatusRequest followingStatusRequest = new FollowingStatusRequest(user, isFollowing); // Alias is the @username
-                followingStatusRequest.setMyUsername("otherUsername");
-                followingStatusRequest.setMyUsername(user.getAlias());
-                GetOtherUserProfileTask getOtherUserProfileTask = new GetOtherUserProfileTask(presenter, OtherUserProfileActivity.this);
-                getOtherUserProfileTask.execute(followingStatusRequest);
+            isFollowing = !isFollowing;
+            FollowingStatusRequest followingStatusRequest = new FollowingStatusRequest(user, isFollowing); // Alias is the @username
+            followingStatusRequest.setMyUsername("otherUsername");
+            followingStatusRequest.setMyUsername(user.getAlias());
+            GetOtherUserProfileTask getOtherUserProfileTask = new GetOtherUserProfileTask(presenter, OtherUserProfileActivity.this);
+            getOtherUserProfileTask.execute(followingStatusRequest);
 
-                if (isFollowing) {
-                    followUnFollowButton.setText("FOLLOWING");
-                }
-                else {
-                    followUnFollowButton.setText("FOLLOW");
-                }
-//                // Display the Follower Count
-                TextView followerCount = findViewById(R.id.otherUserfollowerCount);
-//                followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
-                followerCount.setText(getString(R.string.followerCount, 20)); // TODO: This is a hard coded count
-                // Display the Followee Count
-                TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
-//                followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
-                followeeCount.setText(getString(R.string.followeeCount, 19)); // TODO: This is a hard coded count
-
+            if (isFollowing) {
+                followUnFollowButton.setText("FOLLOWING");
             }
+            else {
+                followUnFollowButton.setText("FOLLOW");
+            }
+//                // Display the Follower Count
+            TextView followerCount = findViewById(R.id.otherUserfollowerCount);
+//                followerCount.setText(getString(R.string.followerCount, user.getFollowersCount()));
+            followerCount.setText(getString(R.string.followerCount, 20)); // TODO: This is a hard coded count
+            // Display the Followee Count
+            TextView followeeCount = findViewById(R.id.otherUserfolloweeCount);
+//                followeeCount.setText(getString(R.string.followeeCount, user.getFollowingCount()));
+            followeeCount.setText(getString(R.string.followeeCount, 19)); // TODO: This is a hard coded count
+
+
+        }
         });
     }
 
