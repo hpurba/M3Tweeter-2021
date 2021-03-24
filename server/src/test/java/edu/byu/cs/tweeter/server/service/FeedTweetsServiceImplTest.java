@@ -44,7 +44,7 @@ public class FeedTweetsServiceImplTest {
         failureResponse = new FeedTweetsResponse("An exception occurred");
 
         // Create a FeedTweetsService instance and wrap it with a spy that will use the mock service
-        feedTweetsServiceSpy = Mockito.spy(new FeedTweetsServiceImpl());
+        feedTweetsServiceSpy = Mockito.mock(FeedTweetsServiceImpl.class);
         Mockito.when(feedTweetsServiceSpy.getFeedTweets(validRequest)).thenReturn(successResponse);
         Mockito.when(feedTweetsServiceSpy.getFeedTweets(invalidRequest)).thenReturn(failureResponse);
     }
