@@ -14,7 +14,7 @@ public class LoginServiceImpl implements ILoginService {
     public LoginResponse login(LoginRequest request) {
         if (request == null) {
             throw new RuntimeException("[BadRequest400] 400");
-        } else if (request.getUsername() == null || request.getUsername() == null) {
+        } else if (request.getUsername() == null || request.getPassword() == null) {
             throw new RuntimeException("[BadRequest500] 500");
         }
         return loginAttemptDAO().verifyLogin(request);

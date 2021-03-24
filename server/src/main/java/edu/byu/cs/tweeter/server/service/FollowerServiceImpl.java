@@ -6,6 +6,11 @@ import edu.byu.cs.tweeter.server.dao.FollowerDAO;
 
 public class FollowerServiceImpl {
     public FollowerResponse getFollowers(FollowerRequest request) {
+        if (request == null) {
+            throw new RuntimeException("[BadRequest400] 400");
+        } else if (request.getFollowee() == null) {
+            throw new RuntimeException("[BadRequest500] 500");
+        }
         return getFollowerDAO().getFollowers(request);
     }
 

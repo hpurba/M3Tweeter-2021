@@ -21,6 +21,11 @@ public class FollowingServiceImpl implements IFollowingService {
      */
     @Override
     public FollowingResponse getFollowees(FollowingRequest request) {
+        if (request == null) {
+            throw new RuntimeException("[BadRequest400] 400");
+        } else if (request.getFollower() == null) {
+            throw new RuntimeException("[BadRequest500] 500");
+        }
         return getFollowingDAO().getFollowees(request);
     }
 

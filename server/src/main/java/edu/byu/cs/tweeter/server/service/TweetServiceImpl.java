@@ -7,6 +7,11 @@ import edu.byu.cs.tweeter.server.dao.TweetDAO;
 public class TweetServiceImpl {
 
     public TweetResponse tweet(TweetRequest request) {
+        if (request == null) {
+            throw new RuntimeException("[BadRequest400] 400");
+        } else if (request.getUsername() == null) {
+            throw new RuntimeException("[BadRequest500] 500");
+        }
         return tweetDAO().tweet(request);
     }
 
