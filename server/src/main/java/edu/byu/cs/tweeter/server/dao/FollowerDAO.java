@@ -35,32 +35,35 @@ public class FollowerDAO {
 
     public FollowerResponse getFollowers(FollowerRequest request) {
 
+        List<User> allFollowers = getDummyFollowers();
 
-        // Used in place of assert statements because Android does not support them
-        if(request.getLimit() < 0) {
-            throw new AssertionError();
+        int requestLimit = request.getLimit();
+        if (requestLimit < 8) { // Ensure the request limit is at least 8.
+            requestLimit = 8;
         }
 
-//        if(request.getFollowee() == null) {
-//            throw new AssertionError();
-//        }
-
-        List<User> allFollowers = getDummyFollowers();
         List<User> responseFollowers = new ArrayList<>(request.getLimit());
 
-        boolean hasMorePages = false;
+        boolean hasMorePages = true;
 
-        if(request.getLimit() > 0) {
-            int followersIndex = getFolloweesStartingIndex(user20, allFollowers);
+        if(requestLimit > 0) {
+            if (allFollowers != null) {
+                int followersIndex = getFolloweesStartingIndex(request.getLastFollower(), allFollowers);
 
-            for(int limitCounter = 0; followersIndex < allFollowers.size() && limitCounter < request.getLimit(); followersIndex++, limitCounter++) {
-                responseFollowers.add(allFollowers.get(followersIndex));
+                if (request.getLastFollower() == null){
+                    followersIndex = 0;
+                }
+
+                for(int limitCounter = 0; followersIndex < allFollowers.size() && limitCounter < requestLimit; followersIndex++, limitCounter++) {
+                    responseFollowers.add(allFollowers.get(followersIndex));
+                }
+
+                hasMorePages = followersIndex < allFollowers.size();
             }
-
-            hasMorePages = followersIndex < allFollowers.size();
         }
 
         return new FollowerResponse(responseFollowers, hasMorePages);
+//        return new FollowerResponse(allFollowers, hasMorePages);
     }
 
     List<User> getDummyFollowers() {
