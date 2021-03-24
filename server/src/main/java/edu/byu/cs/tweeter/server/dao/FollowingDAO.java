@@ -62,15 +62,17 @@ public class FollowingDAO {
      */
     public FollowingResponse getFollowees(FollowingRequest request) {
         // TODO: Generates dummy data. Replace with a real implementation.
-        assert request.getLimit() > 0;
-        assert request.getFollower() != null;
 
         List<User> allFollowees = getDummyFollowees();
         List<User> responseFollowees = new ArrayList<>(request.getLimit());
 
         boolean hasMorePages = false;
+        int requestLimit = request.getLimit();
+        if (requestLimit < 8) { // Ensure the request limit is at least 8.
+            requestLimit = 8;
+        }
 
-        if(request.getLimit() > 0) {
+        if(requestLimit > 0) {
             if (allFollowees != null) {
                 int followeesIndex = getFolloweesStartingIndex(request.getLastFollowee(), allFollowees);
 

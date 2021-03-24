@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: Tweeter.shared.shared-all">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/shared/build/libs/shared-all.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

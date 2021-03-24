@@ -158,6 +158,10 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
         private final List<User> users = new ArrayList<>();
 
         private edu.byu.cs.tweeter.model.domain.User lastFollowee;
+        private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
+        private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
+
+        private final User user1 = new User("Allen", "Anderson", MALE_IMAGE_URL);
 
         private boolean hasMorePages;
         private boolean isLoading = false;
@@ -271,7 +275,7 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
         void loadMoreItems() {
             isLoading = true;
             addLoadingFooter();
-
+            lastFollowee = user1;
             GetFollowingTask getFollowingTask = new GetFollowingTask(presenter, this);
             FollowingRequest request = new FollowingRequest(user, PAGE_SIZE, lastFollowee);
             getFollowingTask.execute(request);

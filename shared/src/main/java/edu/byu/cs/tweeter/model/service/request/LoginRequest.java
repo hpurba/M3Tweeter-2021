@@ -11,7 +11,7 @@ public class LoginRequest {
     /**
      * Empty Default constructor
      */
-    public LoginRequest() { }
+    public LoginRequest() {}
 
     /**
      * Creates an instance.

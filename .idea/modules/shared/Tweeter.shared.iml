@@ -27,6 +27,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Gradle: Tweeter.shared.shared" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: Tweeter.shared.shared-all" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations-java5:15.0" level="project" />
   </component>
 </module>
