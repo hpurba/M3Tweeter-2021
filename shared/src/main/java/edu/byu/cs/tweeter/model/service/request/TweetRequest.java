@@ -2,8 +2,13 @@ package edu.byu.cs.tweeter.model.service.request;
 
 public class TweetRequest {
 
-    private final String username;
-    private final String tweetText;
+    private String username;
+    private String tweetText;
+
+    /**
+     * Empty Default constructor
+     */
+    public TweetRequest() { }
 
     public TweetRequest(String username, String tweetText) {
         this.username = username;

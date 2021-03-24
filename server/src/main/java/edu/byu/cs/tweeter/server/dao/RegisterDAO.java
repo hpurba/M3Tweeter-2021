@@ -18,13 +18,7 @@ public class RegisterDAO {
                 request.getLastName(),
                 request.getAlias(),
                 MALE_IMAGE_URL);
-
         user.setImageBytes(byteArray);
-
-        // TODO: When verified that this is not needed, remove it.
-//        if(request.getAlias() == null || request.getPassword() == null || request.getFirstName() == null || request.getLastName() == null || request.getByteArray() == null) {
-//            return new RegisterResponse(null, null);
-//        }
 
         AuthToken authToken = new AuthToken();
         RegisterResponse registerResponse = new RegisterResponse(user1, authToken);

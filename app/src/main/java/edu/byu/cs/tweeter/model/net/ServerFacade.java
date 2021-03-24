@@ -466,29 +466,14 @@ public class ServerFacade {
     }
 
     // POST A TWEET
-    public TweetResponse tweet(TweetRequest tweetRequest) {
-        tweetRequest.getUsername();
-        tweetRequest.getTweetText();
-        // Add tweet to database using the username provided
+    public TweetResponse tweet(TweetRequest request, String urlPath) throws IOException, TweeterRemoteException {
+        TweetResponse response = clientCommunicator.doPost(urlPath, request, null, TweetResponse.class);
 
-        // Used in place of assert statements because Android does not support them
-        if(BuildConfig.DEBUG) {
-            if(tweetRequest.getUsername() == null || tweetRequest.getTweetText() == null) {
-                throw new AssertionError();
-            }
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
         }
-
-        TweetResponse tweetResponse;
-
-        if(tweetRequest.getTweetText() != null && tweetRequest.getUsername() != null) {
-            User user = new User("Test", "User",
-                    "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
-            tweetResponse = new TweetResponse(user);
-        }
-        else {
-            tweetResponse = new TweetResponse((User) null);
-        }
-        return tweetResponse;
     }
 
     private Boolean followingStatus = true;
