@@ -1,4 +1,4 @@
-package edu.byu.cs.tweeter.model.service;
+package edu.byu.cs.tweeter.server.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,11 +9,12 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import edu.byu.cs.tweeter.model.domain.Tweet;
+import edu.byu.cs.tweeter.model.service.IFollowingService;
 import edu.byu.cs.tweeter.model.service.request.FeedTweetsRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.model.service.response.FeedTweetsResponse;
 
-class FeedTweetsServiceTest {
+public class FeedTweetsServiceImplTest {
 
     private FeedTweetsRequest validRequest;
     private FeedTweetsRequest invalidRequest;
@@ -21,7 +22,7 @@ class FeedTweetsServiceTest {
     private FeedTweetsResponse successResponse;
     private FeedTweetsResponse failureResponse;
 
-    private FeedTweetsService feedTweetsServiceSpy;
+    private FeedTweetsServiceImpl feedTweetsServiceSpy;
 
     /**
      * Create a FollowingService spy that uses a mock ServerFacade to return known responses to
@@ -43,14 +44,14 @@ class FeedTweetsServiceTest {
         failureResponse = new FeedTweetsResponse("An exception occurred");
 
         // Create a FeedTweetsService instance and wrap it with a spy that will use the mock service
-        feedTweetsServiceSpy = Mockito.spy(new FeedTweetsService());
+        feedTweetsServiceSpy = Mockito.spy(new FeedTweetsServiceImpl());
         Mockito.when(feedTweetsServiceSpy.getFeedTweets(validRequest)).thenReturn(successResponse);
         Mockito.when(feedTweetsServiceSpy.getFeedTweets(invalidRequest)).thenReturn(failureResponse);
     }
 
     /**
-     * Verify that for successful requests the {@link IFollowingService#getFollowees(FollowingRequest)}
-     * method returns the same result as the {@link edu.byu.cs.tweeter.model.net.ServerFacade}.
+     * Verify that for successful requests the {@link FeedTweetsServiceImpl #getFeedTweets(FeedTweetsRequest)}
+     * method returns the same result as the {@link edu.byu.cs.tweeter.server.dao.FeedTweetsDAO}.
      * .
      *
      * @throws IOException if an IO error occurs.
@@ -63,8 +64,8 @@ class FeedTweetsServiceTest {
 
 
     /**
-     * Verify that for failed requests the {@link FeedTweetsService #getFeedTweets(FeedTweetsRequest)}
-     * method returns the same result as the {@link edu.byu.cs.tweeter.model.net.ServerFacade}.
+     * Verify that for failed requests the {@link FeedTweetsServiceImpl #getFeedTweets(FeedTweetsRequest)}
+     * method returns the same result as the {@link edu.byu.cs.tweeter.server.dao.FeedTweetsDAO}.
      *
      * @throws IOException if an IO error occurs.
      */
