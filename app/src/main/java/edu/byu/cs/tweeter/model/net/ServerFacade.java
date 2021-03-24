@@ -478,63 +478,14 @@ public class ServerFacade {
      * @param request contains all information needed to perform a login.
      * @return the login response.
      */
-    public RegisterResponse register(RegisterRequest request) throws IOException {
-        request.getAlias();
-        request.getPassword();
-        String firstName = request.getFirstName();
-        String lastName = request.getLastName();
-        String alias = request.getAlias();
+    public RegisterResponse register(RegisterRequest request, String urlPath) throws IOException, TweeterRemoteException {
+        RegisterResponse response = clientCommunicator.doPost(urlPath, request, null, RegisterResponse.class);
 
-        byte[] byteArray = request.getByteArray();
-
-
-        User user = new User(firstName, lastName, alias,
-                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
-
-
-        if(request.getAlias() == null || request.getPassword() == null || request.getFirstName() == null || request.getLastName() == null || request.getByteArray() == null) {
-            return new RegisterResponse(null, null);
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
         }
-//        User user = new User(firstName, lastName,
-//                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
-
-        user.setImageBytes(byteArray);
-
-        // ------------------------------------------------------------------------------------------------------------
-        // Create a neat value object to hold the URL
-        URL url = new URL("https://136xswxwxa.execute-api.us-west-2.amazonaws.com/dev/registeruser");
-
-        // Open a connection(?) on the URL(??) and cast the response(???)
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        connection.setRequestMethod("POST");
-        // Now it's "open", we can set the request method, headers etc.
-        connection.setRequestProperty("?Content-Type", "application/json");
-        connection.setRequestProperty("Accept", "application/json");
-
-        connection.setDoOutput(true);
-
-        String jsonInputString = "{\"firstname\": \"Superman\", \"lastname\":\"INSERT A LASTNAME HERE\", \"username\":\"INSERT A USERNAME HERE\", \"password\":\"INSERT A PASSWORD HERE\", \"profilepicture\":\"INSERT AN IMAGE HERE\"}";
-
-        try(OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes("utf-8");
-            os.write(input, 0, input.length);
-        }
-
-        try(BufferedReader br = new BufferedReader(
-                new InputStreamReader(connection.getInputStream(), "utf-8"))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
-            System.out.println(response.toString());
-        }
-        // ------------------------------------------------------------------------------------------------------
-
-//        User user = new User("Test", "User",
-//                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
-        return new RegisterResponse(user, null);
     }
 
     // POST A TWEET

@@ -2,12 +2,16 @@ package edu.byu.cs.tweeter.model.service.request;
 
 public class RegisterRequest {
 
-    private final String firstName;
-    private final String lastName;
-    private final String alias;
-    private final String password;
+    private String firstName;
+    private String lastName;
+    private String alias;
+    private String password;
     public byte[] byteArray;
 
+    /**
+     * Empty Default constructor
+     */
+    public RegisterRequest() { }
 
     public RegisterRequest(String firstName, String lastName, String alias, String password, byte[] byteArray) {
         this.firstName = firstName;
