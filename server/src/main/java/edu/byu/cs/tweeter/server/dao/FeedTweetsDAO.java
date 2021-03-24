@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.Tweet;
-import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.service.request.FeedTweetsRequest;
-import edu.byu.cs.tweeter.model.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.model.service.response.FeedTweetsResponse;
-import edu.byu.cs.tweeter.model.service.response.RegisterResponse;
 
 public class FeedTweetsDAO {
 
@@ -38,22 +34,31 @@ public class FeedTweetsDAO {
 
     public FeedTweetsResponse getFeedTweets(FeedTweetsRequest request) {
 
+        // This is a List of all the dummy Tweets.
         List<Tweet> allTweets = getDummyTweets();
-        List<Tweet> responseTweets = new ArrayList<>(request.getLimit());
 
-        boolean hasMorePages = false;
+        // Set the request Limit to request.getLimit();
+        int requestLimit = request.getLimit();
+        if (requestLimit < 8) { // Ensure the request limit is at least 8.
+            requestLimit = 8;
+        }
 
-        if(request.getLimit() > 0) {
-            int tweetsIndex = getTweetsStartingIndex(request.getLastTweet(), allTweets);
+        // This is a List of the responseTweets
+        List<Tweet> responseTweets = new ArrayList<>(requestLimit);
 
-            for(int limitCounter = 0; tweetsIndex < allTweets.size() && limitCounter < request.getLimit(); tweetsIndex++, limitCounter++) {
+        boolean hasMorePages = true;
+        if( requestLimit > 0) {
+            int tweetsIndex = getTweetsStartingIndex(request.getLastTweet(), allTweets);    // 0 if the first element.
+
+            for(int limitCounter = 0; tweetsIndex < allTweets.size() && limitCounter < requestLimit; tweetsIndex++, limitCounter++) {
                 responseTweets.add(allTweets.get(tweetsIndex));
             }
 
             hasMorePages = tweetsIndex < allTweets.size();
         }
 
-        return new FeedTweetsResponse(responseTweets, hasMorePages);
+        return new FeedTweetsResponse(responseTweets, hasMorePages);  // Original
+//        return new FeedTweetsResponse(allTweets, hasMorePages);
     }
 
     /**
@@ -93,7 +98,6 @@ public class FeedTweetsDAO {
                 }
             }
         }
-
         return tweetsIndex;
     }
 }

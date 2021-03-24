@@ -40,7 +40,7 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
     private static final int LOADING_DATA_VIEW = 0;
     private static final int ITEM_VIEW = 1;
 
-    private static final int PAGE_SIZE = 11;
+    private static final int PAGE_SIZE = 8;
 
     private Tweet tweet;
     private FeedTweetsPresenter presenter;
