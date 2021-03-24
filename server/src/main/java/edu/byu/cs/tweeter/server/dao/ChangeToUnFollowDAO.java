@@ -9,10 +9,10 @@ public class ChangeToUnFollowDAO {
     // This actually modifies a following status
     public FollowingStatusResponse changeToUnFollow(FollowingStatusRequest request) {
         followingStatus = request.getFollowing();
-        if(followingStatus == true) {
-            followingStatus = false;
-        }
-        FollowingStatusResponse followingStatusResponse = new FollowingStatusResponse(request.getOtherPersonUsername(), followingStatus);
+//        if(followingStatus == true) {
+//            followingStatus = false;
+//        }
+        FollowingStatusResponse followingStatusResponse = new FollowingStatusResponse("SomeDude", followingStatus);
         return followingStatusResponse;
     }
 }

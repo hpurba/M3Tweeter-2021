@@ -38,4 +38,20 @@ public class FollowingStatusRequest {
     public Boolean getFollowing() {
         return isFollowing;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setMyUsername(String myUsername) {
+        this.myUsername = myUsername;
+    }
+
+    public void setOtherPersonUsername(String otherPersonUsername) {
+        this.otherPersonUsername = otherPersonUsername;
+    }
+
+    public void setFollowing(Boolean following) {
+        isFollowing = following;
+    }
 }

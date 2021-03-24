@@ -5,7 +5,6 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.byu.cs.tweeter.model.service.request.FollowingStatusRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowingStatusResponse;
-import edu.byu.cs.tweeter.server.service.ChangeToFollowServiceImpl;
 import edu.byu.cs.tweeter.server.service.ChangeToUnFollowServiceImpl;
 
 public class ChangeToUnFollowHandler implements RequestHandler<FollowingStatusRequest, FollowingStatusResponse> {

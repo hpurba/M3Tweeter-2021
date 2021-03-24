@@ -8,11 +8,11 @@ public class ChangeToFollowDAO {
 
     // This actually modifies a following status
     public FollowingStatusResponse changeToFollow(FollowingStatusRequest request) {
-        followingStatus = request.getFollowing();
-        if(followingStatus == false) {
-            followingStatus = true;
-        }
-        FollowingStatusResponse followingStatusResponse = new FollowingStatusResponse(request.getOtherPersonUsername(), followingStatus);
+//        followingStatus = request.getFollowing();
+//        if(followingStatus == false) {
+//            followingStatus = true;
+//        }
+        FollowingStatusResponse followingStatusResponse = new FollowingStatusResponse("SomeDude", followingStatus);
         return followingStatusResponse;
     }
 }

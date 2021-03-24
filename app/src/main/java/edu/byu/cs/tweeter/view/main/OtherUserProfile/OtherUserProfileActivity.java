@@ -20,7 +20,6 @@ import java.util.List;
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.service.request.FollowerRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowingStatusRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowerResponse;
 import edu.byu.cs.tweeter.model.service.response.FollowingStatusResponse;
@@ -124,6 +123,8 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
 
                 isFollowing = !isFollowing;
                 FollowingStatusRequest followingStatusRequest = new FollowingStatusRequest(user, isFollowing); // Alias is the @username
+                followingStatusRequest.setMyUsername("otherUsername");
+                followingStatusRequest.setMyUsername(user.getAlias());
                 GetOtherUserProfileTask getOtherUserProfileTask = new GetOtherUserProfileTask(presenter, OtherUserProfileActivity.this);
                 getOtherUserProfileTask.execute(followingStatusRequest);
 
