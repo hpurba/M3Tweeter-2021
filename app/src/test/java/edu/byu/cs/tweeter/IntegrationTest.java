@@ -154,8 +154,10 @@ public class IntegrationTest {
         StoryTweetsService storyTweetsService = new StoryTweetsService();
         StoryTweetsResponse storyTweetsResponse = storyTweetsService.getStoryTweets(storyTweetsRequest);
 
-        assertNotNull(registerResponse);
-        assertEquals(registerResponseExpected.getUser(), registerResponse.getUser());
+
+        assertNotNull(storyTweetsResponse);
+        assertEquals(storyTweetsResponseExpected.getTweets().size(), storyTweetsResponse.getTweets().size());
+        assertEquals(storyTweetsResponseExpected.getHasMorePages(), storyTweetsResponse.getHasMorePages());
 
 
         TweetRequest tweetRequest = new TweetRequest(username, "Test");
