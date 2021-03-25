@@ -8,4 +8,5 @@ import edu.byu.cs.tweeter.model.service.response.FeedTweetsResponse;
 
 public interface IFeedTweetsService {
     FeedTweetsResponse getFeedTweets(FeedTweetsRequest request) throws IOException, TweeterRemoteException;
+
 }
