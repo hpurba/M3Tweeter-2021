@@ -8,7 +8,7 @@ public class FollowerServiceImpl {
     public FollowerResponse getFollowers(FollowerRequest request) {
         if (request == null) {
             throw new RuntimeException("[BadRequest400] 400");
-        } else if (request.getFollowee() == null) {
+        } else if (request.getLimit() < 0) {
             throw new RuntimeException("[BadRequest500] 500");
         }
         return getFollowerDAO().getFollowers(request);

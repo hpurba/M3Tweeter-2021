@@ -22,4 +22,12 @@ public class TweetRequest {
     public String getTweetText() {
         return tweetText;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setTweetText(String tweetText) {
+        this.tweetText = tweetText;
+    }
 }

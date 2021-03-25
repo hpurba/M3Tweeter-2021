@@ -23,7 +23,7 @@ public class FollowingServiceImpl implements IFollowingService {
     public FollowingResponse getFollowees(FollowingRequest request) {
         if (request == null) {
             throw new RuntimeException("[BadRequest400] 400");
-        } else if (request.getFollower() == null) {
+        } else if (request.getLimit() < 0) {
             throw new RuntimeException("[BadRequest500] 500");
         }
         return getFollowingDAO().getFollowees(request);
