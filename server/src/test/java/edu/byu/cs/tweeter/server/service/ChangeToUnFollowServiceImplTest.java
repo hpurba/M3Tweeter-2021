@@ -48,20 +48,20 @@ public class ChangeToUnFollowServiceImplTest {
         invalidResponse = new FollowingStatusResponse("An exception occurred");
 
         implSpy = Mockito.mock(ChangeToUnFollowServiceImpl.class);
-        Mockito.when(implSpy.changeToUnFollow(validRequest)).thenReturn(validResponse);
-        Mockito.when(implSpy.changeToUnFollow(invalidRequest)).thenReturn(invalidResponse);
+        Mockito.when(implSpy.getFollowingStatus(validRequest)).thenReturn(validResponse);
+        Mockito.when(implSpy.getFollowingStatus(invalidRequest)).thenReturn(invalidResponse);
 
     }
 
     @Test
-    public void testChangeToFollow_validRequest_correctResponse(){
-        FollowingStatusResponse response = implSpy.changeToUnFollow(validRequest);
+    public void testChangeToFollow_validRequest_correctResponse() throws IOException, TweeterRemoteException {
+        FollowingStatusResponse response = implSpy.getFollowingStatus(validRequest);
         assertEquals(validResponse, response);
     }
 
     @Test
-    public void testChangeToFollow_invalidRequest_incorrectResponse(){
-        FollowingStatusResponse response = implSpy.changeToUnFollow(invalidRequest);
+    public void testChangeToFollow_invalidRequest_incorrectResponse() throws IOException, TweeterRemoteException {
+        FollowingStatusResponse response = implSpy.getFollowingStatus(invalidRequest);
         assertEquals(invalidResponse, response);
     }
 

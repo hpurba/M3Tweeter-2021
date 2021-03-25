@@ -11,7 +11,7 @@ import edu.byu.cs.tweeter.util.ByteArrayUtils;
 /**
  * FollowerService extends the BaseService Abstract Class to get the Followers of a user.
  */
-public class FollowerService extends BaseService {
+public class FollowerService extends BaseService implements IFollowerService {
     private static final String URL_PATH = "/followers";
 
     // Follower Response and Request Objects.

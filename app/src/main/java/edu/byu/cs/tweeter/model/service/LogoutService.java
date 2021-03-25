@@ -7,7 +7,7 @@ import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.LogoutRequest;
 import edu.byu.cs.tweeter.model.service.response.LogoutResponse;
 
-public class LogoutService extends BaseService {
+public class LogoutService extends BaseService implements ILogoutService {
     LogoutRequest logoutRequest;
     LogoutResponse logoutResponse;
 

@@ -12,7 +12,7 @@ import edu.byu.cs.tweeter.model.service.response.FollowingStatusResponse;
  * some other User. (usage is in Loading another user's page which shows if I (the current user)
  * is following "someOtherUser").
  */
-public class FollowingStatusService extends BaseService {
+public class FollowingStatusService extends BaseService implements IFollowingStatusService {
 
     // FollowingStatus Response and Request Objects.
     FollowingStatusResponse followingStatusResponse;

@@ -7,7 +7,7 @@ import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.TweetRequest;
 import edu.byu.cs.tweeter.model.service.response.TweetResponse;
 
-public class TweetService extends BaseService {
+public class TweetService extends BaseService implements ITweetService {
 
     TweetResponse tweetResponse;
     TweetRequest tweetRequest;

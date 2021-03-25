@@ -1,10 +1,11 @@
 package edu.byu.cs.tweeter.server.service;
 
+import edu.byu.cs.tweeter.model.service.IFeedTweetsService;
 import edu.byu.cs.tweeter.model.service.request.FeedTweetsRequest;
 import edu.byu.cs.tweeter.model.service.response.FeedTweetsResponse;
 import edu.byu.cs.tweeter.server.dao.FeedTweetsDAO;
 
-public class FeedTweetsServiceImpl {
+public class FeedTweetsServiceImpl implements IFeedTweetsService {
 
     public FeedTweetsResponse getFeedTweets(FeedTweetsRequest request) {
         if (request == null) {

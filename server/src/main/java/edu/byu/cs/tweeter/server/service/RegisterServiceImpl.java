@@ -1,10 +1,11 @@
 package edu.byu.cs.tweeter.server.service;
 
+import edu.byu.cs.tweeter.model.service.IRegisterService;
 import edu.byu.cs.tweeter.model.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.model.service.response.RegisterResponse;
 import edu.byu.cs.tweeter.server.dao.RegisterDAO;
 
-public class RegisterServiceImpl {
+public class RegisterServiceImpl implements IRegisterService {
 
     public RegisterResponse register(RegisterRequest request) {
         if (request == null) {

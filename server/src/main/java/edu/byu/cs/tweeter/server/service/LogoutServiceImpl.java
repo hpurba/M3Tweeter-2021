@@ -1,10 +1,11 @@
 package edu.byu.cs.tweeter.server.service;
 
+import edu.byu.cs.tweeter.model.service.ILogoutService;
 import edu.byu.cs.tweeter.model.service.request.LogoutRequest;
 import edu.byu.cs.tweeter.model.service.response.LogoutResponse;
 import edu.byu.cs.tweeter.server.dao.LogoutDAO;
 
-public class LogoutServiceImpl {
+public class LogoutServiceImpl implements ILogoutService {
 
     public LogoutResponse logout(LogoutRequest request) {
         if (request == null) {

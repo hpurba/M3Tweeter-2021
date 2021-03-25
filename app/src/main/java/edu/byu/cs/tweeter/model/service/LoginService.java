@@ -10,7 +10,7 @@ import edu.byu.cs.tweeter.util.ByteArrayUtils;
 /**
  * LoginService extends the BaseService Abstract Class to login the user.
  */
-public class LoginService extends BaseService {
+public class LoginService extends BaseService implements ILoginService {
     // Login Request and Response Objects.
     LoginRequest loginRequest;
     LoginResponse loginResponse;

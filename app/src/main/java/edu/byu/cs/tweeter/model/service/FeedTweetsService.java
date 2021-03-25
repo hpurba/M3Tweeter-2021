@@ -10,7 +10,7 @@ import edu.byu.cs.tweeter.model.service.response.FeedTweetsResponse;
 /**
  * FeedTweetsService extends the BaseService Abstract Class to get the Tweets for the Feed.
  */
-public class FeedTweetsService extends BaseService{
+public class FeedTweetsService extends BaseService implements IFeedTweetsService {
 
     // Feed of Tweets Response and Request Objects.
     FeedTweetsResponse feedTweetsResponse;

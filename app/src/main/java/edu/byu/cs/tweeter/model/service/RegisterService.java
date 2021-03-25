@@ -7,7 +7,7 @@ import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.model.service.response.RegisterResponse;
 
-public class RegisterService extends BaseService {
+public class RegisterService extends BaseService implements IRegisterService {
 
     RegisterResponse registerResponse;
     RegisterRequest registerRequest;
