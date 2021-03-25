@@ -163,7 +163,7 @@ public class IntegrationTest {
         TweetService tweetService = new TweetService();
         TweetResponse tweetResponse = tweetService.tweet(tweetRequest);
 
-       assertEquals(tweetResponseExpected.getUser(), tweetResponse.getUser());
+        assertEquals(tweetResponseExpected.getUser(), tweetResponse.getUser());
 
     }
 }
