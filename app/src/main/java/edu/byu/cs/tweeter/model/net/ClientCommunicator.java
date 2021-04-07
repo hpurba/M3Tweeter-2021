@@ -19,7 +19,7 @@ import java.util.Map;
  * which is the response Object.
  */
 class ClientCommunicator {
-    private static final int TIMEOUT_MILLIS = 10000;    // Connection timeout (10 sec.)
+    private static final int TIMEOUT_MILLIS = 10000;    // Connection timeout (10 sec. in milliseconds)
     private final String baseURL;                       // Base URL is the Invoke URL found in API:Tweeter stage:dev
 
     // Constructor for this ClientCommunicator
@@ -29,7 +29,8 @@ class ClientCommunicator {
 
     /**
      * Interface: Strategy Pattern for Sending A Request.
-     * 1. Set the Request Method using the HttpURLConnection
+     * - Set the Request Method using the HttpURLConnection
+     * - Send the Request on the HttpURLConnection
      */
     private interface RequestStrategy {
         void setRequestMethod(HttpURLConnection connection) throws IOException;
@@ -40,21 +41,24 @@ class ClientCommunicator {
      *  Does an HTTP POST Request Method.
      *  1. Uses the provided HttpURLConnection to set the request method to be a: POST
      *  2. Send Request. Uses the Request Object (ex. LoginRequest). Serializes to JSON, writes its bytes to DataOutputStream.
-     *  Lastly, invoke the doRequest method using the specific urlPath for the API endpoint, header (usually null),
      *
-     * @param urlPath The urlPath is the extension to the baseURL. (ex: "/loginuser")
-     * @param requestInfo This is the request Object. (ex: LoginRequest)
-     * @param headers   This is typically null.
+     *  Lastly, invoke the doRequest method using the specific urlPath for the API endpoint, request Object,
+     *      header (usually null), and the Response object class type.
+     *      - Note: doRequest will be the one that actually invokes the methods that are Overridden
+     *          (setRequestMethod and sendRequest Method)
+     *
+     * @param urlPath       The urlPath is the extension to the baseURL. (ex: "/loginuser")
+     * @param requestInfo   This is the request Object. (ex: LoginRequest)
+     * @param headers       This is typically null.
      * @param returnType    Return type T: Generic class. T can be substituted with any Class name during initialization.
-     * @param <T>   Class<T> represents a class object of specific class type 'T'.
-     * @return  Returns return from doRequest method.
+     * @param <T>           Class<T> represents a class object of specific class type 'T'.
+     * @return              Returns return from doRequest method, which is a response object.
      * @throws IOException
      * @throws TweeterRemoteException
      */
     <T> T doPost(String urlPath, final Object requestInfo, Map<String, String> headers, Class<T> returnType)
             throws IOException, TweeterRemoteException {
-
-        // Usage of the Request Strategy Interface.
+        // Usage of the Request Strategy Interface. Defines the request strategy methods to be used in doRequest().
         RequestStrategy requestStrategy = new RequestStrategy() {
             @Override
             public void setRequestMethod(HttpURLConnection connection) throws IOException {
@@ -71,24 +75,26 @@ class ClientCommunicator {
                 }
             }
         };
-
+        // Makes the request. Upon success, it returns the result in the correct response object type.
         return doRequest(urlPath, headers, returnType, requestStrategy);
     }
 
     /**
-     * TODO: Figure out from where this will be called from elsewhere.
+     * TODO: Figure out when this will actually be used
+     * https://www.w3schools.com/tags/ref_httpmethods.asp ->
+     *  "Note that the query string (name/value pairs) is sent in the URL of a GET request"
      *
-     * @param urlPath   The urlPath is the extension to the baseURL. (ex: "/loginuser")
-     * @param headers   This is typically null.
+     *
+     * @param urlPath       The urlPath is the extension to the baseURL. (ex: "/loginuser")
+     * @param headers       This is typically null.
      * @param returnType    Return type T: Generic class. Returns appropriate Response Class object.
-     * @param <T>
+     * @param <T>           Class<T> represents a class object of specific class type 'T'.
      * @return
      * @throws IOException
      * @throws TweeterRemoteException
      */
     <T> T doGet(String urlPath, Map<String, String> headers, Class<T> returnType)
             throws IOException, TweeterRemoteException {
-
         // Usage of the RequestStrategy Interface. @Overrides default methods.
         RequestStrategy requestStrategy = new RequestStrategy() {
             @Override
@@ -98,9 +104,9 @@ class ClientCommunicator {
             @Override
             public void sendRequest(HttpURLConnection connection) {
                 // Nothing to send. For a get, the request is sent when the connection is opened.
+                // TODO: Verify with a TA that this is left empty.
             }
         };
-
         return doRequest(urlPath, headers, returnType, requestStrategy);
     }
 
@@ -119,7 +125,6 @@ class ClientCommunicator {
      */
     private <T> T doRequest(String urlPath, Map<String, String> headers, Class<T> returnType, RequestStrategy requestStrategy)
             throws IOException, TweeterRemoteException {
-
         // Initialize the connection to null.
         HttpURLConnection connection = null;
 
