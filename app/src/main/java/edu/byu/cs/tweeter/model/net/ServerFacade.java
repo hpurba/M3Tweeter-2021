@@ -59,7 +59,6 @@ public class ServerFacade {
      */
     public LogoutResponse logout(LogoutRequest request, String urlPath) throws IOException, TweeterRemoteException {
         LogoutResponse response = clientCommunicator.doPost(urlPath, request, null, LogoutResponse.class);
-
         if(response.isSuccess()) {
             return response;
         } else {
@@ -69,24 +68,24 @@ public class ServerFacade {
 
     /**
      * Performs a retrieval of followees of a user (Can be the current user or some other user).
-     * This method returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followees returned and to return the next set of
-     * followees after any that were returned in a previous request.
+     * If successful, this method returns a FollowingResponse Object which contains List<User> which are
+     * followees of the user (a follower) specified in the request.
+     * Also in the FollowingRequest is the limit for the number of followees returned to allow for pagination.
+     * - This also means it contains the lastFollowee of the previous request.
      *
-     * @param request contains information about the user whose followees are to be returned and any
-     *                other information required to satisfy the request.
-     * @return the followees.
+     * @param request   FollowingRequest Object which contains all information necessary to get the followees of a user (the follower).
+     * @return          FollowingResponse object.
      */
     public FollowingResponse getFollowees(FollowingRequest request, String urlPath)
             throws IOException, TweeterRemoteException {
         FollowingResponse response = clientCommunicator.doPost(urlPath, request, null, FollowingResponse.class);
-
         if(response.isSuccess()) {
             return response;
         } else {
             throw new RuntimeException(response.getMessage());
         }
     }
+
 
     /**
      * Returns the users that the user specified in the request is following. Uses information in
