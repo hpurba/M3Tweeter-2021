@@ -12,6 +12,7 @@ import edu.byu.cs.tweeter.model.service.response.LoginResponse;
 import edu.byu.cs.tweeter.presenter.LoginPresenter;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
 
+// THIS CANNOT CHANGE OR DO ANYTHING WITH THE VIEW (DIFFERENT THREAD)
 public class LoginTask extends AsyncTask<LoginRequest, Void, LoginResponse> {
 
     private final LoginPresenter presenter;
@@ -56,7 +57,6 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, LoginResponse> {
 
         try {
             loginResponse = presenter.login();
-//            loginResponse = presenter.login(loginRequests[0]);
 
             if(loginResponse.isSuccess()) {
                 loadImage(loginResponse.getUser());

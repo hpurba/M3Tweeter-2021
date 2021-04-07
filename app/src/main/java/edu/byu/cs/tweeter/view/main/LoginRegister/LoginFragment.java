@@ -60,9 +60,10 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
             @Override
             public void onClick(View view) {
                 // Show the Toast
-                // TODO: This should be a method in presenter which the presenter calls it.
                 loginInToast = Toast.makeText(getActivity(), "Logging In", Toast.LENGTH_LONG);
                 loginInToast.show();
+
+//                presenter.showLoggingInToast(); // This is wasteful but for demonstrative purposes. Use the above for the toast.
 
                 LoginTask loginTask = new LoginTask(presenter, LoginFragment.this);
                 loginTask.execute();
@@ -111,16 +112,32 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
         Toast.makeText(getActivity(), "Failed to login because of exception: " + exception.getMessage(), Toast.LENGTH_LONG).show();
     }
 
-
+    /**
+     * Retrieves the username from the view's username input text field.
+     *
+     * @return username as a String.
+     */
     @Override
     public String getUsernameText() {
         String username = usernameEditText.getText().toString();
         return username;
     }
 
+    /**
+     * Retrieves the password from the view's username input text field.
+     *
+     * @return password as a String.
+     */
     @Override
     public String getPasswordText() {
         String password = passwordEditText.getText().toString();
         return password;
+    }
+
+    @Override
+    public void showLoggingInToast() {
+        // Show the Toast
+        loginInToast = Toast.makeText(getActivity(), "Logging In", Toast.LENGTH_LONG);
+        loginInToast.show();
     }
 }

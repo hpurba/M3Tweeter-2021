@@ -14,14 +14,20 @@ public class LoginPresenter {
 
     private final View view;
 
+//    public void showLoggingInToast() {
+//        view.showLoggingInToast();
+//    }
+
     /**
      * The interface by which this presenter communicates with it's view.
      */
     public interface View {
+        // This is only for retrieval, or raising an event (change a button status).
         // If needed, specify methods here that will be called on the view in response to model updates
-        // TODO: This should have get username field, get password field.
         String getUsernameText();
         String getPasswordText();
+//        void showLoggingInToast();
+        // ex: activate LoginButton (if both are filled this method is called on the view. activate the login button.)
     }
 
     /**
@@ -37,7 +43,6 @@ public class LoginPresenter {
      * Makes a login request.
      *
      */
-//    public LoginResponse login(LoginRequest loginRequest) throws IOException, TweeterRemoteException {
     public LoginResponse login() throws IOException, TweeterRemoteException {
 
         LoginRequest loginRequest = new LoginRequest(view.getUsernameText(), view.getPasswordText());
