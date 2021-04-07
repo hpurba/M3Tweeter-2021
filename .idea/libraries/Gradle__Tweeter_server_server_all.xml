@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: Tweeter.server.server-all">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/server/build/libs/server-all.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
