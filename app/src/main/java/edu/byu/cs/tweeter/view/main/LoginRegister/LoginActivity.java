@@ -17,7 +17,7 @@ import edu.byu.cs.tweeter.presenter.LoginPresenter;
  * TODO: Currently, Login will log in a TestUser, ignoring any @username and password combination.
  *  Fix this in later milestones when appropriate.
  */
-public class LoginActivity extends AppCompatActivity implements LoginPresenter.View {
+public class LoginActivity extends AppCompatActivity  {
     private static final String LOG_TAG = "LoginActivity";
 
     // Tabs and ViewPager

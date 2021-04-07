@@ -19,6 +19,9 @@ public class LoginPresenter {
      */
     public interface View {
         // If needed, specify methods here that will be called on the view in response to model updates
+        // TODO: This should have get username field, get password field.
+        String getUsernameText();
+        String getPasswordText();
     }
 
     /**
@@ -33,9 +36,12 @@ public class LoginPresenter {
     /**
      * Makes a login request.
      *
-     * @param loginRequest the request.
      */
-    public LoginResponse login(LoginRequest loginRequest) throws IOException, TweeterRemoteException {
+//    public LoginResponse login(LoginRequest loginRequest) throws IOException, TweeterRemoteException {
+    public LoginResponse login() throws IOException, TweeterRemoteException {
+
+        LoginRequest loginRequest = new LoginRequest(view.getUsernameText(), view.getPasswordText());
+
         LoginService loginService = getLoginService();
         if (loginRequest.getUsername() == null || loginRequest.getPassword() == null){
             throw new IOException();
