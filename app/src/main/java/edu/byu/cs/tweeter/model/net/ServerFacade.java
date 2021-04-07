@@ -38,7 +38,10 @@ public class ServerFacade {
      * If successful, returns the logged in user and an auth token in the LoginResponse object.
      *
      * @param request   LoginRequest Object which contains all information needed to perform a login.
-     * @return          LogoutResponse Object.
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for logging a user in.
+     * @return          LogoutResponse Object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
     public LoginResponse login(LoginRequest request, String urlPath) throws IOException, TweeterRemoteException {
         LoginResponse response = clientCommunicator.doPost(urlPath, request, null, LoginResponse.class);
@@ -55,10 +58,35 @@ public class ServerFacade {
      * If successful, returns a LogoutResponse with success = true and message = null.
      *
      * @param request   LogoutRequest Object which contains all information needed to perform a logout.
-     * @return          LogoutResponse object.
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for logging a user out.
+     * @return          LogoutResponse object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
     public LogoutResponse logout(LogoutRequest request, String urlPath) throws IOException, TweeterRemoteException {
         LogoutResponse response = clientCommunicator.doPost(urlPath, request, null, LogoutResponse.class);
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
+        }
+    }
+
+    /**
+     * Performs a register of a new user.
+     * If successful, this method returns a RegisterResponse Object which contains the newly logged in user and an auth token.
+     * Included in the RegisterRequest Object is the (potential) newly created user's firstName, lastName, alias (username),
+     * password, and byteArray (byte[]).
+     *
+     * @param request   RegisterRequest Object which contains all the necessary information to register a new user and log them in.
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for registering a new user.
+     * @return          RegisterResponse Object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
+     */
+    public RegisterResponse register(RegisterRequest request, String urlPath) throws IOException, TweeterRemoteException {
+        RegisterResponse response = clientCommunicator.doPost(urlPath, request, null, RegisterResponse.class);
+
         if(response.isSuccess()) {
             return response;
         } else {
@@ -74,7 +102,10 @@ public class ServerFacade {
      * - This also means it contains the lastFollowee of the previous request.
      *
      * @param request   FollowingRequest Object which contains all information necessary to get the followees of a user (the follower).
-     * @return          FollowingResponse object.
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for getting followees of a user.
+     * @return          FollowingResponse object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
     public FollowingResponse getFollowees(FollowingRequest request, String urlPath)
             throws IOException, TweeterRemoteException {
@@ -86,16 +117,18 @@ public class ServerFacade {
         }
     }
 
-
     /**
-     * Returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followers returned and to return the next set of
-     * followers after any that were returned in a previous request. The current implementation
-     * returns generated data and doesn't actually make a network request.
+     * Performs a retrieval of followers of a user (Can be the current user or some other user).
+     * If successful, this method returns a FollowerResponse Object which contains List<User> which are
+     * followers of the user (a followee) specified in the request.
+     * Also in the FollowerRequest is the limit for the number of followees returned to allow for pagination.
+     *  - This also means it contains the lastFollower of the previous request.
      *
-     * @param request contains information about the user whose followers are to be returned and any
-     *                other information required to satisfy the request.
-     * @return the following response.
+     * @param request   FollowerRequest Object which contains all information necessary to get the followers of a user (the followee).
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for getting followers of a user.
+     * @return          FollowerResponse Object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
     public FollowerResponse getFollowers(FollowerRequest request, String urlPath) throws IOException, TweeterRemoteException {
         FollowerResponse response = clientCommunicator.doPost(urlPath, request, null, FollowerResponse.class);
@@ -108,16 +141,20 @@ public class ServerFacade {
 
     }
 
-
     /**
-     * Returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followers returned and to return the next set of
-     * followers after any that were returned in a previous request. The current implementation
-     * returns generated data and doesn't actually make a network request.
+     * Performs a retrieval of feed tweets of the user. Only the feed of the logged in user will have
+     * a feed of followee (tweets of users he/she if following) tweets visible.
+     * If successful, this method returns a FeedTweetsResponse Object which contains List<Tweet>.
+     * Included in the FeedTweetsRequest is the limit for the number of feed tweets to be returned to allow for pagination.
+     * - This also means it contains the lastTweet of the previous request.
      *
-     * @param request contains information about the tweet are to be returned and any
-     *                other information required to satisfy the request.
-     * @return the following response.
+     * *** Remember only the currently logged in user can see his/her own feed.
+     *
+     * @param request   FeedTweetsRequest Object which contains all the necessary information to get the feed of tweets for the current user.
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for getting the user's feed of tweets.
+     * @return          FeedTweetsResponse Object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
     public FeedTweetsResponse getFeedTweets(FeedTweetsRequest request, String urlPath) throws IOException, TweeterRemoteException {
 
@@ -131,14 +168,18 @@ public class ServerFacade {
     }
 
     /**
-     * Returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followers returned and to return the next set of
-     * followers after any that were returned in a previous request. The current implementation
-     * returns generated data and doesn't actually make a network request.
+     * Performs a retrieval of story tweets of a user (Can be the current user or some other user).
+     * If successful, this method returns a StoryTweetsResponse Object which contains List<Tweet>.
+     * Included in the StoryTweetsRequest is the limit for the number of story tweets to be returned to allow for pagination.
+     *   - This also means it contains the lastTweet of the previous request.
      *
-     * @param request contains information about the tweet are to be returned and any
-     *                other information required to satisfy the request.
-     * @return the following response.
+     * *** Remember any user can see another user's story.
+     *
+     * @param request   StoryTweetsRequest Object which contains all the necessary information to get the story of tweets for a user.
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for getting the user's story of tweets.
+     * @return          StoryTweetsResponse Object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
     public StoryTweetsResponse getStoryTweets(StoryTweetsRequest request, String urlPath) throws IOException, TweeterRemoteException {
 
@@ -151,26 +192,18 @@ public class ServerFacade {
         }
     }
 
-
     /**
-     * Performs a login and if successful, returns the logged in user and an auth token. The current
-     * implementation is hard-coded to return a dummy user and doesn't actually make a network
-     * request.
+     * Performs a post of a tweet by the currently logged in user.
+     * If successful, this method will post a tweet (enter the tweet into dynamoDB) and return a TweetResponse Object which
+     * indicates if the action was successful or not.
+     * Included in the TweetRequest Object is the username/alias of the currently tweeting user (logged in user) and tweetText.
      *
-     * @param request contains all information needed to perform a login.
-     * @return the login response.
+     * @param request   TweetRequest Object which contains all the necessary information to make a tweet by the user.
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for making a tweet.
+     * @return          TweetResponse Object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
-    public RegisterResponse register(RegisterRequest request, String urlPath) throws IOException, TweeterRemoteException {
-        RegisterResponse response = clientCommunicator.doPost(urlPath, request, null, RegisterResponse.class);
-
-        if(response.isSuccess()) {
-            return response;
-        } else {
-            throw new RuntimeException(response.getMessage());
-        }
-    }
-
-    // POST A TWEET
     public TweetResponse tweet(TweetRequest request, String urlPath) throws IOException, TweeterRemoteException {
         TweetResponse response = clientCommunicator.doPost(urlPath, request, null, TweetResponse.class);
 
@@ -181,6 +214,17 @@ public class ServerFacade {
         }
     }
 
+    /**
+     * Performs a change of following status of a user by the currently logged in user to FOLLOWING.
+     * If successful, this method will make the currently logged in user follow another user indicated by "otherPersonUsername".
+     * Included in the FollowingStatusRequest is a boolean "isFollowing" which contains the following or un-following that is being requested.
+     *
+     * @param request   FollowingStatusRequest Object which contains all the necessary information to make a change to follow another user.
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for making a request to follow another user and change following status.
+     * @return          FollowingStatusResponse Object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
+     */
     public FollowingStatusResponse changeToFollow(FollowingStatusRequest request, String urlPath) throws IOException, TweeterRemoteException {
         FollowingStatusResponse response = clientCommunicator.doPost(urlPath, request, null, FollowingStatusResponse.class);
 
@@ -191,6 +235,17 @@ public class ServerFacade {
         }
     }
 
+    /**
+     * Performs a change of following status of a user by the currently logged in user to UN-FOLLOWING.
+     * If successful, this method will make the currently logged in user un-follow another user indicated by "otherPersonUsername".
+     * Included in the FollowingStatusRequest is a boolean "isFollowing" which contains the following or un-following that is being requested.
+     *
+     * @param request   FollowingStatusRequest Object which contains all the necessary information to make a change to un-follow another user.
+     * @param urlPath   urlPath Extension to the SERVER_URL (base URL) for making a request to un-follow another user and change following status.
+     * @return          FollowingStatusResponse Object from the AWS server.
+     * @throws IOException
+     * @throws TweeterRemoteException
+     */
     public FollowingStatusResponse changeToUnFollow(FollowingStatusRequest request, String urlPath) throws IOException, TweeterRemoteException {
         FollowingStatusResponse response = clientCommunicator.doPost(urlPath, request, null, FollowingStatusResponse.class);
 
