@@ -13,15 +13,14 @@ import edu.byu.cs.tweeter.model.service.response.FollowingStatusResponse;
  * is following "someOtherUser").
  */
 public class FollowingStatusService extends BaseService implements IFollowingStatusService {
+    // The url_path extension for following a user or unfollowing a user. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
+    private static final String URL_PATH_FOLLOW = "/followuser";
+    private static final String URL_PATH_UNFOLLOW = "/unfollowuser";
 
     // FollowingStatus Response and Request Objects.
     FollowingStatusResponse followingStatusResponse;
     FollowingStatusRequest followingStatusRequest;
 
-    // The url_path extension for register. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
-    private static final String URL_PATH_FOLLOW = "/followuser";
-    // The url_path extension for register. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
-    private static final String URL_PATH_UNFOLLOW = "/unfollowuser";
 
     /**
      * This is called to get the Following status for the current user over another user.
@@ -29,8 +28,8 @@ public class FollowingStatusService extends BaseService implements IFollowingSta
      * the currently viewing user's page.
      * Takes a FollowingStatusRequest as the parameter and returns a FollowingStatusResponse.
      *
-     * @param request
-     * @return
+     * @param request   FollowingStatusRequest Object.
+     * @return          FollowingStatusResponse Object.
      * @throws IOException
      */
     public FollowingStatusResponse getFollowingStatus(FollowingStatusRequest request) throws IOException {
@@ -43,14 +42,15 @@ public class FollowingStatusService extends BaseService implements IFollowingSta
      * This is the primary method in the Template pattern of the BaseService Abstract Class.
      * This will get the FollowingStatus from the server facade of the current user on another user
      * using the provided FollowingStatusRequest (which is first passed into getFollowingStatus).
+     *
      * @throws IOException
+     * @throws TweeterRemoteException
      */
     @Override
     public void doServiceSpecificTask() throws IOException, TweeterRemoteException {
         ServerFacade serverFacade = getServerFacade();
 
-        // This will help determine which API endpoint to call depending on if
-        // the user is going to begin following another user or un-follow a user.
+        // Depending on the user beginning to following another user or un-follow a user, use a specific API endpoint.
         String URL_Extension = "";
         if (followingStatusRequest.getFollowing() == true) {
             this.followingStatusResponse = serverFacade.changeToFollow(followingStatusRequest, URL_PATH_FOLLOW);
@@ -58,6 +58,5 @@ public class FollowingStatusService extends BaseService implements IFollowingSta
         else {
             this.followingStatusResponse = serverFacade.changeToUnFollow(followingStatusRequest, URL_PATH_UNFOLLOW);
         }
-//        this.followingStatusResponse = serverFacade.checkFollowingStatus(followingStatusRequest, URL_Extension);
     }
 }

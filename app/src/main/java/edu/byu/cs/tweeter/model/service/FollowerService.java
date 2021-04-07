@@ -12,6 +12,7 @@ import edu.byu.cs.tweeter.util.ByteArrayUtils;
  * FollowerService extends the BaseService Abstract Class to get the Followers of a user.
  */
 public class FollowerService extends BaseService implements IFollowerService {
+    // The url_path extension for retrieving followers for a user. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
     private static final String URL_PATH = "/followers";
 
     // Follower Response and Request Objects.
@@ -19,11 +20,11 @@ public class FollowerService extends BaseService implements IFollowerService {
     FollowerRequest followerRequest;
 
     /**
-     * This is called to get the Followers for a user (followee).
-     * Takes a FollowerRequest as the parameter and returns a FollowerResponse.
+     * This is called to get the Followers for a user (aka a followee).
+     * Takes a FollowerRequest Object as the parameter and returns a FollowerResponse Object.
      *
-     * @param request A FollowerRequest Object.
-     * @return A FollowerResponse Object which contains the followers of the user.
+     * @param request   FollowerRequest Object.
+     * @return          FollowerResponse Object which contains the followers of a user.
      */
     public FollowerResponse getFollowers(FollowerRequest request) throws IOException {
         this.followerRequest = request;
@@ -35,6 +36,9 @@ public class FollowerService extends BaseService implements IFollowerService {
      * This is the primary method in the Template pattern of the BaseService Abstract Class.
      * This will get the Followers from the server facade of a user (followee) using the provided
      * FollowerRequest (which is first passed into getFollowers).
+     *
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
     @Override
     public void doServiceSpecificTask() throws IOException, TweeterRemoteException {
@@ -47,7 +51,9 @@ public class FollowerService extends BaseService implements IFollowerService {
 
     /**
      * Loads the profile image data for each follower included in the response.
-     * @param response the response from the follower request.
+     *
+     * @param response  The response from the follower request.
+     * @throws IOException
      */
     public void loadImages(FollowerResponse response) throws IOException {
         for(User user : response.getFollowers()) {

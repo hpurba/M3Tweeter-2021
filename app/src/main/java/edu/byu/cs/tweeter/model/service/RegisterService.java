@@ -8,19 +8,35 @@ import edu.byu.cs.tweeter.model.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.model.service.response.RegisterResponse;
 
 public class RegisterService extends BaseService implements IRegisterService {
-
-    RegisterResponse registerResponse;
-    RegisterRequest registerRequest;
-
     // The url_path extension for register. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
     private static final String URL_PATH = "/registeruser";
 
+    // Register Response and Request Objects.
+    RegisterResponse registerResponse;
+    RegisterRequest registerRequest;
+
+    /**
+     * Performs the registering of a new user.
+     *
+     * @param request   RegisterRequest Object.
+     * @return          RegisterResponse Object.
+     * @throws IOException
+     */
     public RegisterResponse register(RegisterRequest request) throws IOException {
         this.registerRequest = request;
         processServiceRequest();
         return registerResponse;
     }
 
+    /**
+     * This is the primary method in the Template pattern of the BaseService Class.
+     * This will register a user by calling the register method in the server facade
+     * by passing it the provided registerRequest (which is first passed into the register method).
+     * Returning the registerResponse Object is handled in the register() method.
+     *
+     * @throws IOException
+     * @throws TweeterRemoteException
+     */
     @Override
     public void doServiceSpecificTask() throws IOException, TweeterRemoteException {
         ServerFacade serverFacade = getServerFacade();
@@ -28,16 +44,5 @@ public class RegisterService extends BaseService implements IRegisterService {
         if(registerResponse.isSuccess()) {
             loadImage(registerResponse.getUser());
         }
-    }
-
-    /**
-     * Returns an instance of {@link ServerFacade}. Allows mocking of the ServerFacade class for
-     * testing purposes. All usages of ServerFacade should get their ServerFacade instance from this
-     * method to allow for proper mocking.
-     *
-     * @return the instance.
-     */
-    public ServerFacade getServerFacade() {
-        return new ServerFacade();
     }
 }

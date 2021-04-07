@@ -11,20 +11,19 @@ import edu.byu.cs.tweeter.model.service.response.FeedTweetsResponse;
  * FeedTweetsService extends the BaseService Abstract Class to get the Tweets for the Feed.
  */
 public class FeedTweetsService extends BaseService implements IFeedTweetsService {
+    // The url_path extension for retrieving tweets for the user's feed. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
+    private static final String URL_PATH = "/feedtweets";
 
     // Feed of Tweets Response and Request Objects.
     FeedTweetsResponse feedTweetsResponse;
     FeedTweetsRequest feedTweetsRequest;
 
-    // The url_path extension for register. (Can be found in AWS console -> API:Tweeter -> Stages -> dev tab)
-    private static final String URL_PATH = "/feedtweets";
-
     /**
-     * This is called to get the Tweets for the users Feed.
-     * Takes a FeedTweetsRequest as the parameter and returns a FeedTweetsResponse.
+     * This is called to get the Tweets for the user's Feed.
+     * Takes a FeedTweetsRequest Object as the parameter and returns a FeedTweetsResponse Object.
      *
-     * @param request A FeedTweetsRequest Object.
-     * @return A FeedTweetsResponse Object.
+     * @param request   FeedTweetsRequest Object.
+     * @return          FeedTweetsResponse Object.
      * @throws IOException
      */
     public FeedTweetsResponse getFeedTweets(FeedTweetsRequest request) throws IOException {
@@ -37,6 +36,9 @@ public class FeedTweetsService extends BaseService implements IFeedTweetsService
      * This is the primary method in the Template pattern of the BaseService Class.
      * This will get the Feed Tweets from the server facade using the provided
      * feedTweetsRequest (which is first passed into getFeedTweets).
+     *
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
     @Override
     public void doServiceSpecificTask() throws IOException, TweeterRemoteException {
