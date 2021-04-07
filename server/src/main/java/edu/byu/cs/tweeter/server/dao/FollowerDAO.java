@@ -66,6 +66,12 @@ public class FollowerDAO {
 //        return new FollowerResponse(allFollowers, hasMorePages);
     }
 
+    /**
+     * Returns the list of dummy follower data. This is written as a separate method to allow
+     * mocking of the followers.
+     *
+     * @return the generator.
+     */
     List<User> getDummyFollowers() {
         user1.setFollowingCount(10);
         user1.setFollowersCount(17);
@@ -113,6 +119,17 @@ public class FollowerDAO {
                 user19, user20);
     }
 
+
+    /**
+     * Determines the index for the first follower in the specified 'allFollowers' list that should
+     * be returned in the current request. This will be the index of the next follower after the
+     * specified 'lastFollower'.
+     *
+     * @param lastFollower the last follower that was returned in the previous request or null if
+     *                     there was no previous request.
+     * @param allFollowers the generated list of followers from which we are returning paged results.
+     * @return the index of the first follower to be returned.
+     */
     private int getFolloweesStartingIndex(User lastFollowee, List<User> allFollowees) {
 
         int followeesIndex = 0;
