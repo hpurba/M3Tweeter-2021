@@ -11,24 +11,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import edu.byu.cs.tweeter.R;
-import edu.byu.cs.tweeter.model.service.request.LoginRequest;
 import edu.byu.cs.tweeter.model.service.response.LoginResponse;
 import edu.byu.cs.tweeter.presenter.LoginPresenter;
 import edu.byu.cs.tweeter.view.asyncTasks.LoginTask;
 import edu.byu.cs.tweeter.view.main.MainActivity;
 
-
+/**
+ * LoginFragment is the View which displays the content for logging a user in.
+ * Implements Async LoginTask and LoginPresenter for calling the login() method.
+ */
 public class LoginFragment extends Fragment implements LoginPresenter.View, LoginTask.Observer {
     public LoginFragment() {}
 
     // Used in Logging. Specifically when an exception occurs
     private static final String LOG_TAG = "LoginFragment";
 
-    // Presenter assumes the functionality of the “middle-man”
-    // all presentation logic is pushed to the presenter
+    // Presenter assumes the functionality of the “middle-man” all presentation logic is diverted here
     private LoginPresenter presenter;
 
-    // Toast used to notify the User of Login (Successful, Unsuccessful, or Exception)
+    // Toast used to notify the User of a Login (Successful, Unsuccessful, or Exception)
     private Toast loginInToast;
 
     // ExitText for the user to enter their username and password.
@@ -62,9 +63,10 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
                 // Show the Toast
                 loginInToast = Toast.makeText(getActivity(), "Logging In", Toast.LENGTH_LONG);
                 loginInToast.show();
+                // This is wasteful but for demonstrative purposes. Use the above for the toast.
+                //  presenter.showLoggingInToast();
 
-//                presenter.showLoggingInToast(); // This is wasteful but for demonstrative purposes. Use the above for the toast.
-
+                // Make the Login
                 LoginTask loginTask = new LoginTask(presenter, LoginFragment.this);
                 loginTask.execute();
             }
@@ -103,7 +105,6 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
     /**
      * A callback indicating that an exception was thrown in an asynchronous method called on the
      * presenter.
-     *
      * @param exception the exception.
      */
     @Override
@@ -114,7 +115,6 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
 
     /**
      * Retrieves the username from the view's username input text field.
-     *
      * @return username as a String.
      */
     @Override
@@ -125,7 +125,6 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
 
     /**
      * Retrieves the password from the view's username input text field.
-     *
      * @return password as a String.
      */
     @Override
@@ -134,10 +133,15 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
         return password;
     }
 
-    @Override
-    public void showLoggingInToast() {
-        // Show the Toast
-        loginInToast = Toast.makeText(getActivity(), "Logging In", Toast.LENGTH_LONG);
-        loginInToast.show();
-    }
+    /**
+     * This is for demonstrative purposes only.
+     * Demonstrates how view will call presenter for a method which involves logic.
+     * Then the presenter may call this method to update/modify the view.
+     */
+//    @Override
+//    public void showLoggingInToast() {
+//        // Show the Toast
+//        loginInToast = Toast.makeText(getActivity(), "Logging In", Toast.LENGTH_LONG);
+//        loginInToast.show();
+//    }
 }

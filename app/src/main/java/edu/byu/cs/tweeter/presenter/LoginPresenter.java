@@ -14,26 +14,24 @@ public class LoginPresenter {
 
     private final View view;
 
-//    public void showLoggingInToast() {
-//        view.showLoggingInToast();
-//    }
-
     /**
-     * The interface by which this presenter communicates with it's view.
+     * This is the interface for the presenter's view (LoginFragment).
+     * It is the interface by which this presenter can communicate with it's view (call it's methods).
+     * Methods listed here should be used only for retrieval, or raising an event (ex: change a button status).
+     *  - If needed, specify methods here that will be called on the view in response to model updates.
      */
     public interface View {
-        // This is only for retrieval, or raising an event (change a button status).
-        // If needed, specify methods here that will be called on the view in response to model updates
         String getUsernameText();
         String getPasswordText();
-//        void showLoggingInToast();
-        // ex: activate LoginButton (if both are filled this method is called on the view. activate the login button.)
+
+        // Demonstrative purposes only
+        // void showLoggingInToast();
+        // TODO: Not necessary, just an idea: Activate the LoginButton (if both text fields are filled this method is called on the view.)
     }
 
     /**
-     * Creates an instance.
-     *
-     * @param view the view for which this class is the presenter.
+     * Creates an instance of a LoginPresenter with the provided view (should be a LoginFragment).
+     * @param view View, which should be a LoginFragment view for which this class is the presenter for.
      */
     public LoginPresenter(View view) {
         this.view = view;
@@ -41,20 +39,32 @@ public class LoginPresenter {
 
     /**
      * Makes a login request.
-     *
+     * @return  LoginResponse Object.
+     * @throws IOException
+     * @throws TweeterRemoteException
      */
     public LoginResponse login() throws IOException, TweeterRemoteException {
 
+        // Construct a Login Request using the username and password in the text fields.
         LoginRequest loginRequest = new LoginRequest(view.getUsernameText(), view.getPasswordText());
 
         LoginService loginService = getLoginService();
         if (loginRequest.getUsername() == null || loginRequest.getPassword() == null){
             throw new IOException();
         }
-        return loginService.login(loginRequest);
+        return loginService.login(loginRequest);    // Make a login
     }
 
-    LoginService getLoginService() {
+    /**
+     * Performs a retrieval of a new Login Service
+     * @return  A new LoginService Object.
+     */
+    public LoginService getLoginService() {
         return new LoginService();
     }
+
+    // Demonstrative purposes only for calling a presenter method from the view (Login Fragment)
+    //    public void showLoggingInToast() {
+    //        view.showLoggingInToast();
+    //    }
 }
