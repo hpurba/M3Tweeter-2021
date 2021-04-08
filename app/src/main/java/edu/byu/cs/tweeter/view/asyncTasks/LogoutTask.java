@@ -10,7 +10,6 @@ import edu.byu.cs.tweeter.presenter.LogoutPresenter;
 
 public class LogoutTask extends AsyncTask<LogoutRequest, Void, LogoutResponse> {
 
-
     private final LogoutPresenter presenter;
     private final Observer observer;
     private Exception exception;
@@ -52,10 +51,11 @@ public class LogoutTask extends AsyncTask<LogoutRequest, Void, LogoutResponse> {
         LogoutResponse logoutResponse = null;
 
         try {
-            logoutResponse = presenter.logout(logoutRequests[0]);
+            logoutResponse = presenter.logout();
 
             if(logoutResponse.isSuccess()) {
                 // when the logout is successful
+                // TODO: Maybe erase the logged in user information and authtoken (potentially being held in the MainActivity).
 
             }
         } catch (IOException ex) {

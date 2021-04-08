@@ -56,7 +56,7 @@ public class LoginPresenter {
     }
 
     /**
-     * Performs a retrieval of a new Login Service
+     * Performs a retrieval of a new LoginService
      * @return  A new LoginService Object.
      */
     public LoginService getLoginService() {

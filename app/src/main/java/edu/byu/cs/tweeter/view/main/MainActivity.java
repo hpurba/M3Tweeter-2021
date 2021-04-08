@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
     private View view;
     private PopupWindow popupWindow;
     private ImageView tweetProfilePictureView;
-    //    private Bitmap profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,9 +182,8 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
         logoutToast.show();
 
         // Execute the logout
-        LogoutRequest logoutRequest = new LogoutRequest(user.getAlias()); // Alias is the @username
         LogoutTask logoutTask = new LogoutTask(logoutPresenter, this);
-        logoutTask.execute(logoutRequest);
+        logoutTask.execute();
     }
 
 
@@ -325,5 +323,10 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
     public static void clearDim(@NonNull ViewGroup parent) {
         ViewGroupOverlay overlay = parent.getOverlay();
         overlay.clear();
+    }
+
+    @Override
+    public String getUserAlias() {
+        return user.getAlias();
     }
 }

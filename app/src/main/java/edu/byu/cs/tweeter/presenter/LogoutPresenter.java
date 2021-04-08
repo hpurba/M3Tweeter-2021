@@ -19,14 +19,12 @@ public class LogoutPresenter {
      * The interface by which this presenter communicates with it's view.
      */
     public interface View {
-        // If needed, specify methods here that will be called on the view in response to model updates
-        // String getUserAlias();   // TODO: Do this if you have time. user.getAlias() is currently in mainActivity.
+        String getUserAlias();
     }
 
     /**
-     * Creates an instance.
-     *
-     * @param view the view for which this class is the presenter.
+     * Creates an instance of a LogoutPresenter with the provided view (should be the MainActivity).
+     * @param view View, which should be a MainActivity view for which this class is a presenter for.
      */
     public LogoutPresenter(View view) {
         this.view = view;
@@ -34,14 +32,20 @@ public class LogoutPresenter {
 
     /**
      * Makes a logout request.
-     *
-     * @param logoutRequest the request.
+     * @return  LogoutResponse Object.
+     * @throws IOException
      */
-    public LogoutResponse logout(LogoutRequest logoutRequest) throws IOException {
+    public LogoutResponse logout() throws IOException {
+        LogoutRequest logoutRequest = new LogoutRequest(view.getUserAlias()); // Alias is the @username
+
         LogoutService logoutService = new LogoutService();
         return logoutService.logout(logoutRequest);
     }
 
+    /**
+     * Performs a retrieval of a new LogoutService
+     * @return  A new LogoutService Object.
+     */
     LogoutService getLogoutService() {
         return new LogoutService();
     }
