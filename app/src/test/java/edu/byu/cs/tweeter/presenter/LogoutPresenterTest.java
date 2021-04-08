@@ -34,7 +34,12 @@ class LogoutPresenterTest {
         Mockito.when(mockLogoutService.logout(request)).thenReturn(response);
 
         // Wrap a FollowingPresenter in a spy that will use the mock service.
-        presenter = Mockito.spy(new LogoutPresenter(new LogoutPresenter.View() {}));
+        presenter = Mockito.spy(new LogoutPresenter(new LogoutPresenter.View() {
+            @Override
+            public String getUserAlias() {
+                return null;
+            }
+        }));
         Mockito.when(presenter.getLogoutService()).thenReturn(mockLogoutService);
     }
 

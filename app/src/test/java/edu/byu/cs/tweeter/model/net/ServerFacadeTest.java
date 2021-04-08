@@ -28,6 +28,7 @@ class ServerFacadeTest {
 
     private ServerFacade serverFacadeSpy;
 
+
     @BeforeEach
     void setup() {
         serverFacadeSpy = Mockito.spy(new ServerFacade());
@@ -36,10 +37,12 @@ class ServerFacadeTest {
     @Test
     void testGetFollowees_noFolloweesForUser() throws IOException, TweeterRemoteException {
         List<User> followees = Collections.emptyList();
-        Mockito.when(serverFacadeSpy.getDummyFollowees()).thenReturn(followees);
+//        Mockito.when(serverFacadeSpy.getFollowees()).thenReturn(followees);
 
         FollowingRequest request = new FollowingRequest(user1, 10, null);
         FollowingResponse response = serverFacadeSpy.getFollowees(request, URL_PATH);
+
+        Mockito.when(serverFacadeSpy.getFollowees(request, "")).thenReturn(followees);
 
         Assertions.assertEquals(8, response.getFollowees().size());
         Assertions.assertTrue(response.getHasMorePages());
