@@ -12,16 +12,18 @@ public class FeedTweetsPresenter {
     private final View view;
 
     /**
-     * The interface by which this presenter communicates with it's view.
+     * This is the interface for the presenter's view (FeedTweetsFragment).
+     * It is the interface by which this presenter can communicate with it's view (call it's methods).
+     * Methods listed here should be used only for retrieval, or raising an event (ex: change a button status).
+     *  - If needed, specify methods here that will be called on the view in response to model updates.
      */
     public interface View {
         // If needed, specify methods here that will be called on the view in response to model updates
     }
 
     /**
-     * Creates an instance.
-     *
-     * @param view the view for which this class is the presenter.
+     * Creates an instance of a FeedTweetsPresenter with the provided view (should be FeedTweetsFragment).
+     * @param view View, which should be a FeedTweetsFragment view for which this class is the presenter.
      */
     public FeedTweetsPresenter(View view) {
         this.view = view;
@@ -34,6 +36,12 @@ public class FeedTweetsPresenter {
      *
      * @param request contains the data required to fulfill the request.
      * @return the followees.
+     */
+    /**
+     * Makes the retrieval of the feed of tweets.
+     * @param request   contains the data required to fulfill the request.
+     * @return
+     * @throws IOException
      */
     public FeedTweetsResponse getFeedTweets(FeedTweetsRequest request) throws IOException {
         FeedTweetsService feedTweetsService = getFeedTweetsService();
