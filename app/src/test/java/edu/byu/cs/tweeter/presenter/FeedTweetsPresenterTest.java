@@ -38,7 +38,22 @@ class FeedTweetsPresenterTest {
         Mockito.when(mockFeedTweetsService.getFeedTweets(request)).thenReturn(response);
 
         // Wrap a FollowingPresenter in a spy that will use the mock service.
-        presenter = Mockito.spy(new FeedTweetsPresenter(new FeedTweetsPresenter.View() {}));
+        presenter = Mockito.spy(new FeedTweetsPresenter(new FeedTweetsPresenter.View() {
+            @Override
+            public Tweet getTweet() {
+                return null;
+            }
+
+            @Override
+            public int getPageSize() {
+                return 0;
+            }
+
+            @Override
+            public Tweet getLastTweet() {
+                return null;
+            }
+        }));
         Mockito.when(presenter.getFeedTweetsService()).thenReturn(mockFeedTweetsService);
     }
 
@@ -48,7 +63,8 @@ class FeedTweetsPresenterTest {
 
         // Assert that the presenter returns the same response as the service (it doesn't do
         // anything else, so there's nothing else to test).
-        Assertions.assertEquals(response, presenter.getFeedTweets(request));
+//        Assertions.assertEquals(response, presenter.getFeedTweets(request));
+        Assertions.assertEquals(response, presenter.getFeedTweets());
     }
 
     @Test
@@ -56,7 +72,8 @@ class FeedTweetsPresenterTest {
         Mockito.when(mockFeedTweetsService.getFeedTweets(request)).thenThrow(new IOException());
 
         Assertions.assertThrows(IOException.class, () -> {
-            presenter.getFeedTweets(request);
+//            presenter.getFeedTweets(request);
+            presenter.getFeedTweets();
         });
     }
 }
