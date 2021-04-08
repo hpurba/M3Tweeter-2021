@@ -2,6 +2,7 @@ package edu.byu.cs.tweeter.presenter;
 
 import java.io.IOException;
 
+import edu.byu.cs.tweeter.model.domain.Tweet;
 import edu.byu.cs.tweeter.model.service.FeedTweetsService;
 import edu.byu.cs.tweeter.model.service.FollowerService;
 import edu.byu.cs.tweeter.model.service.request.FeedTweetsRequest;
@@ -18,7 +19,9 @@ public class FeedTweetsPresenter {
      *  - If needed, specify methods here that will be called on the view in response to model updates.
      */
     public interface View {
-        // If needed, specify methods here that will be called on the view in response to model updates
+        Tweet getTweet();
+        int getPageSize();
+        Tweet getLastTweet();
     }
 
     /**
@@ -30,33 +33,25 @@ public class FeedTweetsPresenter {
     }
 
     /**
-     * Returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followees returned and to return the next set of
-     * followees after any that were returned in a previous request.
-     *
-     * @param request contains the data required to fulfill the request.
-     * @return the followees.
-     */
-    /**
      * Makes the retrieval of the feed of tweets.
-     * @param request   contains the data required to fulfill the request.
-     * @return
+     * @return  FeedTweetsResponse Object. Contains tweets made by followees of the current user.
      * @throws IOException
      */
-    public FeedTweetsResponse getFeedTweets(FeedTweetsRequest request) throws IOException {
+    public FeedTweetsResponse getFeedTweets() throws IOException {
+        FeedTweetsRequest request = new FeedTweetsRequest(view.getTweet(), view.getPageSize(), view.getLastTweet());
         FeedTweetsService feedTweetsService = getFeedTweetsService();
         return feedTweetsService.getFeedTweets(request);
     }
 
     /**
-     * Returns an instance of {@link FollowerService}. Allows mocking of the FollowerService class
-     * for testing purposes. All usages of FollowerService should get their FollowerService
+     * Performs a retrieval of a new FeedTweetsService Object.
+     * Returns an instance of {@link FeedTweetsService}. Allows mocking of the FeedTweetsService class
+     * for testing purposes. All usages of FeedTweetsService should get their FeedTweetsService
      * instance from this method to allow for mocking of the instance.
      *
-     * @return the instance.
+     * @return  A new FeedTweetsService Object.
      */
     FeedTweetsService getFeedTweetsService() {
         return new FeedTweetsService();
     }
-
 }

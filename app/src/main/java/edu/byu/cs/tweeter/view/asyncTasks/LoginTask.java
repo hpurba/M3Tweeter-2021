@@ -12,8 +12,6 @@ import edu.byu.cs.tweeter.model.service.response.LoginResponse;
 import edu.byu.cs.tweeter.presenter.LoginPresenter;
 import edu.byu.cs.tweeter.util.ByteArrayUtils;
 
-// THIS CANNOT CHANGE OR DO ANYTHING WITH THE VIEW (DIFFERENT THREAD)
-
 /**
  * LoginTask will call presenter.login()
  * Remember: This cannot change or do anything with the view (It's a different thread).
@@ -44,7 +42,6 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, LoginResponse> {
         if(observer == null) {
             throw new NullPointerException();
         }
-
         this.presenter = presenter;
         this.observer = observer;
     }

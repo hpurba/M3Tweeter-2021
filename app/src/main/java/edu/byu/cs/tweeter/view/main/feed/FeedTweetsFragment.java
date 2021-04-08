@@ -36,16 +36,14 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
     private static final String LOG_TAG = "FeedTweetsFragment";
     private static final String USER_KEY = "UserKey";
     private static final String AUTH_TOKEN_KEY = "AuthTokenKey";
-
     private static final int LOADING_DATA_VIEW = 0;
     private static final int ITEM_VIEW = 1;
+    private static final int PAGE_SIZE = 8; // Number of items for each scrolling pagination.
 
-    private static final int PAGE_SIZE = 8;
-
-    private Tweet tweet;
-    private FeedTweetsPresenter presenter;
     private User user;
     private AuthToken authToken;
+    private Tweet tweet;
+    private FeedTweetsPresenter presenter;
 
     private FeedTweetsFragment.FeedTweetsRecyclerViewAdapter feedTweetsRecyclerViewAdapter;
 
@@ -58,19 +56,15 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
      */
     public static FeedTweetsFragment newInstance(User user, AuthToken authToken) {
         FeedTweetsFragment fragment = new FeedTweetsFragment();
-
-
         Bundle args = new Bundle(2);
         args.putSerializable(USER_KEY, user);
         args.putSerializable(AUTH_TOKEN_KEY, authToken);
-
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feedtweets, container, false);
 
         //noinspection ConstantConditions
@@ -90,6 +84,21 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
         feedTweetsRecyclerView.addOnScrollListener(new FeedTweetsFragment.FeedTweetsRecyclerViewPaginationScrollListener(layoutManager));
 
         return view;
+    }
+
+    @Override
+    public Tweet getTweet() {
+        return tweet;
+    }
+
+    @Override
+    public int getPageSize() {
+        return PAGE_SIZE;
+    }
+
+    @Override
+    public Tweet getLastTweet() {
+        return feedTweetsRecyclerViewAdapter.lastTweet;
     }
 
     /**
@@ -130,8 +139,6 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
                         intent.putExtra(OtherUserProfileActivity.CURRENT_USER_KEY, user);
                         intent.putExtra(OtherUserProfileActivity.AUTH_TOKEN_KEY, authToken);
                         intent.putExtra(OtherUserProfileActivity.OTHER_USER_ALIAS, userAlias.getText().toString());
-
-                        //
                         intent.putExtra(OtherUserProfileActivity.OTHER_USER_FULL_NAME, userName.getText().toString());
 
                         context.startActivity(intent);
@@ -141,7 +148,6 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
                 userAlias = null;
                 tweetText = null;
             }
-
         }
 
         /**
@@ -162,8 +168,7 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
     private class FeedTweetsRecyclerViewAdapter extends RecyclerView.Adapter<FeedTweetsFragment.FeedTweetsHolder> implements GetFeedTweetsTask.Observer {
 
         private final List<Tweet> tweets = new ArrayList<>();
-
-        private edu.byu.cs.tweeter.model.domain.Tweet lastTweet;
+        private Tweet lastTweet;
 
         private boolean hasMorePages;
         private boolean isLoading = false;
@@ -225,8 +230,7 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
             View view;
 
             if(viewType == LOADING_DATA_VIEW) {
-                view =layoutInflater.inflate(R.layout.loading_row, parent, false);
-
+                view = layoutInflater.inflate(R.layout.loading_row, parent, false);
             } else {
                 view = layoutInflater.inflate(R.layout.tweet_row, parent, false);
             }
@@ -279,8 +283,7 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
             addLoadingFooter();
 
             GetFeedTweetsTask getFeedTweetsTask = new GetFeedTweetsTask(presenter, this);
-            FeedTweetsRequest request = new FeedTweetsRequest(tweet, PAGE_SIZE, lastTweet);
-            getFeedTweetsTask.execute(request);
+            getFeedTweetsTask.execute();
         }
 
         /**
@@ -340,7 +343,6 @@ public class FeedTweetsFragment extends Fragment implements FeedTweetsPresenter.
 
         /**
          * Creates a new instance.
-         *
          * @param layoutManager the layout manager being used by the RecyclerView.
          */
         FeedTweetsRecyclerViewPaginationScrollListener(LinearLayoutManager layoutManager) {

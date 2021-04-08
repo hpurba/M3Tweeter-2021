@@ -8,6 +8,9 @@ import edu.byu.cs.tweeter.model.service.request.FeedTweetsRequest;
 import edu.byu.cs.tweeter.model.service.response.FeedTweetsResponse;
 import edu.byu.cs.tweeter.presenter.FeedTweetsPresenter;
 
+/**
+ *  GetFeedTweetsTask will call presenter.getFeedTweets();
+ */
 public class GetFeedTweetsTask extends AsyncTask<FeedTweetsRequest, Void, FeedTweetsResponse> {
 
     private final FeedTweetsPresenter presenter;
@@ -33,7 +36,6 @@ public class GetFeedTweetsTask extends AsyncTask<FeedTweetsRequest, Void, FeedTw
         if(observer == null) {
             throw new NullPointerException();
         }
-
         this.presenter = presenter;
         this.observer = observer;
     }
@@ -47,11 +49,10 @@ public class GetFeedTweetsTask extends AsyncTask<FeedTweetsRequest, Void, FeedTw
      */
     @Override
     protected FeedTweetsResponse doInBackground(FeedTweetsRequest... feedTweetsRequests) {
-
         FeedTweetsResponse response = null;
 
         try {
-            response = presenter.getFeedTweets(feedTweetsRequests[0]);
+            response = presenter.getFeedTweets();
         } catch (IOException ex) {
             exception = ex;
         }
@@ -72,6 +73,4 @@ public class GetFeedTweetsTask extends AsyncTask<FeedTweetsRequest, Void, FeedTw
             observer.feedTweetsRetrieved(feedTweetsResponse);
         }
     }
-
-
 }
