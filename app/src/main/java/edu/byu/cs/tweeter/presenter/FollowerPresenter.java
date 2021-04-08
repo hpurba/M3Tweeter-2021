@@ -2,6 +2,7 @@ package edu.byu.cs.tweeter.presenter;
 
 import java.io.IOException;
 
+import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.service.FollowerService;
 import edu.byu.cs.tweeter.model.service.request.FollowerRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowerResponse;
@@ -13,7 +14,9 @@ public class FollowerPresenter {
      * The interface by which this presenter communicates with it's view.
      */
     public interface View {
-        // If needed, specify methods here that will be called on the view in response to model updates
+        User getUser();
+        int getPageSize();
+        User getLastFollower();
     }
 
     /**
@@ -33,7 +36,8 @@ public class FollowerPresenter {
      * @param request contains the data required to fulfill the request.
      * @return the followees.
      */
-    public FollowerResponse getFollowers(FollowerRequest request) throws IOException {
+    public FollowerResponse getFollowers() throws IOException { // FollowerRequest request
+        FollowerRequest request = new FollowerRequest(view.getUser(), view.getPageSize(), view.getLastFollower());
         FollowerService followerService = getFollowerService();
         return followerService.getFollowers(request);
     }

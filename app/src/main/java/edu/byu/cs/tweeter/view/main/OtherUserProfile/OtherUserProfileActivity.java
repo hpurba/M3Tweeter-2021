@@ -42,12 +42,16 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
     public static final String OTHER_USER_ALIAS = "OtherUserAlias";
     public static final String OTHER_USER_FULL_NAME = "OtherUserFullName";
 
+    private static final int PAGE_SIZE = 10;
+
     public User user;
     public String otherUserAlias;
     public String otherUserFullName;
     public Boolean isFollowing = true;
     public Button followUnFollowButton;
     public int numberOfFollowers = 0;
+
+    private User lastFollower;
 
     // Tabs and ViewPager
     TabLayout tabLayout;                                    // Button Tabs
@@ -201,10 +205,27 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
         TextView followerCount = findViewById(R.id.otherUserfollowerCount);
 //        followerCount.setText(getString(R.string.followerCount, numberOfFollowers));
 //        followerCount.setText(getString(R.string.followerCount, 20)); // TODO: CHANGE THIS LATER, HARD CODED FOLLOWERCOUNT
+
+        lastFollower = (followersRetrieved.size() > 0) ? followersRetrieved.get(followersRetrieved.size() -1) : null;
     }
 
     @Override
     public void handleException(Exception exception) {
 
+    }
+
+    @Override
+    public User getUser() {
+        return user;
+    }
+
+    @Override
+    public int getPageSize() {
+        return PAGE_SIZE;
+    }
+
+    @Override
+    public User getLastFollower() {
+        return lastFollower;
     }
 }

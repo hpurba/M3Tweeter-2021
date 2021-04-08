@@ -51,6 +51,7 @@ public class FollowersFragment extends Fragment implements FollowerPresenter.Vie
     private FollowersFragment followersFragment;
     private OtherUserProfilePresenter presenterNext;
     private View rootView;
+    private User lastFollower;
 
     private FollowersFragment.FollowerRecyclerViewAdapter followerRecyclerViewAdapter;
 
@@ -73,8 +74,6 @@ public class FollowersFragment extends Fragment implements FollowerPresenter.Vie
         return fragment;
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,7 +88,6 @@ public class FollowersFragment extends Fragment implements FollowerPresenter.Vie
         presenter = new FollowerPresenter(this);
         presenterNext = new OtherUserProfilePresenter(this);
 
-//        RecyclerView followerRecyclerView = view.findViewById(R.id.followerRecyclerView);
         RecyclerView followerRecyclerView = view.findViewById(R.id.followerRecyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
@@ -121,6 +119,21 @@ public class FollowersFragment extends Fragment implements FollowerPresenter.Vie
     @Override
     public void handleException(Exception exception) {
 
+    }
+
+    @Override
+    public User getUser() {
+        return user;
+    }
+
+    @Override
+    public int getPageSize() {
+        return PAGE_SIZE;
+    }
+
+    @Override
+    public User getLastFollower() {
+        return lastFollower;
     }
 
     /**
@@ -189,7 +202,8 @@ public class FollowersFragment extends Fragment implements FollowerPresenter.Vie
 
         private final List<User> users = new ArrayList<>();
 
-        private edu.byu.cs.tweeter.model.domain.User lastFollower;
+//        private User lastFollower;
+
 
         private boolean hasMorePages;
         private boolean isLoading = false;
@@ -304,9 +318,9 @@ public class FollowersFragment extends Fragment implements FollowerPresenter.Vie
             isLoading = true;
             addLoadingFooter();
 
-            GetFollowersTask getFollowersTask = new GetFollowersTask(presenter, this);
-            FollowerRequest request = new FollowerRequest(user, PAGE_SIZE, lastFollower);
-            getFollowersTask.execute(request);
+             GetFollowersTask getFollowersTask = new GetFollowersTask(presenter, this);
+//            FollowerRequest request = new FollowerRequest(user, PAGE_SIZE, lastFollower);
+            getFollowersTask.execute();
         }
 
         /**
