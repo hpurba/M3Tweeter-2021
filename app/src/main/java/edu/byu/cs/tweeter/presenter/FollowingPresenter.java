@@ -2,7 +2,10 @@ package edu.byu.cs.tweeter.presenter;
 
 import java.io.IOException;
 
+import edu.byu.cs.tweeter.model.domain.User;
+import edu.byu.cs.tweeter.model.service.FollowerService;
 import edu.byu.cs.tweeter.model.service.FollowingService;
+import edu.byu.cs.tweeter.model.service.request.FollowerRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowingResponse;
 
@@ -14,40 +17,42 @@ public class FollowingPresenter {
     private final View view;
 
     /**
-     * The interface by which this presenter communicates with it's view.
+     * This is the interface for the presenter's view (FollowingFragment).
+     * It is the interface by which this presenter can communicate with it's view (call it's methods).
+     * Methods listed here should be used only for retrieval, or raising an event (ex: change a button status).
+     *  - If needed, specify methods here that will be called on the view in response to model updates.
      */
     public interface View {
-        // If needed, specify methods here that will be called on the view in response to model updates
+        User getUser();
+        int getPageSize();
+        User getLastFollowee();
     }
 
     /**
-     * Creates an instance.
-     *
-     * @param view the view for which this class is the presenter.
+     * Creates an instance of a FollowingPresenter with the provided view (should be FollowingFragment).
+     * @param view View, which should be a FollowingFragment view for which this class is the presenter.
      */
     public FollowingPresenter(View view) {
         this.view = view;
     }
 
     /**
-     * Returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followees returned and to return the next set of
-     * followees after any that were returned in a previous request.
-     *
-     * @param request contains the data required to fulfill the request.
-     * @return the followees.
+     * Retrieves the followees of a user.
+     * @return  FollowingResponse Object. Contains List<User> followees of a user.
+     * @throws IOException
      */
-    public FollowingResponse getFollowing(FollowingRequest request) throws IOException {
+    public FollowingResponse getFollowing() throws IOException {
+        FollowingRequest request= new FollowingRequest(view.getUser(), view.getPageSize(), view.getLastFollowee());
         FollowingService followingService = getFollowingService();
         return followingService.getFollowees(request);
     }
 
     /**
-     * Returns an instance of {@link IFollowingService}. Allows mocking of the FollowingService class
-     * for testing purposes. All usages of FollowingService should get their FollowingService
-     * instance from this method to allow for mocking of the instance.
+     * Performs a retrieval of a new FollowingService Object.
+     * Returns an instance of {@link FollowingService}. For testing purposes, all usages of FollowingService
+     * should get their FollowingService instance from this method to allow for mocking of the instance.
      *
-     * @return the instance.
+     * @return  A new FollowerService Object.
      */
     FollowingService getFollowingService() {
         return new FollowingService();

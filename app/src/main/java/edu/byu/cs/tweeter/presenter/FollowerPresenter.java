@@ -3,12 +3,12 @@ package edu.byu.cs.tweeter.presenter;
 import java.io.IOException;
 
 import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.service.FeedTweetsService;
 import edu.byu.cs.tweeter.model.service.FollowerService;
 import edu.byu.cs.tweeter.model.service.request.FollowerRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowerResponse;
 
 public class FollowerPresenter {
+
     private final View view;
 
     /**

@@ -317,9 +317,7 @@ public class FollowersFragment extends Fragment implements FollowerPresenter.Vie
         void loadMoreItems() {
             isLoading = true;
             addLoadingFooter();
-
-             GetFollowersTask getFollowersTask = new GetFollowersTask(presenter, this);
-//            FollowerRequest request = new FollowerRequest(user, PAGE_SIZE, lastFollower);
+            GetFollowersTask getFollowersTask = new GetFollowersTask(presenter, this);
             getFollowersTask.execute();
         }
 

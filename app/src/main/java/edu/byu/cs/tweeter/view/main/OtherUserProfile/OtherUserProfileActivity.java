@@ -52,11 +52,11 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
     public int numberOfFollowers = 0;
 
     private User lastFollower;
+    private User lastFollowee;
 
     // Tabs and ViewPager
     TabLayout tabLayout;                                    // Button Tabs
     ViewPager myViewPager;                                  // Widget that allows the user to swipe left or right to see an entirely new screen.
-//    OtherUserSectionsPagerAdapter othrUsrSecPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +222,11 @@ public class OtherUserProfileActivity extends AppCompatActivity implements Other
     @Override
     public int getPageSize() {
         return PAGE_SIZE;
+    }
+
+    @Override
+    public User getLastFollowee() {
+        return lastFollowee;
     }
 
     @Override

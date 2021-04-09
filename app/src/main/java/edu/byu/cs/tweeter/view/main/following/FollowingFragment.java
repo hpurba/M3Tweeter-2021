@@ -49,6 +49,7 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
     private User user;
     private AuthToken authToken;
     private FollowingPresenter presenter;
+    private User lastFollowee;
 
     private FollowingRecyclerViewAdapter followingRecyclerViewAdapter;
 
@@ -93,6 +94,21 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
         followingRecyclerView.addOnScrollListener(new FollowRecyclerViewPaginationScrollListener(layoutManager));
 
         return view;
+    }
+
+    @Override
+    public User getUser() {
+        return user;
+    }
+
+    @Override
+    public int getPageSize() {
+        return PAGE_SIZE;
+    }
+
+    @Override
+    public User getLastFollowee() {
+        return lastFollowee;
     }
 
     /**
@@ -157,7 +173,7 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
 
         private final List<User> users = new ArrayList<>();
 
-        private edu.byu.cs.tweeter.model.domain.User lastFollowee;
+        private User lastFollowee;
         private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
         private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
 
@@ -277,8 +293,7 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
             addLoadingFooter();
             lastFollowee = user1;
             GetFollowingTask getFollowingTask = new GetFollowingTask(presenter, this);
-            FollowingRequest request = new FollowingRequest(user, PAGE_SIZE, lastFollowee);
-            getFollowingTask.execute(request);
+            getFollowingTask.execute();
         }
 
         /**
