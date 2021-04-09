@@ -45,9 +45,8 @@ public class FeedTweetsPresenter {
 
     /**
      * Performs a retrieval of a new FeedTweetsService Object.
-     * Returns an instance of {@link FeedTweetsService}. Allows mocking of the FeedTweetsService class
-     * for testing purposes. All usages of FeedTweetsService should get their FeedTweetsService
-     * instance from this method to allow for mocking of the instance.
+     * Returns an instance of {@link FeedTweetsService}. For testing purposes, all usages of FeedTweetsService
+     * should get their FeedTweetsService instance from this method to allow for mocking of the instance.
      *
      * @return  A new FeedTweetsService Object.
      */
