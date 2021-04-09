@@ -44,7 +44,6 @@ public class LoginPresenter {
      * @throws TweeterRemoteException
      */
     public LoginResponse login() throws IOException, TweeterRemoteException {
-
         // Construct a Login Request using the username and password in the text fields.
         LoginRequest loginRequest = new LoginRequest(view.getUsernameText(), view.getPasswordText());
 
@@ -52,7 +51,7 @@ public class LoginPresenter {
         if (loginRequest.getUsername() == null || loginRequest.getPassword() == null){
             throw new IOException();
         }
-        return loginService.login(loginRequest);    // Make a login
+        return loginService.login(loginRequest);
     }
 
     /**

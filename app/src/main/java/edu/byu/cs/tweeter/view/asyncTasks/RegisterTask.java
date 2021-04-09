@@ -52,11 +52,11 @@ public class RegisterTask extends AsyncTask<RegisterRequest, Void, RegisterRespo
      * @return the response.
      */
     @Override
-    protected RegisterResponse doInBackground(RegisterRequest... registerRequests) {
+    protected RegisterResponse doInBackground(RegisterRequest... registerRequests) {    // TODO: Ask TA why I give this a RegisterRequest, when not used here.
         RegisterResponse registerResponse = null;
 
         try {
-            registerResponse = presenter.register(registerRequests[0]);
+            registerResponse = presenter.register();
 
             if(registerResponse.isSuccess()) {
                 loadImage(registerResponse.getUser());

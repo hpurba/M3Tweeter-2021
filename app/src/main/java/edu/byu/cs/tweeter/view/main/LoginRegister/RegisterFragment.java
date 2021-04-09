@@ -1,13 +1,8 @@
 package edu.byu.cs.tweeter.view.main.LoginRegister;
 
-import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,10 +17,8 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import java.io.ByteArrayOutputStream;
-import java.nio.ByteBuffer;
 
 import edu.byu.cs.tweeter.R;
-import edu.byu.cs.tweeter.model.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.model.service.response.RegisterResponse;
 import edu.byu.cs.tweeter.presenter.RegisterPresenter;
 import edu.byu.cs.tweeter.view.asyncTasks.RegisterTask;
@@ -53,6 +46,12 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
     private EditText usernameEditText;
     private EditText passwordEditText;
 
+    private String firstName;
+    private String lastName;
+    private String alias;
+    private String password;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
@@ -63,11 +62,9 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
         usernameEditText = view.findViewById(R.id.et_username2);
         passwordEditText = view.findViewById(R.id.et_password2);
 
-
         imageView = (ImageView) view.findViewById(R.id.imageView);
 
-        // PHOTO CAPTURE BUTTON
-//        This is how to do it: https://developer.android.com/training/camera/photobasics
+        // PHOTO CAPTURE BUTTON - This is how to do it: https://developer.android.com/training/camera/photobasics
         Button takeProfilePictureButton = view.findViewById(R.id.TakeProfilePictureButton);
         takeProfilePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,21 +104,13 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
                     registerInToast = Toast.makeText(getActivity(), "You are Registered!", Toast.LENGTH_LONG); // getActivity().getBaseContext()
                     registerInToast.show();
 
-                    String firstName = firstNameEditText.getText().toString();
-                    String lastName = lastNameEditText.getText().toString();
-                    String alias = usernameEditText.getText().toString();
-                    String password = passwordEditText.getText().toString();
+                    firstName = firstNameEditText.getText().toString();
+                    lastName = lastNameEditText.getText().toString();
+                    alias = usernameEditText.getText().toString();
+                    password = passwordEditText.getText().toString();
 
-                    RegisterRequest registerRequest = new RegisterRequest(firstName, lastName, alias, password, byteArray);
                     RegisterTask registerTask = new RegisterTask(presenter, RegisterFragment.this);
-
-//                    // This clears the textview fields.
-//                    firstNameEditText.setText("");
-//                    lastNameEditText.setText("");
-//                    usernameEditText.setText("");
-//                    passwordEditText.setText("");
-
-                    registerTask.execute(registerRequest);
+                    registerTask.execute();
                 }
             }
         });
@@ -171,10 +160,31 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byteArray = stream.toByteArray();
-
-//            photo.recycle();
         }
     }
 
+    @Override
+    public String getFirstName() {
+        return firstName;
+    }
 
+    @Override
+    public String getLastName() {
+        return lastName;
+    }
+
+    @Override
+    public String getAlias() {
+        return alias;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public byte[] getByteArray() {
+        return byteArray;
+    }
 }
